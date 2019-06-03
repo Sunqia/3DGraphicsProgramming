@@ -47,7 +47,7 @@ static int GetPixelSize(D3DFORMAT fmt)
 }
 
 /*
- `±qNVIDIAºô¯¸¤W¤U¸ü, °µ¤F¤@¨Ç­×§ïÅı¥¦¤]¥i¥HÅª¨ú«DÀ£ÁYªºDDS®æ¦¡, ¨Ò¦pHDR¯BÂI¼Æ®æ¦¡¶K¹Ï.`
+ `å¾NVIDIAç¶²ç«™ä¸Šä¸‹è¼‰, åšäº†ä¸€äº›ä¿®æ”¹è®“å®ƒä¹Ÿå¯ä»¥è®€å–éå£“ç¸®çš„DDSæ ¼å¼, ä¾‹å¦‚HDRæµ®é»æ•¸æ ¼å¼è²¼åœ–.`
 */
 DDS_IMAGE_DATA* loadDDSTextureFile( const char *filename )
 {
@@ -58,7 +58,7 @@ DDS_IMAGE_DATA* loadDDSTextureFile( const char *filename )
 	int factor = 1;
 	int bufferSize = 0;
 
-	// `¶}±ÒÀÉ®×`
+	// `é–‹å•Ÿæª”æ¡ˆ`
 	pFile = fopen( filename, "rb" );
 	if( pFile == NULL )
 	{
@@ -68,7 +68,7 @@ DDS_IMAGE_DATA* loadDDSTextureFile( const char *filename )
 		return NULL;
 	}
 
-	// `½T»{¥¦¬O­ÓDDSÀÉ`
+	// `ç¢ºèªå®ƒæ˜¯å€‹DDSæª”`
 	fread( filecode, 1, 4, pFile );
 
 	if( strncmp( filecode, "DDS ", 4 ) != 0 )
@@ -78,7 +78,7 @@ DDS_IMAGE_DATA* loadDDSTextureFile( const char *filename )
 		return NULL;
 	}
 
-	// `¨ú±o¹Ï§Î®æ¦¡`
+	// `å–å¾—åœ–å½¢æ ¼å¼`
 	fread( &ddsd, sizeof(ddsd), 1, pFile );
 
 	pDDSImageData = (DDS_IMAGE_DATA*) malloc(sizeof(DDS_IMAGE_DATA));
@@ -91,26 +91,26 @@ DDS_IMAGE_DATA* loadDDSTextureFile( const char *filename )
 	//
 	switch( ddsd.ddpfPixelFormat.dwFourCC )
 	{
-	case FOURCC_DXT1: // `DXT1À£ÁY¤ñ¬°8:1`
+	case FOURCC_DXT1: // `DXT1å£“ç¸®æ¯”ç‚º8:1`
 		pDDSImageData->format = D3DFMT_DXT1;
 		factor = 2;
 		pDDSImageData->bBlock = true;
 		break;
 
-	case FOURCC_DXT3: // `DXT3À£ÁY¤ñ¬°4:1`
+	case FOURCC_DXT3: // `DXT3å£“ç¸®æ¯”ç‚º4:1`
 		pDDSImageData->format = D3DFMT_DXT3;
 		factor = 4;
 		pDDSImageData->bBlock = true;
 		break;
 
-	case FOURCC_DXT5: // `DXT5À£ÁY¤ñ¬°4:1`
+	case FOURCC_DXT5: // `DXT5å£“ç¸®æ¯”ç‚º4:1`
 		pDDSImageData->format = D3DFMT_DXT5;
 		factor = 4;
 		pDDSImageData->bBlock = true;
 		break;
 
 	default:
-		// `DDS¤]¥i¥HÀx¦s¨ä¥¦«DÀ£ÁY®æ¦¡`
+		// `DDSä¹Ÿå¯ä»¥å„²å­˜å…¶å®ƒéå£“ç¸®æ ¼å¼`
 		if ( ddsd.ddpfPixelFormat.dwFlags & DDPF_FOURCC )
 		{
 			pDDSImageData->format = ddsd.ddpfPixelFormat.dwFourCC;
@@ -129,7 +129,7 @@ DDS_IMAGE_DATA* loadDDSTextureFile( const char *filename )
 	pDDSImageData->cubeMap = (ddsd.ddsCaps.dwCaps & DDSCAPS_COMPLEX) && (ddsd.ddsCaps.dwCaps2 & DDSCAPS2_CUBEMAP);
     
 	//
-	// `¹w¦ô¹Ï¤ù¦û¥Î°O¾ĞÅéªº¤j¤p`
+	// `é ä¼°åœ–ç‰‡ä½”ç”¨è¨˜æ†¶é«”çš„å¤§å°`
 	// 
 	if( ddsd.dwLinearSize == 0 )
 	{

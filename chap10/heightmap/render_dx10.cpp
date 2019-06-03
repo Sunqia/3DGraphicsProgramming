@@ -17,7 +17,7 @@ bool InitResourceDX10(void)
 {
 	g_pDevice = GutGetGraphicsDeviceDX10();
 
-	// ¸ü¤Jheightmap
+	// è¼‰å…¥heightmap
 	if ( !g_Heightmap.LoadHeightmapTexture("../../textures/GrandCanyon.tga") )
 		return false;
 
@@ -51,7 +51,7 @@ bool ReleaseResourceDX10(void)
 void ResizeWindowDX10(int width, int height)
 {
 	GutResetGraphicsDeviceDX10();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, aspect, 0.5f, 1000.0f);
 }
@@ -59,13 +59,13 @@ void ResizeWindowDX10(int width, int height)
 void RenderFrameDX10(void)
 {
 	Vector4 vClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	// ¨ú±o©I¥sGutCreateGraphicsDeviceDX10®É©Ò²£¥ÍªºD3D10ª«¥ó
+	// å–å¾—å‘¼å«GutCreateGraphicsDeviceDX10æ™‚æ‰€ç”¢ç”Ÿçš„D3D10ç‰©ä»¶
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView(); //frame buffer
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); //depth/stencil buffer
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); // front/back buffer
-	// ²M°£ÃC¦â
+	// æ¸…é™¤é¡è‰²
 	g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
-	// ²M°£Depth/Stencil buffer
+	// æ¸…é™¤Depth/Stencil buffer
 	g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 	//
 	/*
@@ -79,7 +79,7 @@ void RenderFrameDX10(void)
 
 	//g_Heightmap.Render(g_Control.GetObjectMatrix(), g_Control.GetViewMatrix(), g_proj_matrix, &light);
 	g_Heightmap.Render(g_Control.GetObjectMatrix(), g_Control.GetViewMatrix(), g_proj_matrix);
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	pSwapChain->Present(1, 0);
 }
 

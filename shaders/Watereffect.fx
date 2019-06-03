@@ -63,7 +63,7 @@ VS_OUTPUT VS(VS_INPUT In)
 	return Out;
 }
 
-// §â°ª«×­È¤À¸Ñ¦¨(r,g,b,a) 4­Ó¼Æ­È
+// æŠŠé«˜åº¦å€¼åˆ†è§£æˆ(r,g,b,a) 4å€‹æ•¸å€¼
 float4 EncodeHeightmap(float fHeight)
 {
 	float h = fHeight;
@@ -72,22 +72,22 @@ float4 EncodeHeightmap(float fHeight)
 
 	float4 color = 0;
 
-	// Â²³æªº°µªk
+	// ç°¡å–®çš„åšæ³•
 	color.r = positive;
 	color.g = negative;
 	
 	if ( bHighPrecision )
 	{
-		// `­n¼W¥[ºë½T«×®É, §â¤p¼ÆÂI¤¤¤ñ¸û§Cªº¦ì¼Æ©ñ¦b (b,a) ¤¤ .`
+		// `è¦å¢åŠ ç²¾ç¢ºåº¦æ™‚, æŠŠå°æ•¸é»ä¸­æ¯”è¼ƒä½çš„ä½æ•¸æ”¾åœ¨ (b,a) ä¸­ .`
 		color.ba = frac(color.rg*256);
-		// `(r,g) Àx¦sªº¬O¦ì¼Æ¤ñ¸û°ªªº³¡¥÷`
+		// `(r,g) å„²å­˜çš„æ˜¯ä½æ•¸æ¯”è¼ƒé«˜çš„éƒ¨ä»½`
 		color.rg -= color.ba/256.0f;
 	}
 	
 	return color;
 }
 
-// §â°ª«×­È±q(r,g,b,a)4ºû¦V¶qÁÙ­ì¦¨³æ¤@¼Æ­È
+// æŠŠé«˜åº¦å€¼å¾(r,g,b,a)4ç¶­å‘é‡é‚„åŸæˆå–®ä¸€æ•¸å€¼
 float DecodeHeightmap(float4 heightmap)
 {
 	float4 table;
@@ -121,10 +121,10 @@ float4 PS_Simulate(VS_OUTPUT In) : COLOR
 		float3( 0.0f, 1.0f, 0.25f),
 	};	
 
-	// «e¤@­Óµe­±ªº¼uÂ®ªø«×
+	// å‰ä¸€å€‹ç•«é¢çš„å½ˆç°§é•·åº¦
 	float fHeightPrev = DecodeHeightmap(HeightPrevSampler, In.Texcoord);
 	
-	// ¥Ø«eªº¼uÂ®ªø«×, ¥¦¨úªº¬Oªşªñ¹³¯Àªº¥­§¡­È, ¦Ó¤£¬O³æ¤@¹Ï¯Àªº­È.
+	// ç›®å‰çš„å½ˆç°§é•·åº¦, å®ƒå–çš„æ˜¯é™„è¿‘åƒç´ çš„å¹³å‡å€¼, è€Œä¸æ˜¯å–®ä¸€åœ–ç´ çš„å€¼.
 	float fNeighCurrent = 0;
 	for ( int i=0; i<4; i++ )
 	{
@@ -132,9 +132,9 @@ float4 PS_Simulate(VS_OUTPUT In) : COLOR
 		fNeighCurrent += (DecodeHeightmap(HeightCurrentSampler, texcoord) * offset[i].z);
 	}	
 	
-	// ®M¥Î¤½¦¡¨Ó¹w´ú¼uÂ®¤U¤@¨Bªº¦ì¸m.
+	// å¥—ç”¨å…¬å¼ä¾†é æ¸¬å½ˆç°§ä¸‹ä¸€æ­¥çš„ä½ç½®.
 	float fHeight = fNeighCurrent * 2.0f - fHeightPrev;
-	// ´î®z¼uÂ®ªºÂ\°Ê, Åı¥¦ºCºCªº°±¤U¨Ó.
+	// æ¸›å¼±å½ˆç°§çš„æ“ºå‹•, è®“å®ƒæ…¢æ…¢çš„åœä¸‹ä¾†.
 	fHeight *= fDamping;
 	float4 color = EncodeHeightmap(fHeight);
 			
@@ -143,7 +143,7 @@ float4 PS_Simulate(VS_OUTPUT In) : COLOR
 
 float fNormalScale;
 
-// ¸g¥Ñ¤ô­±°ª«×¨Ó­pºâNormal
+// ç¶“ç”±æ°´é¢é«˜åº¦ä¾†è¨ˆç®—Normal
 float4 PS_Normal(VS_OUTPUT In) : COLOR
 {
 	float2 offset[4] =

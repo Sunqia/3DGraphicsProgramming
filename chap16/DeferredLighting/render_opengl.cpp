@@ -49,7 +49,7 @@ bool InitResourceOpenGL(void)
 
 	int w, h; GutGetWindowSize(w, h);
 	float fAspect = (float)h/(float)w;
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, fAspect, 0.1f, 100.0f);
 
 	glMatrixMode(GL_PROJECTION);
@@ -162,15 +162,15 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_proj_matrix);
 }
@@ -184,7 +184,7 @@ static void DeferredLighting_Prepare(void)
 	GLuint mrt[] = {GL_COLOR_ATTACHMENT0_EXT, GL_COLOR_ATTACHMENT1_EXT, GL_COLOR_ATTACHMENT2_EXT};
 	glDrawBuffers(3, mrt);
 
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	glClearStencil(0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -226,17 +226,17 @@ static void DeferredLighting_PointLight(void)
 
 	glUniform4fv(camerapos_reg, 1, (float *)&camera_matrix[3]);
 
-	// `Position ¶K¹Ï`
+	// `Position è²¼åœ–`
 	glActiveTexture(GL_TEXTURE0_ARB);
 	glUniform1i(pos_sampler, 0);
 	glBindTexture(GL_TEXTURE_2D, g_Texture[BUFFER_POS]);
 
-	// `Normalmap ¶K¹Ï`
+	// `Normalmap è²¼åœ–`
 	glActiveTexture(GL_TEXTURE1_ARB);
 	glUniform1i(normalmap_sampler, 1);
 	glBindTexture(GL_TEXTURE_2D, g_Texture[BUFFER_NORMAL]);
 
-	// `Albedo ¤Ï¥ú¯à¤O¶K¹Ï`
+	// `Albedo åå…‰èƒ½åŠ›è²¼åœ–`
 	glActiveTexture(GL_TEXTURE2_ARB);
 	glUniform1i(albedo_sampler, 2);
 	glBindTexture(GL_TEXTURE_2D, g_Texture[BUFFER_ALBEDO]);
@@ -246,9 +246,9 @@ static void DeferredLighting_PointLight(void)
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float*) &g_proj_matrix);
 
-	// `¤£»İ­n§ó·s ZBuffer`
+	// `ä¸éœ€è¦æ›´æ–° ZBuffer`
 	glDepthMask(GL_FALSE);
-	// `±Ò°Ê¥[¦â²V¦â`
+	// `å•Ÿå‹•åŠ è‰²æ··è‰²`
 	glEnable(GL_BLEND);
 	glDisable(GL_ALPHA_TEST);
 	glBlendFunc(GL_ONE, GL_ONE);
@@ -259,7 +259,7 @@ static void DeferredLighting_PointLight(void)
 	{
 		sGutLight *pLight = &g_Lights[i];
 		
-		// `§ó·s¥ú½u¸ê°T`
+		// `æ›´æ–°å…‰ç·šè³‡è¨Š`
 		glUniform4fv(lightpos_reg, 1, (float *)&pLight->m_vPosition);
 		glUniform4fv(lightcolor_reg, 1, (float *)&pLight->m_vDiffuse);
 		glUniform4fv(lightambient_reg, 1, (float *)&pLight->m_vAmbient);
@@ -273,7 +273,7 @@ static void DeferredLighting_PointLight(void)
 
 		glLoadMatrixf( (float*) &wv_matrix);
 
-		// µe¥X²y§Î
+		// ç•«å‡ºçƒå½¢
 		if ( i==0 )
 		{
 			glDepthMask(GL_TRUE);
@@ -307,7 +307,7 @@ void RenderFrameOpenGL_(void)
 {
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
 	DeferredLighting_Prepare();

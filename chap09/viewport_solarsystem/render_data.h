@@ -8,7 +8,7 @@ struct Vertex_VC
 	float m_Position[3];
 	// R,G,B,A in OpenGL
 	// B,G,R,A in Direct3D 9
-	// Direct3D 10¥i¬O¬O¨âºØ¨ä¤¤¤§1, ¬İ³]©w¦Ó©w.
+	// Direct3D 10å¯æ˜¯æ˜¯å…©ç¨®å…¶ä¸­ä¹‹1, çœ‹è¨­å®šè€Œå®š.
 	unsigned char m_RGBA[4];
 };
 
@@ -26,7 +26,7 @@ extern Light g_Light;
 extern Vector4 g_vAmbientLight;
 // controller object
 extern CGutUserControl g_Control;
-// Ãä½u
+// é‚Šç·š
 extern Vertex_VC g_Border[4];
 // 
 extern Matrix4x4 g_sun_matrix, g_earth_matrix, g_moon_matrix;

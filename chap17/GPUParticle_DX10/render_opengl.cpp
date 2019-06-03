@@ -34,9 +34,9 @@ static bool g_bUseZCompare = false;
 
 bool InitResourceOpenGL(void)
 {
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, 1.0f, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_proj_matrix);
 
@@ -56,17 +56,17 @@ bool InitResourceOpenGL(void)
 
 	if ( g_bUseZCompare )
 	{
-		// ±Ò°Ê¦Û°Ê¤ñ¸ûªº¥\¯à
+		// å•Ÿå‹•è‡ªå‹•æ¯”è¼ƒçš„åŠŸèƒ½
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_COMPARE_R_TO_TEXTURE_ARB);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_FUNC, GL_LESS);
 	}
 	else
 	{
-		// Ãö³¬¦Û°Ê¤ñ¸ûªº¥\¯à
+		// é—œé–‰è‡ªå‹•æ¯”è¼ƒçš„åŠŸèƒ½
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_COMPARE_MODE, GL_NONE);
 	}
 
-	// µeShadowmapªºShader
+	// ç•«Shadowmapçš„Shader
 	g_ZPassVS = GutLoadVertexShaderOpenGL_GLSL("../../shaders/ZPass.glvs");
 	g_ZPassPS = GutLoadFragmentShaderOpenGL_GLSL("../../shaders/ZPass.glfs");
 	if ( 0==g_ZPassVS || 0==g_ZPassPS )
@@ -74,7 +74,7 @@ bool InitResourceOpenGL(void)
 
 	g_ZPassProgram = GutCreateProgram(g_ZPassVS, g_ZPassPS);
 
-	// µe³±¼v®ÄªG¥ÎªºShader
+	// ç•«é™°å½±æ•ˆæœç”¨çš„Shader
 	g_ShadowmapVS = GutLoadVertexShaderOpenGL_GLSL("../../shaders/Shadowmap.glvs");
 	g_ShadowmapPS = GutLoadFragmentShaderOpenGL_GLSL("../../shaders/Shadowmap_PCF.glfs");
 	g_ShadowmapZComparePS = GutLoadFragmentShaderOpenGL_GLSL("../../shaders/ShadowmapZCompare.glfs");
@@ -84,7 +84,7 @@ bool InitResourceOpenGL(void)
 	g_ShadowmapProgram = GutCreateProgram(g_ShadowmapVS, g_ShadowmapPS);
 	g_ShadowmapZCompareProgram = GutCreateProgram(g_ShadowmapVS, g_ShadowmapZComparePS);
 
-	// Âà´«¨ì¶K¹Ï®y¼Ğ¨tªº¯x°}
+	// è½‰æ›åˆ°è²¼åœ–åº§æ¨™ç³»çš„çŸ©é™£
 	g_remap_matrix.Identity();
 	g_remap_matrix.Scale(0.5f, 0.5f, 0.5f);
 	g_remap_matrix[3].Set(0.5f, 0.5f, 0.5f, 1.0f);
@@ -97,20 +97,20 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_proj_matrix);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
 }

@@ -34,7 +34,7 @@ void FrameMove(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -64,17 +64,17 @@ void main(void)
 
 	GutResizeFunc( resize_func );
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
 		exit(0);
 	}
 
-	// ³]©w¤è¦V¥ú
+	// è¨­å®šæ–¹å‘å…‰
 	g_Light.m_Position.Set(0.0f, 0.0f, 10.0f);
 	g_Light.m_Direction.Set(0.0f, 0.0f, 1.0f, 0.0f);
 	g_Light.m_Direction.Normalize();
@@ -91,7 +91,7 @@ void main(void)
 	g_Model.Load_ASCII("../../models/teapot2.gma");
 	g_Terrain.Load_ASCII("../../models/Grand_Canyon.gma");
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -99,7 +99,7 @@ void main(void)
 		exit(0);
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
@@ -107,9 +107,9 @@ void main(void)
 		render();
 	}
 	
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
 
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

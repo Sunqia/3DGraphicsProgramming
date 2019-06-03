@@ -3,15 +3,15 @@
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, 1.0f, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
-	// µe¥X¥¿¦V¸ò¤Ï¦Vªº¤T¨¤§Î
+	// ç•«å‡ºæ­£å‘è·Ÿåå‘çš„ä¸‰è§’å½¢
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	return true;
@@ -25,13 +25,13 @@ bool ReleaseResourceDX9(void)
 void ResizeWindowDX9(int width, int height)
 {
 	GutResetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, aspect, 0.1f, 100.0f);
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
-	// µe¥X¥¿¦V¸ò¤Ï¦Vªº¤T¨¤§Î
+	// ç•«å‡ºæ­£å‘è·Ÿåå‘çš„ä¸‰è§’å½¢
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 }
 
@@ -52,111 +52,111 @@ D3DCOLOR ConvertToD3DCOLOR(Vector4 &vColor)
 
 void SetupLightingDX9(void)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	
-	// `¶}±Ò¥´¥ú¥\¯à`
+	// `é–‹å•Ÿæ‰“å…‰åŠŸèƒ½`
 	device->SetRenderState(D3DRS_LIGHTING, TRUE);
-	// `³]©wÀô¹Ò¥ú`
+	// `è¨­å®šç’°å¢ƒå…‰`
 	device->SetRenderState(D3DRS_AMBIENT, ConvertToD3DCOLOR(g_vGlobal_AmbientLight));
-	// `«ü©wDiffuse§÷½èªº¸ê®Æ¨Ó·½, §â¥¦³]¬°±qSetMaterial¨ç¦¡¤¤¨Ó³]©w.`
+	// `æŒ‡å®šDiffuseæè³ªçš„è³‡æ–™ä¾†æº, æŠŠå®ƒè¨­ç‚ºå¾SetMaterialå‡½å¼ä¸­ä¾†è¨­å®š.`
 	device->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
-	// `³]©wª«¥ó§÷½èªº¤Ï¥ú¯à¤O`
+	// `è¨­å®šç‰©ä»¶æè³ªçš„åå…‰èƒ½åŠ›`
 	D3DMATERIAL9 mtrl;
 	ZeroMemory( &mtrl, sizeof(mtrl) );
 	mtrl.Ambient = *(D3DCOLORVALUE*) &g_vMaterialAmbient;
 	mtrl.Diffuse = *(D3DCOLORVALUE*) &g_vMaterialDiffuse;
 	mtrl.Specular = *(D3DCOLORVALUE*) &g_vMaterialSpecular;
 	mtrl.Emissive = *(D3DCOLORVALUE*) &g_vMaterialEmissive;
-	// `¸g¥Ñ©I¥sSetMaterial¨Ó³]©w§÷½è`
+	// `ç¶“ç”±å‘¼å«SetMaterialä¾†è¨­å®šæè³ª`
 	device->SetMaterial(&mtrl);
-	// `³]©w¥ú·½`
+	// `è¨­å®šå…‰æº`
 	for ( int i=0; i<g_iNumLights; i++ )
 	{
 		if ( g_Lights[i].m_bEnabled )
 		{
-			// `¥´¶}³o·ø¥ú`
+			// `æ‰“é–‹é€™ç›å…‰`
 			device->LightEnable(i, TRUE);
-			// `D3D9¸g¥Ñ³]©wD3DLIGHT9 struct¨Ó³]©w¥ú·½Äİ©Ê`
+			// `D3D9ç¶“ç”±è¨­å®šD3DLIGHT9 structä¾†è¨­å®šå…‰æºå±¬æ€§`
 			D3DLIGHT9 light;
 			ZeroMemory( &light, sizeof(light) );
 
 			switch(g_Lights[i].m_eType)
 			{
 			case LIGHT_DIRECTIONAL:
-				// `³]©w¦¨¤è¦V¥ú`
+				// `è¨­å®šæˆæ–¹å‘å…‰`
 				light.Type = D3DLIGHT_DIRECTIONAL;
-				// `³]©w¤è¦V`
+				// `è¨­å®šæ–¹å‘`
 				light.Direction = *(D3DVECTOR *) &g_Lights[i].m_vDirection;	
 				break;
 			case LIGHT_POINT:
-				// `³]©w¦¨ÂI¥ú·½`
+				// `è¨­å®šæˆé»å…‰æº`
 				light.Type = D3DLIGHT_POINT;
-				// `³]©w¦ì¸m`
+				// `è¨­å®šä½ç½®`
 				light.Position = *(D3DVECTOR *) &g_Lights[i].m_vPosition;
-				// `ÀH¶ZÂ÷ªº°I´î­È`
+				// `éš¨è·é›¢çš„è¡°æ¸›å€¼`
 				// 1/(CONSTANT+LINEAR*d+QUADRATIC*d^2)
-				// `¤½¦¡¤¤ªºCONSTANT, LINEAR, QUADRATIC­È`
+				// `å…¬å¼ä¸­çš„CONSTANT, LINEAR, QUADRATICå€¼`
 				light.Attenuation0 = g_Lights[i].m_vAttenuation[0];
 				light.Attenuation1 = g_Lights[i].m_vAttenuation[1];
 				light.Attenuation2 = g_Lights[i].m_vAttenuation[2];
 				break;
 			case LIGHT_SPOT:
-				// `³]©w¦¨»E¥ú¿O`
+				// `è¨­å®šæˆèšå…‰ç‡ˆ`
 				light.Type = D3DLIGHT_SPOT;
-				// `³]©w¦ì¸m`
+				// `è¨­å®šä½ç½®`
 				light.Position = *(D3DVECTOR *) &g_Lights[i].m_vPosition;
-				// `³]©w¤è¦V`
+				// `è¨­å®šæ–¹å‘`
 				light.Direction = *(D3DVECTOR *) &g_Lights[i].m_vDirection;	
-				// `ÀH¶ZÂ÷ªº°I´î­È`
+				// `éš¨è·é›¢çš„è¡°æ¸›å€¼`
 				// 1/(CONSTANT+LINEAR*d+QUADRATIC*d^2)
-				// `¤½¦¡¤¤ªºCONSTANT, LINEAR, QUADRATIC­È`
+				// `å…¬å¼ä¸­çš„CONSTANT, LINEAR, QUADRATICå€¼`
 				light.Attenuation0 = g_Lights[i].m_vAttenuation[0];
 				light.Attenuation1 = g_Lights[i].m_vAttenuation[1];
 				light.Attenuation2 = g_Lights[i].m_vAttenuation[2];
-				// `¥ú¬W¶êÀ@ªº¤@¥b¨¤«×`
+				// `å…‰æŸ±åœ“éŒçš„ä¸€åŠè§’åº¦`
 				light.Phi = FastMath::DegreeToRadian(g_Lights[i].m_fSpotlightCutoff);
-				// `Inner Coneªº¨¤«×, Inner Cone¤º³¡¨S¦³¨¤«×°I·À.`
+				// `Inner Coneçš„è§’åº¦, Inner Coneå…§éƒ¨æ²’æœ‰è§’åº¦è¡°æ»….`
 				light.Theta = FastMath::DegreeToRadian(g_Lights[i].m_fSpotLightInnerCone);
-				// `¥ú¬Wªº¨¤«×°I·À­È`
+				// `å…‰æŸ±çš„è§’åº¦è¡°æ»…å€¼`
 				light.Falloff = g_Lights[i].m_fSpotlightExponent;
 				break;
 			}
-			// `¥ú·½ªºAmbient­È`
+			// `å…‰æºçš„Ambientå€¼`
 			light.Ambient = *(D3DCOLORVALUE*) &g_Lights[i].m_vAmbientColor;
-			// `¥ú·½ªºDiffuse­È`
+			// `å…‰æºçš„Diffuseå€¼`
 			light.Diffuse = *(D3DCOLORVALUE*) &g_Lights[i].m_vDiffuseColor;
-			// `¥ú·½¦³®Ä½d³ò, ¦b¦¹§â¥¦³]©w¦¨¯BÂI¼Æ©Ò®e­pªº³Ì¤j­È.`
+			// `å…‰æºæœ‰æ•ˆç¯„åœ, åœ¨æ­¤æŠŠå®ƒè¨­å®šæˆæµ®é»æ•¸æ‰€å®¹è¨ˆçš„æœ€å¤§å€¼.`
 			light.Range = 1000.0f;
-			// `¥ÎSetLight¨Ó³]©w¥ú·½Äİ©Ê`
+			// `ç”¨SetLightä¾†è¨­å®šå…‰æºå±¬æ€§`
 			device->SetLight(i, &light);
 		}
 		else
 		{
-			// `Ãö³¬³o·ø¥ú`
+			// `é—œé–‰é€™ç›å…‰`
 			device->LightEnable(i, FALSE);
 		}
 	}
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ®ø°£µe­±
+	// æ¶ˆé™¤ç•«é¢
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
-	// ¶}©l¤UÃ¸¹Ï«ü¥O
+	// é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤
 	device->BeginScene(); 
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &g_world_matrix);
-	// ³]©w¥ú·½
+	// è¨­å®šå…‰æº
 	SetupLightingDX9();
-	// ³]©w¸ê®Æ®æ¦¡
+	// è¨­å®šè³‡æ–™æ ¼å¼
 	device->SetFVF(D3DFVF_XYZ|D3DFVF_NORMAL);
-	// µe¥X®æ¤l
+	// ç•«å‡ºæ ¼å­
 	device->DrawIndexedPrimitiveUP(D3DPT_TRIANGLESTRIP, 0, g_iNumGridVertices, g_iNumGridTriangles, 
 		g_pGridIndices, D3DFMT_INDEX16, g_pGridVertices, sizeof(Vertex_V3N3) );
-	// «Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F
+	// å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†
 	device->EndScene(); 
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
     device->Present( NULL, NULL, NULL, NULL );
 }

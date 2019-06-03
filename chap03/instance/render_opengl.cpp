@@ -8,11 +8,11 @@ static Matrix4x4 g_view_matrix;
 
 bool InitResourceOpenGL(void)
 {
-	// `­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}`
+	// `è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// `§ë¼v¯x°}`
+	// `æŠ•å½±çŸ©é™£`
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(60.0f, 1.0f, 1.0f, 100.0f);
-	// `³]©wµø¨¤Âà´«¯x°}`
+	// `è¨­å®šè¦–è§’è½‰æ›çŸ©é™£`
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 
@@ -21,22 +21,22 @@ bool InitResourceOpenGL(void)
 
 bool ReleaseResourceOpenGL(void)
 {
-	// `¨S¨Æ°µ`
+	// `æ²’äº‹åš`
 	return true;
 }
 
-// `¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨OpenGLä¾†ç¹ªåœ–`
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// `³]©w¦nGPU­n¥h­şÅª¨ú³»ÂI¸ê®Æ`
+	// `è¨­å®šå¥½GPUè¦å»å“ªè®€å–é ‚é»è³‡æ–™`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(4, GL_FLOAT, sizeof(Vector4), g_vertices);
-	// `³]©w­nÅÜ§óGL_MODELVIEW¯x°}`
+	// `è¨­å®šè¦è®Šæ›´GL_MODELVIEWçŸ©é™£`
 	glMatrixMode(GL_MODELVIEW);	
 
-	// `4­Óª÷¦r¶ğªº¦ì¸m`
+	// `4å€‹é‡‘å­—å¡”çš„ä½ç½®`
 	Vector4 pos[4] = 
 	{
 		Vector4(-1.0f, -1.0f, 0.0f),
@@ -50,15 +50,15 @@ void RenderFrameOpenGL(void)
 
 	for ( int i=0; i<4; i++ )
 	{
-		// `±o¨ì¦ì²¾¯x°}`
+		// `å¾—åˆ°ä½ç§»çŸ©é™£`
 		world_matrix.Translate_Replace(pos[i]); 
 		world_view_matrix = world_matrix * g_view_matrix;
-		// `³]©wÂà´«¯x°}'
+		// `è¨­å®šè½‰æ›çŸ©é™£'
 		glLoadMatrixf( (float *) &world_view_matrix);
-		// `µe¥Xª÷¦r¶ğªº8±øÃä½u`
+		// `ç•«å‡ºé‡‘å­—å¡”çš„8æ¢é‚Šç·š`
 		glDrawArrays(GL_LINES, 0, 16);
 	}
 
-	// `§â­I´ºbackbuffer§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferå‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

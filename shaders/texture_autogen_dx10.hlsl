@@ -1,11 +1,11 @@
-// ³]©w³»ÂIªº¸ê®Æ®æ¦¡
+// è¨­å®šé ‚é»çš„è³‡æ–™æ ¼å¼
 struct VS_INPUT
 {
 	float3 Position : POSITION;
 	float2 Texcoord	: TEXCOORD;
 };
 
-// ³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -15,7 +15,7 @@ struct VS_OUTPUT
 Texture2D InputTexture;
 SamplerState InputTextureSampler;
 
-// Âà´«¯x°}
+// è½‰æ›çŸ©é™£
 uniform row_major float4x4 wvp_matrix;
 uniform row_major float4x4 wv_matrix;
 bool bEyeSpace;
@@ -25,16 +25,16 @@ VS_OUTPUT VS(VS_INPUT In)
 {
 	VS_OUTPUT Out;
 	
-	// ®y¼ĞÂà´«
+	// åº§æ¨™è½‰æ›
 	Out.Position = mul( float4(In.Position, 1.0f), wvp_matrix);
 	if ( bEyeSpace )
 	{
-		// ¨Ï¥ÎÃèÀY®y¼Ğ¨t¤Wªº¦ì¸m
+		// ä½¿ç”¨é¡é ­åº§æ¨™ç³»ä¸Šçš„ä½ç½®
 		Out.Texcoord = mul( float4(In.Position, 1.0), wv_matrix);
 	}
 	else
 	{
-		// ª½±µ¨Ï¥Îª«¥óªº³»ÂI®y¼Ğ
+		// ç›´æ¥ä½¿ç”¨ç‰©ä»¶çš„é ‚é»åº§æ¨™
 		Out.Texcoord = In.Position.xy;
 	}
 	

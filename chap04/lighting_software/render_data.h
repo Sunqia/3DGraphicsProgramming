@@ -3,24 +3,24 @@
 
 struct Vertex_VCN
 {
-	Vector4 m_Position; // ³»ÂI¦ì¸m
-	Vector4 m_Color;	// ³»ÂIÃC¦â
-	Vector4 m_Normal;	// ³»ÂI­±¦V
+	Vector4 m_Position; // é ‚é»ä½ç½®
+	Vector4 m_Color;	// é ‚é»é¡è‰²
+	Vector4 m_Normal;	// é ‚é»é¢å‘
 };
 
 struct Vertex_DX9
 {
-	float m_Position[3];	// ³»ÂI¦ì¸m
-	unsigned char m_Color[4]; // ³»ÂIÃC¦â
+	float m_Position[3];	// é ‚é»ä½ç½®
+	unsigned char m_Color[4]; // é ‚é»é¡è‰²
 };
 
-// ±`¼Æ©w¸q
+// å¸¸æ•¸å®šç¾©
 const float g_fFovW = 45.0f;
 const int	g_iMaxNumGrids = 100;
 const int	g_iMaxNumGridVertices = (g_iMaxNumGrids+1) * (g_iMaxNumGrids+1);
 const int	g_iMaxNumGridIndices = g_iMaxNumGrids * (g_iMaxNumGrids * 2 + 2);
 
-// ®æ¤l¼Ò«¬¸ê®Æ
+// æ ¼å­æ¨¡å‹è³‡æ–™
 extern int	g_iNumGridVertices;
 extern int	g_iNumGridIndices;
 extern int	g_iNumGridTriangles;
@@ -28,17 +28,17 @@ extern Vertex_VCN *g_pGridVertices;
 extern Vertex_DX9 *g_pGridVerticesDX9;
 extern unsigned short *g_pGridIndices;
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 extern Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 extern Matrix4x4 g_world_matrix;
-// ¥ú·½¸ê®Æ
+// å…‰æºè³‡æ–™
 extern Vector4 g_vLightAmbient;
 extern Vector4 g_vLightDirection;
 extern Vector4 g_vLightPosition;
@@ -49,14 +49,14 @@ extern float   g_fSpotLightExponent;
 
 //
 void ConvertToDX9(Vertex_VCN g_quad_in[], Vertex_DX9 g_quad_out[], int num_vertices);
-// ²£¥Í®æ¤lªº¨ç¦¡
+// ç”¢ç”Ÿæ ¼å­çš„å‡½å¼
 bool GenerateGrids(int x_grids, int y_grids, 
 				   Vertex_VCN **ppVertices, int &num_vertices, 
 				   unsigned short **ppIndices, int &num_indices,
 				   int &num_triangles);
-// ÄÀ©ñ®æ¤l¼Ò«¬¸ê·½
+// é‡‹æ”¾æ ¼å­æ¨¡å‹è³‡æº
 bool ReleaseGridsResource(Vertex_VCN **ppVertices, unsigned short **ppIndices);
-// ­pºâ¥´¥úªº¨ç¦¡
+// è¨ˆç®—æ‰“å…‰çš„å‡½å¼
 void CalculateAmbientLight(Vertex_VCN *pVertices, int num_vertices);
 void CalculateDirectionalLight(Vertex_VCN *pVertices, int num_vertices);
 void CalculatePointLight(Vertex_VCN *pVertices, int num_vertices);

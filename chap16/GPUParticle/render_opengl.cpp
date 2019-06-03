@@ -64,9 +64,9 @@ bool InitResourceOpenGL(void)
 		return false;
 	}
 
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, 1.0f, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_proj_matrix);
 
@@ -104,7 +104,7 @@ bool InitResourceOpenGL(void)
 	GLuint default_mrt[] = {GL_FRONT, GL_NONE};
 	glDrawBuffers(2, default_mrt);
 
-	// ¼ÒÀÀ particle ªº shader
+	// æ¨¡æ“¬ particle çš„ shader
 	g_ShaderVS[SHADER_SIM] = GutLoadVertexShaderOpenGL_GLSL("../../shaders/Transform.glvs");
 	g_ShaderPS[SHADER_SIM] = GutLoadFragmentShaderOpenGL_GLSL("../../shaders/GPUParticle.glfs");
 	if ( 0==g_ShaderVS[SHADER_SIM] || 0==g_ShaderPS[SHADER_SIM] )
@@ -113,7 +113,7 @@ bool InitResourceOpenGL(void)
 	if ( 0==g_ShaderProgram[SHADER_SIM] )
 		return false;
 
-	// µe¥X particle ªº shader
+	// ç•«å‡º particle çš„ shader
 	g_ShaderVS[SHADER_RENDER] = GutLoadVertexShaderOpenGL_GLSL("../../shaders/GPUParticle_render.glvs");
 	g_ShaderPS[SHADER_RENDER] = GutLoadFragmentShaderOpenGL_GLSL("../../shaders/GPUParticle_render.glfs");
 	if ( 0==g_ShaderVS[SHADER_RENDER] || 0==g_ShaderPS[SHADER_RENDER] )
@@ -213,15 +213,15 @@ void DrawImage(GLuint texture, float x=-1, float y=-1, float w=2, float h=2, boo
 	DrawQuad(x, y, w, h, bInvertV);
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æžåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_proj_matrix);
 }
@@ -248,17 +248,17 @@ static void ParticleSimulation(void)
 		GLint vel_sampler = glGetUniformLocation(program, "VelocitySampler");
 		GLint noise_sampler = glGetUniformLocation(program, "NoiseSampler");
 
-		// `Position ¶K¹Ï`
+		// `Position è²¼åœ–`
 		glActiveTexture(GL_TEXTURE0_ARB);
 		glUniform1i(pos_sampler, 0);
 		glBindTexture(GL_TEXTURE_2D, g_Textures[TEX_POSITION0]);
 
-		// `Velocity ¶K¹Ï`
+		// `Velocity è²¼åœ–`
 		glActiveTexture(GL_TEXTURE1_ARB);
 		glUniform1i(vel_sampler, 1);
 		glBindTexture(GL_TEXTURE_2D, g_Textures[TEX_VELOCITY0]);
 
-		// `Noise ¶K¹Ï`
+		// `Noise è²¼åœ–`
 		glActiveTexture(GL_TEXTURE2_ARB);
 		glUniform1i(noise_sampler, 2);
 		glBindTexture(GL_TEXTURE_2D, g_NoiseTexture);
@@ -339,21 +339,21 @@ static void RenderParticels(void)
 	GLint tanw_param = glGetUniformLocation(program, "fTanW");
 	GLint ScreenSize_param = glGetUniformLocation(program, "ScreenSize");
 
-	// `Position ¶K¹Ï`
+	// `Position è²¼åœ–`
 	if ( pos_sampler >= 0 )
 	{
 		glActiveTexture(GL_TEXTURE2_ARB);
 		glUniform1i(pos_sampler, 2);
 		glBindTexture(GL_TEXTURE_2D, g_Textures[TEX_POSITION1]);
 	}
-	// `Velocity ¶K¹Ï`
+	// `Velocity è²¼åœ–`
 	if ( vel_sampler >=0 )
 	{
 		glActiveTexture(GL_TEXTURE1_ARB);
 		glUniform1i(vel_sampler, 1);
 		glBindTexture(GL_TEXTURE_2D, g_Textures[TEX_VELOCITY1]);
 	}
-	// `particle ¶K¹Ï`
+	// `particle è²¼åœ–`
 	if ( diffuse_sampler >=0 )
 	{
 		glActiveTexture(GL_TEXTURE0_ARB);
@@ -390,7 +390,7 @@ static void RenderParticels(void)
 	glPopClientAttrib();
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
 	ParticleSimulation();

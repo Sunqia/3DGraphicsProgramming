@@ -10,14 +10,14 @@ static CGutModel_DX9 g_Models_DX9[3];
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(70.0f, 1.0f, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// §ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V
+	// æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	for ( int i=0; i<3; i++ )
@@ -37,15 +37,15 @@ void ResizeWindowDX9(int width, int height)
 {
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(70.0f, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// §ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V
+	// æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 }
 
@@ -66,18 +66,18 @@ D3DCOLOR ConvertToD3DCOLOR(Vector4 &vColor)
 
 void SetupLightingDX9(Light *pLightArray, int num_lights)
 {
-	// ¨ú±oDirect3D9¸Ë¸m
+	// å–å¾—Direct3D9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->SetRenderState(D3DRS_LIGHTING, TRUE);
-	// ³]©wÀô¹Ò¥ú
+	// è¨­å®šç’°å¢ƒå…‰
 	device->SetRenderState(D3DRS_AMBIENT, ConvertToD3DCOLOR(g_vAmbientLight));
 
 	int i;
 
 	for ( i=0; i<num_lights; i++ )
 	{
-		// ³]©w¥ú·½
+		// è¨­å®šå…‰æº
 		device->LightEnable(i, TRUE);
 
 		D3DLIGHT9 light;
@@ -102,36 +102,36 @@ void SetupLightingDX9(Light *pLightArray, int num_lights)
 void RenderSolarSystemDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ¤Ó¶§
+	// å¤ªé™½
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &g_sun_matrix);
 	g_Models_DX9[0].Render();
 	//device->SetRenderState(D3DRS_LIGHTING, TRUE);
-	// ¦a²y
+	// åœ°çƒ
 	//SetupLightingDX9(&g_Light, 1);
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &g_earth_matrix);
 	g_Models_DX9[1].Render();
-	// ¤ë«G
+	// æœˆäº®
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &g_moon_matrix);
 	g_Models_DX9[2].Render();
 }
-// ¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï
+// ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
-	// `¨ú±oµøµ¡¤j¤p`
+	// `å–å¾—è¦–çª—å¤§å°`
 	int w, h;
 	GutGetWindowSize(w, h);
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_RGBA(100, 100, 100, 255), 1.0f, 0);
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
 
 	Vector4 camera_lookat(0.0f, 0.0f, 0.0f);
 	Matrix4x4 ortho_proj = GutMatrixOrthoRH_DirectX(20.0f, 20.0f, 0.1f, 100.0f);
 
 	{
-		// `«eµø¹Ï`
+		// `å‰è¦–åœ–`
 		D3DVIEWPORT9 viewport = {0, 0, w/2, h/2, 0.0f, 1.0f};
 		device->SetViewport(&viewport);
 		// view matrix
@@ -145,7 +145,7 @@ void RenderFrameDX9(void)
 		RenderSolarSystemDX9();
 	}
 	{
-		// `¤Wµø¹Ï`
+		// `ä¸Šè¦–åœ–`
 		D3DVIEWPORT9 viewport = {w/2, 0, w/2, h/2, 0.0f, 1.0f};
 		device->SetViewport(&viewport);
 		// view matrix
@@ -159,7 +159,7 @@ void RenderFrameDX9(void)
 		RenderSolarSystemDX9();
 	}
 	{
-		// `¥kµø¹Ï`
+		// `å³è¦–åœ–`
 		D3DVIEWPORT9 viewport = {0, h/2, w/2, h/2, 0.0f, 1.0f};
 		device->SetViewport(&viewport);
 		// view matrix
@@ -173,7 +173,7 @@ void RenderFrameDX9(void)
 		RenderSolarSystemDX9();
 	}
 	{
-		// `¨Ï¥ÎªÌµø¨¤`
+		// `ä½¿ç”¨è€…è¦–è§’`
 		D3DVIEWPORT9 viewport = {w/2, h/2, w/2, h/2, 0.0f, 1.0f};
 		device->SetViewport(&viewport);
 		// view matrix
@@ -198,8 +198,8 @@ void RenderFrameDX9(void)
 		device->SetFVF(D3DFVF_XYZ);
 		device->DrawPrimitiveUP(D3DPT_LINELIST, 2, g_Border, sizeof(Vertex_VC));
 	}
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

@@ -1,13 +1,13 @@
 #include "DefaultConstantBuffers.h"
 
-// ³]©w³»ÂIªº¸ê®Æ®æ¦¡
+// è¨­å®šé ‚é»çš„è³‡æ–™æ ¼å¼
 struct VS_INPUT
 {
 	float3 Position : POSITION;
 	float3 Normal   : NORMAL;
 };
 
-// ³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -51,7 +51,7 @@ VS_OUTPUT VS(VS_INPUT In)
 
 //
 // Pixel Shader
-// ¨Ï¥ÎZBuffer¨Ó­p¿ı
+// ä½¿ç”¨ZBufferä¾†è¨ˆéŒ„
 float4 PS_SamplerCompare(VS_OUTPUT In) : SV_Target
 {
 	float4 projected_pos = In.LightPos / In.LightPos.w;
@@ -68,7 +68,7 @@ float4 PS_SamplerCompare(VS_OUTPUT In) : SV_Target
 
 //
 // Pixel Shader
-// ¨Ï¥ÎZBuffer¨Ó­p¿ı
+// ä½¿ç”¨ZBufferä¾†è¨ˆéŒ„
 float4 PS_SamplerCompare_PCF(VS_OUTPUT In) : SV_Target
 {
 	float4 projected_pos = In.LightPos / In.LightPos.w;

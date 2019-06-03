@@ -26,31 +26,31 @@ void CGutFontOpenGL::Render(void)
 
 	glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
-	// ®M¥Î¦r«¬¶K¹Ï
+	// å¥—ç”¨å­—å‹è²¼åœ–
 	sModelMaterial_OpenGL mtl;
 	mtl.m_bCullFace = false;
 	mtl.m_Textures[0] = m_FontTexture;
 	mtl.Submit(NULL);
-	// ¶}±Òalpha test
+	// é–‹å•Ÿalpha test
 	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_GREATER, 0.5f);
-	// ¨Ï¥Î¥­¦æµø¨¤
+	// ä½¿ç”¨å¹³è¡Œè¦–è§’
 	Matrix4x4 proj_matrix = GutMatrixOrthoRH_OpenGL(m_fWidth, m_fHeight, 0.0f, 1.0f);
 	Matrix4x4 view_matrix; view_matrix.Identity();
 	view_matrix[3].Set(-m_fWidth/2.0f, -m_fHeight/2.0f, 0.0f, 1.0f);
-	// ®M¥ÎÂà´«¯x°}
+	// å¥—ç”¨è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadMatrixf( (float *) &proj_matrix);
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadMatrixf( (float *) &view_matrix);
-	// ³]©wvertex array¨Ó·½
+	// è¨­å®švertex arrayä¾†æº
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(_FontVertex), &m_pVertexArray[0].m_Position);
 	glTexCoordPointer(2, GL_FLOAT, sizeof(_FontVertex), &m_pVertexArray[0].m_Texcoord);
-	// µe¥X©Ò¦³¤å¦r
+	// ç•«å‡ºæ‰€æœ‰æ–‡å­—
 	glDrawElements(GL_TRIANGLES, m_iNumCharacters * 6, GL_UNSIGNED_SHORT, m_pIndexArray);
 
 	glMatrixMode(GL_PROJECTION);
@@ -141,31 +141,31 @@ void CGutFontUniCodeOpenGL::Render(void)
 
 	glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
-	// ®M¥Î¦r«¬¶K¹Ï
+	// å¥—ç”¨å­—å‹è²¼åœ–
 	sModelMaterial_OpenGL mtl;
 	mtl.m_bCullFace = false;
 	mtl.m_Textures[0] = m_FontTexture;
 	mtl.Submit(NULL);
-	// ¶}±Òalpha test
+	// é–‹å•Ÿalpha test
 	glEnable(GL_ALPHA_TEST);
 	glAlphaFunc(GL_GREATER, 0.5f);
-	// ¨Ï¥Î¥­¦æµø¨¤
+	// ä½¿ç”¨å¹³è¡Œè¦–è§’
 	Matrix4x4 proj_matrix = GutMatrixOrthoRH_OpenGL(m_fWidth, m_fHeight, 0.0f, 1.0f);
 	Matrix4x4 view_matrix; view_matrix.Identity();
 	view_matrix[3].Set(-m_fWidth/2.0f, -m_fHeight/2.0f, 0.0f, 1.0f);
-	// ®M¥ÎÂà´«¯x°}
+	// å¥—ç”¨è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glPushMatrix();
 	glLoadMatrixf( (float *) &proj_matrix);
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
 	glLoadMatrixf( (float *) &view_matrix);
-	// ³]©wvertex array¨Ó·½
+	// è¨­å®švertex arrayä¾†æº
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(_FontVertex), &m_pVertexArray[0].m_Position);
 	glTexCoordPointer(2, GL_FLOAT, sizeof(_FontVertex), &m_pVertexArray[0].m_Texcoord);
-	// µe¥X©Ò¦³¤å¦r
+	// ç•«å‡ºæ‰€æœ‰æ–‡å­—
 	glDrawElements(GL_TRIANGLES, m_iNumCharacters * 6, GL_UNSIGNED_SHORT, m_pIndexArray);
 
 	glMatrixMode(GL_PROJECTION);

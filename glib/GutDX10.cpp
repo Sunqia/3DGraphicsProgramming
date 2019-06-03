@@ -85,9 +85,9 @@ bool GutSetDefaultStatesDX10(void)
 bool GutInitGraphicsDeviceDX10(GutDeviceSpec *spec)
 {
 	HRESULT hr = S_OK;
-	// `¨ú±oµøµ¡`
+	// `å–å¾—è¦–çª—`
 	HWND hWnd = GutGetWindowHandleWin32();
-	// `¨ú±oµøµ¡¤j¤p`
+	// `å–å¾—è¦–çª—å¤§å°`
 	RECT rc;
 	GetClientRect( hWnd, &rc );
 	UINT width = rc.right - rc.left;
@@ -98,7 +98,7 @@ bool GutInitGraphicsDeviceDX10(GutDeviceSpec *spec)
 	createDeviceFlags |= D3D10_CREATE_DEVICE_DEBUG;
 #endif
 
-	// `³]©wFrontbuffer/Backbuffer¤j¤p¤Î®æ¦¡`
+	// `è¨­å®šFrontbuffer/Backbufferå¤§å°åŠæ ¼å¼`
 	DXGI_SWAP_CHAIN_DESC sd;
 	ZeroMemory( &sd, sizeof(sd) );
 	sd.BufferCount = 1;
@@ -113,23 +113,23 @@ bool GutInitGraphicsDeviceDX10(GutDeviceSpec *spec)
 	sd.SampleDesc.Quality = 0;
 	sd.Windowed = TRUE;
 
-	// `¶}±ÒFrontbuffer/Backbuffer`
+	// `é–‹å•ŸFrontbuffer/Backbuffer`
 	hr = D3D10CreateDeviceAndSwapChain( NULL, D3D10_DRIVER_TYPE_HARDWARE, NULL, createDeviceFlags, D3D10_SDK_VERSION, &sd, &g_pSwapChain, &g_pd3dDevice );
 	if( FAILED(hr) ) 
 		return false;
 
-	// `¨ú¥X²Ä¤@­Ódisplay buffer`
+	// `å–å‡ºç¬¬ä¸€å€‹display buffer`
 	ID3D10Texture2D *pBuffer = NULL;
 	hr = g_pSwapChain->GetBuffer( 0, __uuidof( ID3D10Texture2D ), (LPVOID*)&pBuffer );
 	if( FAILED(hr) ) 
 		return false;
-	// `¶}±Ò¤@­Ó¦X¥Gdisplay buffer®æ¦¡ªºRenderTargetView`
+	// `é–‹å•Ÿä¸€å€‹åˆä¹display bufferæ ¼å¼çš„RenderTargetView`
 	hr = g_pd3dDevice->CreateRenderTargetView( pBuffer, NULL, &g_pRenderTargetView );
 	pBuffer->Release();
 	if( FAILED( hr ) ) 
 		return false;
 
-	// `³]©wDepth/Stencil bufferªº¸ê®Æ®æ¦¡`
+	// `è¨­å®šDepth/Stencil bufferçš„è³‡æ–™æ ¼å¼`
 	D3D10_TEXTURE2D_DESC descDepth;
 	descDepth.Width = width;
 	descDepth.Height = height;
@@ -142,29 +142,29 @@ bool GutInitGraphicsDeviceDX10(GutDeviceSpec *spec)
 	descDepth.BindFlags = D3D10_BIND_DEPTH_STENCIL;
 	descDepth.CPUAccessFlags = 0;
 	descDepth.MiscFlags = 0;
-	// `°t¸mDepth/Stencil bufferªºªÅ¶¡`
+	// `é…ç½®Depth/Stencil bufferçš„ç©ºé–“`
 	hr = g_pd3dDevice->CreateTexture2D( &descDepth, NULL, &g_pDepthStencil );
 	if( FAILED(hr) )
 		return false;
 
-	// `³]©wDepth/Stencil Viewªº®æ¦¡`
+	// `è¨­å®šDepth/Stencil Viewçš„æ ¼å¼`
 	D3D10_DEPTH_STENCIL_VIEW_DESC descDSV;
 	descDSV.Format = descDepth.Format;
 	descDSV.ViewDimension = D3D10_DSV_DIMENSION_TEXTURE2D;
 	descDSV.Texture2D.MipSlice = 0;
-	// `¶}±ÒDepthStencil BufferªºView`
+	// `é–‹å•ŸDepthStencil Bufferçš„View`
 	hr = g_pd3dDevice->CreateDepthStencilView( g_pDepthStencil, &descDSV, &g_pDepthStencilView );
 	if( FAILED(hr) )
 		return false;
 
-	// `³]©wÃ¸¹Ïªºµ²ªG·|¦s©ñ¦b¤°»ò¦a¤è`
+	// `è¨­å®šç¹ªåœ–çš„çµæœæœƒå­˜æ”¾åœ¨ä»€éº¼åœ°æ–¹`
 	// RenderTargetView = RGBA Color Buffer resource
 	// DepthStencilView = Depth/Stencil Buffer resource
 	g_pd3dDevice->OMSetRenderTargets(1, &g_pRenderTargetView, g_pDepthStencilView);
 
 	GutSetDefaultStatesDX10();
 
-	// `Viewport¥Î¨Ó«ü©w3DÃ¸¹Ïªºµe¥¬½d³ò, ¦b¦¹§âViewport³]©w¦¨¸ò¾ã­Óµøµ¡¤@¼Ë¤j`
+	// `Viewportç”¨ä¾†æŒ‡å®š3Dç¹ªåœ–çš„ç•«å¸ƒç¯„åœ, åœ¨æ­¤æŠŠViewportè¨­å®šæˆè·Ÿæ•´å€‹è¦–çª—ä¸€æ¨£å¤§`
 	D3D10_VIEWPORT vp;
 
 	vp.Width = width;
@@ -186,17 +186,17 @@ bool GutResetGraphicsDeviceDX10(void)
 
 	DWORD hr;
 
-	// `¨ú±oµøµ¡¤j¤p`
+	// `å–å¾—è¦–çª—å¤§å°`
 	RECT rect;
 	GetWindowRect( GutGetWindowHandleWin32(), &rect );
 
 	int width = rect.right - rect.left;
 	int height = rect.bottom - rect.top;
 
-	// `¥ı§â­ì¥»³]©w¥Î¨ÓÃ¸¹Ïªºframebuffer¸òdepthbuffer®³¨«`
+	// `å…ˆæŠŠåŸæœ¬è¨­å®šç”¨ä¾†ç¹ªåœ–çš„framebufferè·Ÿdepthbufferæ‹¿èµ°`
 	g_pd3dDevice->OMSetRenderTargets(0, NULL, NULL);
 
-	// `ÄÀ©ñframebuffer¸òdepthbufferªº¸ê·½`
+	// `é‡‹æ”¾framebufferè·Ÿdepthbufferçš„è³‡æº`
 	SAFE_RELEASE(g_pRenderTargetView);
 	SAFE_RELEASE(g_pDepthStencil);
 	SAFE_RELEASE(g_pDepthStencilView);
@@ -210,21 +210,21 @@ bool GutResetGraphicsDeviceDX10(void)
 	desc.RefreshRate.Denominator = 1;
 	desc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 	desc.ScanlineOrdering = DXGI_MODE_SCANLINE_ORDER_PROGRESSIVE;
-	// `§ïÅÜswapchainªº¤j¤p`
+	// `æ”¹è®Šswapchainçš„å¤§å°`
 	if ( D3D_OK!=g_pSwapChain->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0) )
 		return false;
 
-	// `¨ú¥X²Ä¤@­Ódisplay buffer`
+	// `å–å‡ºç¬¬ä¸€å€‹display buffer`
 	ID3D10Texture2D *pBuffer = NULL;
 	if ( D3D_OK!=g_pSwapChain->GetBuffer( 0, __uuidof( ID3D10Texture2D ), (LPVOID*)&pBuffer ) )
 		return false;
-	// `¶}±Ò¤@­Ó¦X¥Gdisplay buffer®æ¦¡ªºRenderTargetView`
+	// `é–‹å•Ÿä¸€å€‹åˆä¹display bufferæ ¼å¼çš„RenderTargetView`
 	hr = g_pd3dDevice->CreateRenderTargetView( pBuffer, NULL, &g_pRenderTargetView );
 	pBuffer->Release();
 	if( FAILED( hr ) )
 		return false;
 
-	// `³]©wDepth/Stencil bufferªº¸ê®Æ®æ¦¡`
+	// `è¨­å®šDepth/Stencil bufferçš„è³‡æ–™æ ¼å¼`
 	D3D10_TEXTURE2D_DESC descDepth;
 	descDepth.Width = width;
 	descDepth.Height = height;
@@ -237,28 +237,28 @@ bool GutResetGraphicsDeviceDX10(void)
 	descDepth.BindFlags = D3D10_BIND_DEPTH_STENCIL;
 	descDepth.CPUAccessFlags = 0;
 	descDepth.MiscFlags = 0;
-	// `°t¸mDepth/Stencil bufferªºªÅ¶¡`
+	// `é…ç½®Depth/Stencil bufferçš„ç©ºé–“`
 	hr = g_pd3dDevice->CreateTexture2D( &descDepth, NULL, &g_pDepthStencil );
 	if( FAILED(hr) )
 		return false;
 
-	// `³]©wDepth/Stencil Viewªº®æ¦¡`
+	// `è¨­å®šDepth/Stencil Viewçš„æ ¼å¼`
 	D3D10_DEPTH_STENCIL_VIEW_DESC descDSV;
 	descDSV.Format = descDepth.Format;
 	descDSV.ViewDimension = D3D10_DSV_DIMENSION_TEXTURE2D;
 	descDSV.Texture2D.MipSlice = 0;
-	// `¶}±ÒDepthStencil BufferªºView`
+	// `é–‹å•ŸDepthStencil Bufferçš„View`
 	hr = g_pd3dDevice->CreateDepthStencilView( g_pDepthStencil, &descDSV, &g_pDepthStencilView );
 	if( FAILED(hr) )
 		return false;
 
-	// `³]©wÃ¸¹Ïªºµ²ªG·|¦s©ñ¦b¤°»ò¦a¤è`
+	// `è¨­å®šç¹ªåœ–çš„çµæœæœƒå­˜æ”¾åœ¨ä»€éº¼åœ°æ–¹`
 	// RenderTargetView = RGBA Color Buffer resource
 	// DepthStencilView = Depth/Stencil Buffer resource
 	g_pd3dDevice->OMSetRenderTargets(1, &g_pRenderTargetView, g_pDepthStencilView);
 
-	// `Viewport¥Î¨Ó«ü©w3DÃ¸¹Ïªºµe¥¬½d³ò`
-	// `§âViewport³]©w¦¨¸ò¾ã­Óµøµ¡¤@¼Ë¤j`
+	// `Viewportç”¨ä¾†æŒ‡å®š3Dç¹ªåœ–çš„ç•«å¸ƒç¯„åœ`
+	// `æŠŠViewportè¨­å®šæˆè·Ÿæ•´å€‹è¦–çª—ä¸€æ¨£å¤§`
 	D3D10_VIEWPORT vp;
 	vp.Width = width;
 	vp.Height = height;
@@ -288,7 +288,7 @@ void GutSetHLSLShaderMacrosDX10(D3D10_SHADER_MACRO *pMacros)
 	g_pHLSL_Macros = pMacros;
 }
 
-// ¸ü¤JVertex Shader
+// è¼‰å…¥Vertex Shader
 // file = HLSL shader file
 // entry = vertex shader entry point
 // profile = shader version
@@ -333,7 +333,7 @@ ID3D10VertexShader* GutLoadVertexShaderDX10_HLSL(const char *filename, const cha
 
 	return pShader;
 }
-// ¸ü¤JPixel Shader
+// è¼‰å…¥Pixel Shader
 // file = HLSL shader file
 // entry = pixel shader entry point
 // profile = shader version

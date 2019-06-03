@@ -23,9 +23,9 @@ bool InitResourceOpenGL(void)
 		return false;
 	}
 
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, 1.0f, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 	glMatrixMode(GL_MODELVIEW);	
@@ -33,24 +33,24 @@ bool InitResourceOpenGL(void)
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_CULL_FACE);
 
-	// ¶}±Ò¤@­Óframebuffer object
+	// é–‹å•Ÿä¸€å€‹framebuffer object
 	glGenFramebuffersEXT(1, &g_framebuffer);
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_framebuffer);
 
-	// °tÓ_¤@¶ô¶K¹ÏªÅ¶¡µ¹framebuffer objectÃ¸¹Ï¨Ï¥Î 
+	// é…ç½ä¸€å¡Šè²¼åœ–ç©ºé–“çµ¦framebuffer objectç¹ªåœ–ä½¿ç”¨ 
 	{
 		glGenTextures(1, &g_texture);
 		glBindTexture(GL_TEXTURE_2D, g_texture);
-		// ³]©wfilter
+		// è¨­å®šfilter
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		// «Å§i¶K¹Ï¤j¤p¤Î®æ¦¡
+		// å®£å‘Šè²¼åœ–å¤§å°åŠæ ¼å¼
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8,  512, 512, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-		// framebufferªºRGBAÃ¸¹Ï
+		// framebufferçš„RGBAç¹ªåœ–
 		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, g_texture, 0);
 	}
 
-	// °t¸mzbufferµ¹framebuffer object¨Ï¥Î
+	// é…ç½®zbufferçµ¦framebuffer objectä½¿ç”¨
 	{
 		glGenRenderbuffersEXT(1, &g_depthbuffer);
 		glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, g_depthbuffer);
@@ -58,7 +58,7 @@ bool InitResourceOpenGL(void)
 		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, g_depthbuffer);
 	}
 
-	// ÀË¬dframebuffer object¦³¨S¦³°t¸m¦¨¥\
+	// æª¢æŸ¥framebuffer objectæœ‰æ²’æœ‰é…ç½®æˆåŠŸ
 	GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
 	if ( status!=GL_FRAMEBUFFER_COMPLETE_EXT )
 	{
@@ -87,15 +87,15 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 }
@@ -106,10 +106,10 @@ static void RenderSolarSystemOpenGL(void)
 	Vector4 lookat(0.0f, 0.0f, 0.0f); 
 	Vector4 up(0.0f, 1.0f, 0.0f); 
 
-	// `³]©w­n¥Î°}¦Cªº¤è¦¡¶Ç¤J³»ÂI¦ì¸m¸òÃC¦â`
+	// `è¨­å®šè¦ç”¨é™£åˆ—çš„æ–¹å¼å‚³å…¥é ‚é»ä½ç½®è·Ÿé¡è‰²`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
-	// `­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}`
+	// `è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(60.0f, 1.0f, 0.1f, 100.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
@@ -120,19 +120,19 @@ static void RenderSolarSystemOpenGL(void)
 	glMatrixMode(GL_MODELVIEW);
 	glDisable(GL_TEXTURE_2D);
 
-	// `¤Ó¶§`
+	// `å¤ªé™½`
 	world_view_matrix = g_sun_matrix * view_matrix;
 	glLoadMatrixf( (float *) &world_view_matrix);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), g_pSunVertices);
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pSunVertices[0].m_RGBA);
 	glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
-	// `¦a²y`
+	// `åœ°çƒ`
 	world_view_matrix = g_earth_matrix * view_matrix;
 	glLoadMatrixf( (float *) &world_view_matrix);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), g_pEarthVertices);
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pEarthVertices[0].m_RGBA);
 	glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
-	// `¤ë²y`
+	// `æœˆçƒ`
 	world_view_matrix = g_moon_matrix * view_matrix;
 	glLoadMatrixf( (float *) &world_view_matrix);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), g_pMoonVertices);
@@ -140,14 +140,14 @@ static void RenderSolarSystemOpenGL(void)
 	glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
 }
 
-// `¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨OpenGLä¾†ç¹ªåœ–`
 void RenderFrameOpenGL(void)
 {
 	{
-		// `¨Ï¥Î`g_framebuffer framebuffer object	
+		// `ä½¿ç”¨`g_framebuffer framebuffer object	
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_framebuffer);
 		glViewport(0, 0, 512, 512);
-		// `²M°£µe­±`
+		// `æ¸…é™¤ç•«é¢`
 		glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//
@@ -155,22 +155,22 @@ void RenderFrameOpenGL(void)
 	}
 
 	{
-		// `¨Ï¥Î¥Dframebuffer object, ¤]´N¬Oµøµ¡.`
+		// `ä½¿ç”¨ä¸»framebuffer object, ä¹Ÿå°±æ˜¯è¦–çª—.`
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 		int w, h;
 		GutGetWindowSize(w, h);
 		glViewport(0, 0, w, h);
 
-		//` ²M°£µe­±`
+		//` æ¸…é™¤ç•«é¢`
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		// `­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}`
+		// `è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 		Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 		Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 		Matrix4x4 world_view_matrix = world_matrix * view_matrix;
 		glMatrixMode(GL_MODELVIEW);
 		glLoadMatrixf( (float *) &world_view_matrix);
-		// `³]©w³»ÂI¸ê®Æ®æ¦¡`
+		// `è¨­å®šé ‚é»è³‡æ–™æ ¼å¼`
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glDisableClientState(GL_COLOR_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -181,6 +181,6 @@ void RenderFrameOpenGL(void)
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

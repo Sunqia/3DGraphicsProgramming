@@ -38,7 +38,7 @@ bool CGutHeightmapDX10::LoadShader(const char *filename)
 	ID3D10Device *pDevice = GutGetGraphicsDeviceDX10();
 	ID3D10Blob *pVSCode = NULL;
 
-	// ¸ü¤JShader
+	// è¼‰å…¥Shader
 	{
 		D3D10_SHADER_MACRO macros[] =
 		{
@@ -58,7 +58,7 @@ bool CGutHeightmapDX10::LoadShader(const char *filename)
 
 		GutSetHLSLShaderMacrosDX10(NULL);
 	}
-	// ³]©w³»ÂI¸ê®Æ®æ¦¡
+	// è¨­å®šé ‚é»žè³‡æ–™æ ¼å¼
 	{
 		//
 		D3D10_INPUT_ELEMENT_DESC layout[] =
@@ -71,7 +71,7 @@ bool CGutHeightmapDX10::LoadShader(const char *filename)
 			pVSCode->GetBufferPointer(), pVSCode->GetBufferSize(), &m_pVertexLayout ) )
 			return false;
 	}
-	// Shader±`¼Æªº°O¾ÐÅéªÅ¶¡
+	// Shaderå¸¸æ•¸çš„è¨˜æ†¶é«”ç©ºé–“
 	{
 		m_pShaderConstant[0] = GutCreateShaderConstant_DX10(sizeof(sMatrixConstants));
 		m_pShaderConstant[1] = GutCreateShaderConstant_DX10(sizeof(sMaterialConstants));
@@ -89,7 +89,7 @@ bool CGutHeightmapDX10::BuildMesh(int x_grids, int y_grids)
 {
 	CGutHeightmap::BuildMesh(x_grids, y_grids);
 
-	// ¼Ò«¬°O¾ÐÅéªÅ¶¡
+	// æ¨¡åž‹è¨˜æ†¶é«”ç©ºé–“
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
 
@@ -106,9 +106,9 @@ void CGutHeightmapDX10::Render(Matrix4x4 &world_matrix, Matrix4x4 &view_matrix, 
 {
 	if ( m_iNumFaces==0 )
 		return;
-	// ¨ú±oDirect3D10¸Ë¸m
+	// å–å¾—Direct3D10è£ç½®
 	ID3D10Device *pDevice = GutGetGraphicsDeviceDX10();
-	// ³]©w³»ÂI¸ê®Æ®æ¦¡
+	// è¨­å®šé ‚é»žè³‡æ–™æ ¼å¼
 	UINT stride = sizeof(sTerrainVertex);
 	UINT offset = 0;
 	pDevice->IASetInputLayout(m_pVertexLayout);
@@ -151,7 +151,7 @@ void CGutHeightmapDX10::Render(Matrix4x4 &world_matrix, Matrix4x4 &view_matrix, 
 	pDevice->VSSetConstantBuffers(0, 3, m_pShaderConstant);
 	pDevice->PSSetConstantBuffers(0, 3, m_pShaderConstant);
 	pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	// µe¥X©Ò¦³ªº¤å¦r
+	// ç•«å‡ºæ‰€æœ‰çš„æ–‡å­—
 	pDevice->DrawIndexed(m_iNumIndices, 0, 0);
 }
 

@@ -15,18 +15,18 @@ CGutModel_OpenGL g_Model_OpenGL;
 
 bool InitResourceOpenGL(void)
 {
-	// ÃèÀY®y¼Ğ¨tÂà´«¯x°}
+	// é¡é ­åº§æ¨™ç³»è½‰æ›çŸ©é™£
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// ³]©w§ë¼v¯x°}
+	// è¨­å®šæŠ•å½±çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, 1.0f, 0.1f, 100.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
-	// ¸ü¤J¶K¹Ï
+	// è¼‰å…¥è²¼åœ–
 	g_TextureID = GutLoadTexture_OpenGL("../../textures/spheremap2.tga");
 
-	// ¨Ï¥ÎCUBEMAP¶K¹Ï¥\¯à
+	// ä½¿ç”¨CUBEMAPè²¼åœ–åŠŸèƒ½
 	glEnable(GL_TEXTURE_2D);
-	// ®M¥ÎCUBEMAP¶K¹Ï
+	// å¥—ç”¨CUBEMAPè²¼åœ–
 	glBindTexture(GL_TEXTURE_2D, g_TextureID);
 
 	g_Model_OpenGL.ConvertToOpenGLModel(&g_Model);
@@ -44,45 +44,45 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	// `§â¥¿¦V¸ò¤Ï¦Vªº­±³£µe¥X¨Ó`
+	// `æŠŠæ­£å‘è·Ÿåå‘çš„é¢éƒ½ç•«å‡ºä¾†`
 	glDisable(GL_CULL_FACE);
-	// `¶}±Ò¦Û°Ê²£¥Í¶K¹Ï®y¼Ğ¥\¯à`
+	// `é–‹å•Ÿè‡ªå‹•ç”¢ç”Ÿè²¼åœ–åº§æ¨™åŠŸèƒ½`
 	glEnable(GL_TEXTURE_GEN_S);
 	glEnable(GL_TEXTURE_GEN_T);
-	// `¦Û°Ê²£¥Íspheremap¶K¹Ï®y¼Ğ`
+	// `è‡ªå‹•ç”¢ç”Ÿspheremapè²¼åœ–åº§æ¨™`
 	glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 	glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 	// Trilinear filter
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-	// `¨Ï¥Î¦Û°Ênormalize¥\¯à`
+	// `ä½¿ç”¨è‡ªå‹•normalizeåŠŸèƒ½`
 	glEnable(GL_NORMALIZE);
-	// `­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}`
+	// `è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 	Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
 	Matrix4x4 world_view_matrix = g_world_matrix * view_matrix;
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf( (float *) &world_view_matrix);
 	
 	g_Model_OpenGL.Render(0);
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

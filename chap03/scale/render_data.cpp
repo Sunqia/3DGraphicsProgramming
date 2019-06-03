@@ -1,6 +1,6 @@
 #include "Vector4.h"
 
-// ª÷¦r¶ğ§Îªº5­Ó³»ÂI
+// é‡‘å­—å¡”å½¢çš„5å€‹é ‚é»
 Vector4 g_vertices[5] = 
 {
 	Vector4(-1.0f, 1.0f, 0.0f),
@@ -10,7 +10,7 @@ Vector4 g_vertices[5] =
 	Vector4( 0.0f, 0.0f, 1.0f),
 };
 
-// ³sµ²¥Xª÷¦r¶ğ8±øÃä½uªº¯Á¤Ş­È
+// é€£çµå‡ºé‡‘å­—å¡”8æ¢é‚Šç·šçš„ç´¢å¼•å€¼
 unsigned short g_indices[16] =
 {
 	0, 1,
@@ -23,7 +23,7 @@ unsigned short g_indices[16] =
 	3, 4
 };
 
-// 4­Óª÷¦r¶ğªº¦ì²¾
+// 4å€‹é‡‘å­—å¡”çš„ä½ç§»
 Vector4 g_position[4] = 
 {
 	Vector4(-2.0f,-2.0f, 0.0f),
@@ -31,7 +31,7 @@ Vector4 g_position[4] =
 	Vector4(-2.0f, 2.0f, 0.0f),
 	Vector4( 2.0f, 2.0f, 0.0f),
 };
-// 4­Óª÷¦r¶ğªºÁY©ñ­È
+// 4å€‹é‡‘å­—å¡”çš„ç¸®æ”¾å€¼
 Vector4 g_scale[4] = 
 {
 	Vector4( 1.0f, 1.0f, 1.0f),
@@ -40,9 +40,9 @@ Vector4 g_scale[4] =
 	Vector4( 1.5f, 1.5f, 3.0f),
 };
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 8.0f, 1.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 1.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 0.0f, 1.0f); 

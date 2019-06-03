@@ -17,8 +17,8 @@ enum GutEnum
 
 struct Vertex_V3T2
 {
-	float m_Position[3]; // ³»ÂI¦ì¸m
-	float m_Texcoord[2]; // ¶K¹Ï®y¼Ğ
+	float m_Position[3]; // é ‚é»ä½ç½®
+	float m_Texcoord[2]; // è²¼åœ–åº§æ¨™
 };
 
 struct Vertex_V3
@@ -41,8 +41,8 @@ struct Vertex_V3N3C
 
 struct Vertex_V4T4
 {
-	Vector4 m_vPosition; // ³»ÂI¦ì¸m
-	Vector4 m_vTexcoord; // ¶K¹Ï®y¼Ğ
+	Vector4 m_vPosition; // é ‚é»ä½ç½®
+	Vector4 m_vTexcoord; // è²¼åœ–åº§æ¨™
 };
 
 struct GutCallBack

@@ -244,7 +244,7 @@ bool CGutHeightmap::BuildMesh(int x_grids, int y_grids)
 	{
 		if ( from_left_to_right )
 		{
-			// ¦b©_¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥ª±Æ¨ì¥k
+			// åœ¨å¥‡æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å·¦æ’åˆ°å³
 			m_pIndexArray[index_index++] = y * vertices_per_row;
 			m_pIndexArray[index_index++] = y * vertices_per_row + vertices_per_row;
 
@@ -257,7 +257,7 @@ bool CGutHeightmap::BuildMesh(int x_grids, int y_grids)
 		}
 		else
 		{
-			// ¦b°¸¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥k±Æ¨ì¥ª
+			// åœ¨å¶æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å³æ’åˆ°å·¦
 			m_pIndexArray[index_index++] = y * vertices_per_row + x_grids;
 			m_pIndexArray[index_index++] = (y+1) * vertices_per_row + x_grids;
 

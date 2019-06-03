@@ -37,7 +37,7 @@ bool InitResourceDX10(void)
 {
 	g_pDevice = GutGetGraphicsDeviceDX10();
 
-	// ¸ü¤JShader
+	// è¼‰å…¥Shader
 	{
 		g_pRefractionFX = GutLoadFXShaderDX10("../../shaders/Refraction_dx10.fx");
 		if ( NULL==g_pRefractionFX )
@@ -178,7 +178,7 @@ void RenderFrameDX10(void)
 
 	g_Model_DX10.Render(SUBMIT_CULLFACE);
 
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain();
 	pSwapChain->Present(1, 0);
 }

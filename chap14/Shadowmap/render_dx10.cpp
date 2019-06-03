@@ -53,7 +53,7 @@ bool ReInitResourceDX10(void)
 	int w, h;
 	GutGetWindowSize(w, h);
 	float fAspect = (float)h/(float)w;
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, fAspect, 0.1f, 100.0f);
 
 	return true;
@@ -167,7 +167,7 @@ void RenderFrameDX10(void)
 	Vector4 vClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	ID3D10ShaderResourceView *dummy_views[3] = {NULL, NULL, NULL};
 
-	// ¨ú±oÂà´«¯x°}
+	// å–å¾—è½‰æ›çŸ©é™£
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 ident_matrix = Matrix4x4::IdentityMatrix();
@@ -181,7 +181,7 @@ void RenderFrameDX10(void)
 		g_pDevice->OMSetRenderTargets(1, &g_pShadowmapR32F_RTView, g_pShadowmapD32_RTView);
 		D3D10_VIEWPORT viewport = {0, 0, shadowmap_size, shadowmap_size, 0.0f, 1.0f};
 		g_pDevice->RSSetViewports(1, &viewport);
-		// ²M°£ÃC¦â
+		// æ¸…é™¤é¡è‰²
 		g_pDevice->ClearRenderTargetView(g_pShadowmapR32F_RTView, (float *)&vClearColor);
 		g_pDevice->ClearDepthStencilView(g_pShadowmapD32_RTView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 		
@@ -199,14 +199,14 @@ void RenderFrameDX10(void)
 	}
 
 	{
-		// ¨ú±o¥Dµe­±
+		// å–å¾—ä¸»ç•«é¢
 		ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView();
 		ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); 
 		int w, h; GutGetWindowSize(w, h);
 		g_pDevice->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
 		D3D10_VIEWPORT viewport={0, 0, w, h, 0.0f, 1.0f};
 		g_pDevice->RSSetViewports(1, &viewport);
-		// ²M°£ÃC¦â
+		// æ¸…é™¤é¡è‰²
 		g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
 		g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 
@@ -232,7 +232,7 @@ void RenderFrameDX10(void)
 		g_Model_DX10.Render();
 		g_Model_DX10.SetTextureOverwrite(0, NULL);
 	}
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); // front/back buffer
 	pSwapChain->Present(1, 0);
 }

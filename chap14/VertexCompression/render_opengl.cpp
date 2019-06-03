@@ -27,7 +27,7 @@ bool InitResourceOpenGL(void)
 		return false;
 	}
 
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(90.0f, 1.0f, 0.1f, 100.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_proj_matrix);
@@ -51,26 +51,26 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(60.0f, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_proj_matrix);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClearColor(0.4f, 0.4f, 0.4f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// ®M¥Î¯x°}
+	// å¥—ç”¨çŸ©é™£
 	Matrix4x4 object_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 wv_matrix = object_matrix * view_matrix;
@@ -81,15 +81,15 @@ void RenderFrameOpenGL(void)
 	glLoadMatrixf( (float *) &wv_matrix);
 	glMatrixMode(GL_TEXTURE);
 	glLoadMatrixf( (float *) &object_matrix);
-	// ®M¥Îshader
+	// å¥—ç”¨shader
 	glUseProgram(g_Shader);
-	// ³]©w³»ÂI¸ê®Æ¨Ó·½
+	// è¨­å®šé ‚é»è³‡æ–™ä¾†æº
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(CompressedVertex), g_pCompressedVertices[0].m_Position);
 	glEnableVertexAttribArray(2);
 	glVertexAttribPointer(2, 3, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(CompressedVertex), g_pCompressedVertices[0].m_Normal);
-	// µe²y
+	// ç•«çƒ
 	glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
 	GutSwapBuffersOpenGL();
 }

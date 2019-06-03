@@ -4,11 +4,11 @@
 
 struct Vertex_VN
 {
-	float m_Position[3]; // 郴翴竚
+	float m_Position[3]; // 闋傞粸浣嶇疆
 	float m_Normal[3];
 };
 
-// 盽计﹚竡
+// 甯告暩瀹氱京
 const float g_fFovW = 45.0f;
 // controller object
 extern CGutUserControl g_Control;
@@ -20,5 +20,5 @@ extern int g_iNumSphereVertices;
 extern int g_iNumSphereTriangles;
 extern int g_iNumSphereIndices;
 
-// 玻ネ瞴家祘Α
+// 鐢㈢敓鐞冩ā鍨嬬殑绋嬪紡
 bool CreateSphere(float radius, Vertex_VN **ppVertices, unsigned short **ppIndices, int stacks = 20, int pieces = 20);

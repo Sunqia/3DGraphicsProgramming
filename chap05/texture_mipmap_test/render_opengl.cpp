@@ -11,14 +11,14 @@ GLuint g_TextureID = 0;
 
 bool InitResourceOpenGL(void)
 {
-	// ³]©w§ë¼v¯x°}
+	// è¨­å®šæŠ•å½±çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, 1.0f, 0.1f, 100.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 
-	// ²£¥Í¤@­Ó¶K¹Ïª«¥ó
+	// ç”¢ç”Ÿä¸€å€‹è²¼åœ–ç‰©ä»¶
 	glGenTextures( 1, &g_TextureID );
-	// ¨Ï¥Îg_TextureID¶K¹Ïª«¥ó
+	// ä½¿ç”¨g_TextureIDè²¼åœ–ç‰©ä»¶
 	glBindTexture( GL_TEXTURE_2D, g_TextureID );
 	
 	int mipmap_lvl = 0;
@@ -40,7 +40,7 @@ bool InitResourceOpenGL(void)
 		mipmap_lvl++;
 	}
 
-	// ¨Ï¥Î2D¶K¹Ï¥\¯à
+	// ä½¿ç”¨2Dè²¼åœ–åŠŸèƒ½
 	glEnable(GL_TEXTURE_2D);
 
 	return true;
@@ -56,73 +56,73 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	// §â¥¿¦V¸ò¤Ï¦Vªº­±³£µe¥X¨Ó
+	// æŠŠæ­£å‘è·Ÿåå‘çš„é¢éƒ½ç•«å‡ºä¾†
 	glDisable(GL_CULL_FACE);
-	// ³]©w­n¥Î°}¦Cªº¤è¦¡¶Ç¤J³»ÂI¦ì¸m¸òÃC¦â
+	// è¨­å®šè¦ç”¨é™£åˆ—çš„æ–¹å¼å‚³å…¥é ‚é»ä½ç½®è·Ÿé¡è‰²
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VT), &g_Quad[0].m_Position);
 	glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex_VT), &g_Quad[0].m_Texcoord);
 
 	glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-	// ¤U­±·|³]©w¶K¹Ï³QÁY¤p®É­Ô°µªk
+	// ä¸‹é¢æœƒè¨­å®šè²¼åœ–è¢«ç¸®å°æ™‚å€™åšæ³•
 	switch(g_iFilterMode)
 	{
 	case 1: // None
-		// ¤£¨Ï¥Îmipmap, ¨ú³Ìªñ4­ÓÂI¨Ó¥­§¡
+		// ä¸ä½¿ç”¨mipmap, å–æœ€è¿‘4å€‹é»ä¾†å¹³å‡
 		glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-		// Ãö³¬anisotrophic filter 
+		// é—œé–‰anisotrophic filter 
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
 		break;
 	case 2: // Bilinear
-		// GL_LINEAR = ¶K¹ÏÁY¤p®É¨ú4­ÓÂI¨Ó¥­§¡
-		// MIPMAP_NEAREST = ¨Ï¥Î³Ì±µªñ¤j¤pªº¹Ï¼h
+		// GL_LINEAR = è²¼åœ–ç¸®å°æ™‚å–4å€‹é»ä¾†å¹³å‡
+		// MIPMAP_NEAREST = ä½¿ç”¨æœ€æ¥è¿‘å¤§å°çš„åœ–å±¤
 		glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
-		// Ãö³¬anisotrophic filter 
+		// é—œé–‰anisotrophic filter 
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
 		break;
 	case 3: // Trilinear
-		// GL_LINEAR = ¶K¹ÏÁY¤p®É¨ú4­ÓÂI¨Ó¥­§¡
-		// MIPMAP_LINEAR = ¨Ï¥Î³Ì±µªñ¤j¤pªº¨â±i¹Ï¼h, µM«á¦A¤º´¡
+		// GL_LINEAR = è²¼åœ–ç¸®å°æ™‚å–4å€‹é»ä¾†å¹³å‡
+		// MIPMAP_LINEAR = ä½¿ç”¨æœ€æ¥è¿‘å¤§å°çš„å…©å¼µåœ–å±¤, ç„¶å¾Œå†å…§æ’
 		glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-		// Ãö³¬anisotrophic filter 
+		// é—œé–‰anisotrophic filter 
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 1.0f);
 		break;
 	case 4:
 		glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-		// ¨Ï¥Îanisotrophic filter
+		// ä½¿ç”¨anisotrophic filter
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, 8.0f);
 		break;
 	}
 
-	// ­pºâ¯x°}
+	// è¨ˆç®—çŸ©é™£
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 object_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 world_view_matrix = object_matrix * view_matrix;
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf( (float *) &world_view_matrix);
-	// µe¥X®æ¤l
+	// ç•«å‡ºæ ¼å­
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
 	GutSwapBuffersOpenGL();
 }

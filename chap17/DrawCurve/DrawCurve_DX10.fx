@@ -3,7 +3,7 @@ struct VS_OUTPUT
 	float4 Position : SV_POSITION;
 };
 
-// `¨S¦³°µ¥ô¦ó¨Æ±¡ªº vertex shader`
+// `æ²’æœ‰åšä»»ä½•äº‹æƒ…çš„ vertex shader`
 VS_OUTPUT VS(void)
 {
 	VS_OUTPUT Out;
@@ -31,7 +31,7 @@ float2 MapToScreenSpace(float2 f, float2 min, float2 ext)
 }
 
 
-// `µe¥Xsin¨ç¦¡ªºgeometry shader`
+// `ç•«å‡ºsinå‡½å¼çš„geometry shader`
 [maxvertexcount(256)]
 void GS_sin(inout LineStream<GS_OUTPUT> stream )
 {
@@ -68,7 +68,7 @@ float ScreenSpaceZ(float z)
 	return screen_pos.z / screen_pos.w;
 }
 
-// `µe¥XZBuffer¤À¥¬ªºgeometry shader`
+// `ç•«å‡ºZBufferåˆ†å¸ƒçš„geometry shader`
 [maxvertexcount(256)]
 void GS_z(inout LineStream<GS_OUTPUT> stream )
 {

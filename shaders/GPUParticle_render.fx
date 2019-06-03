@@ -1,10 +1,10 @@
-// ³»ÂIªº¸ê®Æ¿é¤J®æ¦¡
+// é ‚é»çš„è³‡æ–™è¼¸å…¥æ ¼å¼
 struct VS_INPUT
 {
 	float2 Texcoord : TEXCOORD0;
 };
 
-// Vertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// Vertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : POSITION;
@@ -48,15 +48,15 @@ VS_OUTPUT VS_particle(VS_INPUT In)
 {
 	VS_OUTPUT Out;
 	
-	// `±q¶K¹Ï¤¤¨ú¥X²É¤l¦ì¸m¸ò¤j¤p`
+	// `å¾è²¼åœ–ä¸­å–å‡ºç²’å­ä½ç½®è·Ÿå¤§å°`
 	float4 position = tex2Dlod(PositionSampler, float4(In.Texcoord, 0, 0));
-	// `±q¶K¹Ï¤¤¨ú¥X²É¤l²¾°Ê³t«×¸ò¹Ø©R­È`
+	// `å¾è²¼åœ–ä¸­å–å‡ºç²’å­ç§»å‹•é€Ÿåº¦è·Ÿå£½å‘½å€¼`
 	float4 velocity = tex2Dlod(VelocitySampler, float4(In.Texcoord, 0, 0));
-	// `¸g¥Ñ¨ú¥Xªº¦ì¸m¨Ó°µ®y¼ĞÂà´«`
+	// `ç¶“ç”±å–å‡ºçš„ä½ç½®ä¾†åšåº§æ¨™è½‰æ›`
 	Out.Position = mul(float4(position.xyz, 1.0f), wvp_matrix);
-	// µeÂI®É PSize ¥i¥H¨M©w¤@­ÓÂIªº¤j¤p.
+	// ç•«é»æ™‚ PSize å¯ä»¥æ±ºå®šä¸€å€‹é»çš„å¤§å°.
 	Out.PSize = (ScreenSize.y * position.w) / (fTanW * abs(Out.Position.w));
-	// `®Ú¾Ú³Ñ¤Uªº¹Ø©Rªøµu¨Ó¨M©w³z©ú«×, Åı§Ö­nµ²§ô¥Í©Rªº²É¤lºCºC®ø¥¢.`
+	// `æ ¹æ“šå‰©ä¸‹çš„å£½å‘½é•·çŸ­ä¾†æ±ºå®šé€æ˜åº¦, è®“å¿«è¦çµæŸç”Ÿå‘½çš„ç²’å­æ…¢æ…¢æ¶ˆå¤±.`
 	Out.Color = saturate(velocity.w * 5.0f);
 	Out.Texcoord = 0;
 	

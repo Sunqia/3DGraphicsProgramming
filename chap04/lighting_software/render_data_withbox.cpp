@@ -2,15 +2,15 @@
 #include "render_data.h"
 #include "gut.h"
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.0f, 2.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 Matrix4x4 g_world_matrix;
 
 Vertex_VCN g_BoxVertices[g_iNumBoxVertices] =

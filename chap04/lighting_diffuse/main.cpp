@@ -37,21 +37,21 @@ void KeyDown_3(void)
 
 void GetUserInput(void)
 {
-	// Åª¨úÁä½L
+	// è®€å–éµç›¤
 	GutReadKeyboard();
-	// Åª¨ú·Æ¹«
+	// è®€å–æ»‘é¼ 
 	GutMouseInfo mouse;
 
 	if ( GutReadMouse(&mouse) )
 	{
-		// ¨ú±oµe§¹«e¤@­Óµe­±¨ì²{¦b©Ò¸g¾úªº®É¶¡
+		// å–å¾—ç•«å®Œå‰ä¸€å€‹ç•«é¢åˆ°ç¾åœ¨æ‰€ç¶“æ­·çš„æ™‚é–“
 		g_fFrame_Time = g_Timer.Stop();
 		g_Timer.Restart();
 
 		float moving_speed = 2.0f * g_fFrame_Time;
 		float rotation_speed = 1.0 * g_fFrame_Time;
 
-		// ¦pªG«ö¤U·Æ¹«¥ªÁä¡A´N±ÛÂàÃèÀY
+		// å¦‚æœæŒ‰ä¸‹æ»‘é¼ å·¦éµï¼Œå°±æ—‹è½‰é¡é ­
 		if ( mouse.button[0] ) 
 		{
 			Matrix4x4 rotate_matrix;
@@ -60,7 +60,7 @@ void GetUserInput(void)
 			g_world_matrix = g_world_matrix * rotate_matrix;
 		}
 
-		// ºu½ü¥i¥H¼W¥[/´î¤Ö´Ñ½L®æ¤lªº¼Æ¥Ø
+		// æ»¾è¼ªå¯ä»¥å¢åŠ /æ¸›å°‘æ£‹ç›¤æ ¼å­çš„æ•¸ç›®
 		if ( mouse.z )
 		{
 			g_iNumGrids += mouse.z > 0 ? 1 : -1;
@@ -82,7 +82,7 @@ void GetUserInput(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -128,10 +128,10 @@ void main(void)
 
 	GutResizeFunc( resize_func );
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
@@ -154,7 +154,7 @@ void main(void)
 
 	memset(g_keyboard_state, 0, sizeof(g_keyboard_state));
 
-	// ¸ü¤JÃ¸¹Ï¸ê®Æ
+	// è¼‰å…¥ç¹ªåœ–è³‡æ–™
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -167,7 +167,7 @@ void main(void)
 	const int DirectionalLightID = 0;
 	const int PointLightID = 1;
 	const int SpotLightID = 2;
-	// §â²Ä¤@­Ó¥ú³]©w¦¨¤è¦V¥ú
+	// æŠŠç¬¬ä¸€å€‹å…‰è¨­å®šæˆæ–¹å‘å…‰
 	{
 		g_Lights[0].m_eType = LIGHT_DIRECTIONAL;
 		g_Lights[0].m_bEnabled = true;
@@ -176,7 +176,7 @@ void main(void)
 		g_Lights[0].m_vAmbientColor.Set(0.0f, 0.0f, 0.0f, 1.0f);
 		g_Lights[0].m_vDiffuseColor.Set(1.0f, 0.0f, 0.0f, 1.0f);
 	}
-	// ²Ä¤G­Ó¥ú³]¦¨ÂI¥ú·½
+	// ç¬¬äºŒå€‹å…‰è¨­æˆé»å…‰æº
 	{
 		g_Lights[1].m_eType = LIGHT_POINT;
 		g_Lights[1].m_bEnabled = false;
@@ -186,7 +186,7 @@ void main(void)
 		g_Lights[1].m_vDiffuseColor.Set(0.0f, 1.0f, 0.0f, 1.0f);
 		g_Lights[1].m_vAttenuation.Set(0.0f, 0.0f, 1.0f);
 	}
-	// ²Ä¤T­Ó¥ú³]¦¨»E¥ú¿O
+	// ç¬¬ä¸‰å€‹å…‰è¨­æˆèšå…‰ç‡ˆ
 	{
 		g_Lights[2].m_eType = LIGHT_SPOT;
 		g_Lights[2].m_bEnabled = false;
@@ -200,28 +200,28 @@ void main(void)
 		g_Lights[2].m_fSpotlightCutoff = 60.0f;
 		if ( GutGetGraphicsDeviceType()==GUT_DX9 )
 		{	
-			// Direct3D 9¦³inner cone, ¦Ó¥BÀH¨¤«×°I´îªººâªk¤£¦P
+			// Direct3D 9æœ‰inner cone, è€Œä¸”éš¨è§’åº¦è¡°æ¸›çš„ç®—æ³•ä¸åŒ
 			g_Lights[2].m_fSpotLightInnerCone = 0.0f;
 			g_Lights[2].m_fSpotlightExponent = 4.0f;
 		}
 		else
 		{
-			// OpenGLªº»E¥ú¿O¨S¦³inner cone 
+			// OpenGLçš„èšå…‰ç‡ˆæ²’æœ‰inner cone 
 			g_Lights[2].m_fSpotlightExponent = 20.0f;
 		}
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
 		render();
 	}
 
-	// ÄÀ©ñ´Ñ½L®æ¼Ò«¬°O¾ĞÅéªÅ¶¡	
+	// é‡‹æ”¾æ£‹ç›¤æ ¼æ¨¡å‹è¨˜æ†¶é«”ç©ºé–“	
 	GutReleaseGrids(&g_pGridVertices, &g_pGridIndices);
-	// ¨ø¸üÃ¸¹Ï¸ê®Æ
+	// å¸è¼‰ç¹ªåœ–è³‡æ–™
 	release_resource();
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

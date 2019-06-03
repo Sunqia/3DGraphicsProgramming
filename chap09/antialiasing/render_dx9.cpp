@@ -15,12 +15,12 @@ LPDIRECT3DSURFACE9 g_pMainDepthBuffer = NULL;
 
 void InitStateDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// ¨Ï¥Îtrilinear
+	// ä½¿ç”¨trilinear
 	device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
@@ -45,7 +45,7 @@ void InitStateDX9(void)
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	InitStateDX9();
@@ -76,7 +76,7 @@ void ResizeWindowDX9(int width, int height)
 
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	InitStateDX9();
@@ -88,7 +88,7 @@ static void Antialiasing_None(void)
 
 	device->BeginScene(); 
 
-	// `³]©wÂà´«¯x°}`
+	// `è¨­å®šè½‰æ›çŸ©é™£`
 	Matrix4x4 ident_matrix; ident_matrix.Identity();
 
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &ident_matrix);
@@ -97,28 +97,28 @@ static void Antialiasing_None(void)
 
 	device->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	// `®ø°£µe­±`
+	// `æ¶ˆé™¤ç•«é¢`
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_RGBA(0,0,255,255), 1.0f, 0);
-	// `µe¥X3¨¤§Î`
+	// `ç•«å‡º3è§’å½¢`
 	device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
 	device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TFACTOR);
 	device->SetRenderState(D3DRS_TEXTUREFACTOR, 0xffffffff);
 	device->SetFVF(D3DFVF_XYZ);
 	device->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 1, g_Triangle, sizeof(Vector4));
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }
 
 static void Antialiasing_MultiSampling(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `¥´¶}multisampling¥\¯à`
+	// `æ‰“é–‹multisamplingåŠŸèƒ½`
 	device->SetRenderState(D3DRS_MULTISAMPLEANTIALIAS, TRUE);
-	// `µe¹Ïªº¤èªk¨S¦³¤°»ò¤£¦P`
+	// `ç•«åœ–çš„æ–¹æ³•æ²’æœ‰ä»€éº¼ä¸åŒ`
 	Antialiasing_None();
-	// `Ãö³¬multisampling¥\¯à`
+	// `é—œé–‰multisamplingåŠŸèƒ½`
 	device->SetRenderState(D3DRS_MULTISAMPLEANTIALIAS, FALSE);
 }
 
@@ -136,48 +136,48 @@ static void Antialiasing_SuperSampling(void)
 	device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
 	device->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	// `¥ý§âµe­±µe¦b4­¿¤jªºFramebuffer¤W`
+	// `å…ˆæŠŠç•«é¢ç•«åœ¨4å€å¤§çš„Framebufferä¸Š`
 	{
-		// `³]©wÃ¸¹Ïµ²ªG­nµe¦b°ÊºA¶K¹Ï¤W`
+		// `è¨­å®šç¹ªåœ–çµæžœè¦ç•«åœ¨å‹•æ…‹è²¼åœ–ä¸Š`
 		device->SetRenderTarget(0, g_pFrameBuffer);
 		device->SetDepthStencilSurface(g_pDepthStencil);
-		// `®ø°£µe­±`
+		// `æ¶ˆé™¤ç•«é¢`
 		device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_RGBA(0,0,255,255), 1.0f, 0);
-		// `³]©wÂà´«¯x°}`
+		// `è¨­å®šè½‰æ›çŸ©é™£`
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &g_world_matrix);
-		// `µe¤@¤ù3¨¤§Î`
+		// `ç•«ä¸€ç‰‡3è§’å½¢`
 		device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TFACTOR);
 		device->SetRenderState(D3DRS_TEXTUREFACTOR, 0xffffffff);
 		device->SetFVF(D3DFVF_XYZ);
 		device->DrawPrimitiveUP(D3DPT_TRIANGLELIST, 1, g_Triangle, sizeof(Vector4));
 	}
 
-	// `¦A§âµe­±ÁY¤p©ñ¨ì­ì©l¤j¤pªºµe­±¤W`
+	// `å†æŠŠç•«é¢ç¸®å°æ”¾åˆ°åŽŸå§‹å¤§å°çš„ç•«é¢ä¸Š`
 	{
-		// `§ï¥Î­ì¥»ªºFramebuffer`
+		// `æ”¹ç”¨åŽŸæœ¬çš„Framebuffer`
 		device->SetRenderTarget(0, g_pMainFrameBuffer);
 		device->SetDepthStencilSurface(g_pMainDepthBuffer);
-		// `³]©w­n¶K¹Ïªº¤º´¡`
+		// `è¨­å®šè¦è²¼åœ–çš„å…§æ’`
 		device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 		device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 		device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_NONE);
-		// `¨Ï¥Î°ÊºA¶K¹Ï`
+		// `ä½¿ç”¨å‹•æ…‹è²¼åœ–`
 		device->SetTexture(0, g_pTexture);
 		device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-		// `³]©wÂà´«¯x°}`
+		// `è¨­å®šè½‰æ›çŸ©é™£`
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &ident_matrix);
-		// `§â¶K¹Ï®M¨ì¾ã­Óµe­±¤W`
+		// `æŠŠè²¼åœ–å¥—åˆ°æ•´å€‹ç•«é¢ä¸Š`
 		device->SetFVF(D3DFVF_XYZ | D3DFVF_TEX1);
 		device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(Vertex_VT));
 	}
 
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();

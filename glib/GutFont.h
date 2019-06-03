@@ -9,7 +9,7 @@ struct _FontVertex_Temp
 	Vector4 m_Texcoord;
 };
 
-// Direct3D9 ªº Fixed Pipeline ¹ï³»ÂI¸ê®Æ®æ¦¡¤ñ¸û¬D
+// Direct3D9 çš„ Fixed Pipeline å°é ‚é»è³‡æ–™æ ¼å¼æ¯”è¼ƒæŒ‘
 struct _FontVertex
 {
 	float m_Position[3];

@@ -5,17 +5,17 @@ struct Vertex_VC
 	float m_Position[3];
 	// R,G,B,A in OpenGL
 	// B,G,R,A in Direct3D 9
-	// Direct3D 10¥i¬O¬O¨âºØ¨ä¤¤¤§1, ¬İ³]©w¦Ó©w.
+	// Direct3D 10å¯æ˜¯æ˜¯å…©ç¨®å…¶ä¸­ä¹‹1, çœ‹è¨­å®šè€Œå®š.
 	unsigned char m_RGBA[4];
 };
 
-// ª÷¦r¶ğ§Îªº8±øÃä½u
+// é‡‘å­—å¡”å½¢çš„8æ¢é‚Šç·š
 extern Vertex_VC g_vertices[5];
 extern unsigned short g_indices[18];
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 

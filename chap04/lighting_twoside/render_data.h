@@ -3,37 +3,37 @@
 
 struct Vertex_VN
 {
-	float m_Position[3];	// ³»ÂI¦ì¸m
-	float m_Normal[3];		// ³»ÂI­±¦V
+	float m_Position[3];	// é ‚é»ä½ç½®
+	float m_Normal[3];		// é ‚é»é¢å‘
 };
 
-// ±`¼Æ©w¸q
+// å¸¸æ•¸å®šç¾©
 const float g_fFovW = 45.0f;
 extern Vertex_VN g_Quad[4];
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 extern Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 extern Matrix4x4 g_world_matrix;
-// ¥ú·½¸ê®Æ
+// å…‰æºè³‡æ–™
 extern Vector4 g_vGlobal_AmbientLight;
 extern Vector4 g_vLightAmbient;
 extern Vector4 g_vLightDirection;
 extern Vector4 g_vLightDiffuse;
 extern Vector4 g_vLightSpecular;
-// ¥¿­±§÷½è
+// æ­£é¢æè³ª
 extern Vector4 g_vMaterialAmbient;
 extern Vector4 g_vMaterialDiffuse;
 extern Vector4 g_vMaterialSpecular;
 extern Vector4 g_vMaterialEmissive;
 extern float   g_fMaterialShininess;
-// ­I­±§÷½è
+// èƒŒé¢æè³ª
 extern Vector4 g_vMaterialAmbient_Back;
 extern Vector4 g_vMaterialDiffuse_Back;
 extern Vector4 g_vMaterialSpecular_Back;

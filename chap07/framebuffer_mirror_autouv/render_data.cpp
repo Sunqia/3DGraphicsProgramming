@@ -7,7 +7,7 @@
 CGutModel g_Model;
 // controller object
 CGutUserControl g_Control;
-// √Ë¿Y¶Ï∏m
+// Èè°È†≠‰ΩçÁΩÆ
 Vector4 g_eye(7.0f, 0.0f, 7.0f, 1.0f); 
 // Camera FOV
 float g_fFOV = 45.0f;

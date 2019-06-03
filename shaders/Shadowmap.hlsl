@@ -1,4 +1,4 @@
-// ­pºâ³±¼v®ÄªG
+// è¨ˆç®—é™°å½±æ•ˆæœ
 
 struct VS_INPUT
 {
@@ -13,7 +13,7 @@ struct VS_OUTPUT
 	float3 Normal   : TEXCOORD1;
 };
 
-// Âà´«¯x°}
+// è½‰æ›çŸ©é™£
 uniform row_major float4x4 wvp_matrix		: register(c0);
 uniform row_major float4x4 light_wvp_matrix : register(c4);
 uniform row_major float4x4 light_wv_matrix	: register(c8);
@@ -36,14 +36,14 @@ VS_OUTPUT VS(VS_INPUT In)
 
 //
 // Pixel Shader
-// ¨Ï¥ÎZBuffer°ÊºA¶K¹Ï¨Ó­pºâ³±¼v
+// ä½¿ç”¨ZBufferå‹•æ…‹è²¼åœ–ä¾†è¨ˆç®—é™°å½±
 float4 PS_D24S8(VS_OUTPUT In) : COLOR
 {
 	float4 projected_pos = In.LightPos / In.LightPos.w;
 	float  fToCenter = distance(projected_pos, float2(0.5f,0.5f));
 	float  fSpotLightEffect = 1.0f - saturate(fToCenter/0.4f);
 	
-	// ¨Ï¥ÎDepthBuffer¬°¿é¤J¶K¹Ï®É, ·|¦Û°Ê°µPS_R32F¨ç¦¡¸Ì¬Û¦Pªº¶ZÂ÷¤ñ¸û.
+	// ä½¿ç”¨DepthBufferç‚ºè¼¸å…¥è²¼åœ–æ™‚, æœƒè‡ªå‹•åšPS_R32Få‡½å¼è£¡ç›¸åŒçš„è·é›¢æ¯”è¼ƒ.
 	float4 Lit = tex2Dproj(texShadowmapSampler, In.LightPos);
 	float4 color = fSpotLightEffect * In.Normal.z * Lit;
 	
@@ -52,7 +52,7 @@ float4 PS_D24S8(VS_OUTPUT In) : COLOR
 
 //
 // Pixel Shader
-// ¨Ï¥ÎFloat32°ÊºA¶K¹Ï¨Ó­pºâ³±¼v
+// ä½¿ç”¨Float32å‹•æ…‹è²¼åœ–ä¾†è¨ˆç®—é™°å½±
 float4 PS_R32F(VS_OUTPUT In) : COLOR
 {
 	float4 projected_pos = In.LightPos / In.LightPos.w;

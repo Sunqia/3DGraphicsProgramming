@@ -1,11 +1,11 @@
-// ³]©w³»ÂIªº¸ê®Æ®æ¦¡
+// è¨­å®šé ‚é»çš„è³‡æ–™æ ¼å¼
 struct VS_INPUT
 {
 	float4 Position : POSITION;
 	float4 Normal	: Normal;
 };
 
-// ³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -28,14 +28,14 @@ struct Light_Info
 	int4   m_LightInfo;
 };
 
-// Âà´«¯x°}
+// è½‰æ›çŸ©é™£
 cbuffer Matrices : register(b0)
 {
 	uniform row_major float4x4 viewproj_matrix;
 	uniform row_major float4x4 world_matrix;
 };
 
-// ¥ú·½
+// å…‰æº
 cbuffer Lights : register(b1)
 {
 	uniform float4 g_vGlobal_AmbientLight;
@@ -47,7 +47,7 @@ VS_OUTPUT VS(VS_INPUT In)
 {
 	VS_OUTPUT Out;
 	
-	// ®y¼ĞÂà´«
+	// åº§æ¨™è½‰æ›
 	Out.Position = mul( In.Position, viewproj_matrix);
 	float3 world_position = mul( In.Position, world_matrix);
 	float3x3 world_matrix_3x3 = (float3x3) world_matrix;
@@ -117,6 +117,6 @@ VS_OUTPUT VS(VS_INPUT In)
 // Pixel Shader
 float4 PS(VS_OUTPUT In) : SV_Target
 {
-	// ¨Ï¥Î³»ÂI¶¡¤º´¡¥X¨ÓªºÃC¦â
+	// ä½¿ç”¨é ‚é»é–“å…§æ’å‡ºä¾†çš„é¡è‰²
 	return In.Color;
 }

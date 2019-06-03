@@ -6,7 +6,7 @@
 // controller object
 CGutUserControl g_Control;
 
-// ²yªº¼Ò«¬
+// çƒçš„æ¨¡å‹
 Vertex_VN *g_pSphereVertices = NULL;
 unsigned short *g_pSphereIndices = NULL;
 
@@ -15,11 +15,11 @@ int g_iNumSphereTriangles = 0;
 int g_iNumSphereIndices = 0;
 
 //
-bool CreateSphere(float radius, // ¥b®| 
-				  Vertex_VN **ppVertices, // ¶Ç¦^²y­±ªº³»ÂI
-				  unsigned short **ppIndices, // ¶Ç¦^²y­±ªº¤T¨¤§Î¯Á¤Ş
-				  int stacks, // ½n«×ªº¤Á­±¼Æ¥Ø
-				  int slices // ®|«×ªº¤Á­±¼Æ¥Ø
+bool CreateSphere(float radius, // åŠå¾‘ 
+				  Vertex_VN **ppVertices, // å‚³å›çƒé¢çš„é ‚é»
+				  unsigned short **ppIndices, // å‚³å›çƒé¢çš„ä¸‰è§’å½¢ç´¢å¼•
+				  int stacks, // ç·¯åº¦çš„åˆ‡é¢æ•¸ç›®
+				  int slices // å¾‘åº¦çš„åˆ‡é¢æ•¸ç›®
 				  )
 {
 	*ppVertices = NULL;

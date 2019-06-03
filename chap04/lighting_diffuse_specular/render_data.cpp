@@ -2,36 +2,36 @@
 #include "render_data.h"
 #include "gut.h"
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.0f, 2.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 Matrix4x4 g_world_matrix;
 
 // Ambient Light
 Vector4 g_vGlobal_AmbientLight(0.1f, 0.1f, 0.1f, 0.1f);
-// ¥ú·½
+// å…‰æº
 Light_Info g_Lights[g_iNumLights];
 
-// ª«¥ó§÷½è
+// ç‰©ä»¶æè³ª
 Vector4 g_vMaterialAmbient(1.0f, 1.0f, 1.0f, 1.0f);
 Vector4 g_vMaterialDiffuse(1.0f ,1.0f, 1.0f ,1.0f);
 Vector4 g_vMaterialSpecular(0.0f, 0.0f, 0.0f, 0.0f);
 Vector4 g_vMaterialEmissive(0.0f, 0.0f, 0.0f, 0.0f);
 float	g_fMaterialShininess = 30.0f;
 
-// ³]©w
+// è¨­å®š
 bool	g_bLocalViewer = true;
 bool	g_bAutoNormalize = true;
 bool	g_bDiffuseReflection = true;
 bool	g_bSpecularReflection = true;
 
-//¼Ò«¬
+//æ¨¡å‹
 int g_iNumGridVertices = 0;
 int g_iNumGridIndices = 0;
 int g_iNumGridTriangles = 0;

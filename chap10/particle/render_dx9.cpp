@@ -14,15 +14,15 @@ static LPDIRECT3DTEXTURE9 g_pTexture = NULL;
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	g_Font.SetFontSize(32, 32);
 	g_Font.SetFontAdvance(20, 30);
 	g_Font.SetConsoleSize(32, 16);
-	// ¸ü¤J¦r«¬
+	// è¼‰å…¥å­—åž‹
 	g_Font.LoadTexture("../../textures/ascii_couriernew.tga");
 
 	g_pTexture = GutLoadTexture_DX9("../../textures/particle.tga");
@@ -42,29 +42,29 @@ bool ReleaseResourceDX9(void)
 
 void ResizeWindowDX9(int width, int height)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// 	
 	g_Font.SetConsoleResolution(width, height);
 	g_Font.BuildMesh();
 
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &proj_matrix);
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ®ø°£µe­±
+	// æ¶ˆé™¤ç•«é¢
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
-	// ¶}©l¤UÃ¸¹Ï«ü¥O
+	// é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤
 	device->BeginScene(); 
 	
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
@@ -127,6 +127,6 @@ void RenderFrameDX9(void)
 	}
 	//
 	device->EndScene(); 
-	// §â­I´ºbackbuffer§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferå‘ˆç¾å‡ºä¾†
     device->Present( NULL, NULL, NULL, NULL );
 }

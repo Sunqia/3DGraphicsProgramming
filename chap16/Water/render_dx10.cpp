@@ -92,7 +92,7 @@ bool InitResourceDX10(void)
 		g_pImpulseLayout = GutCreateInputLayoutDX10(pVertexDecl, PassDesc.pIAInputSignature, PassDesc.IAInputSignatureSize);
 	}
 
-	// «Ø¥ß¤@¤ù¯x§Î, ¤ôªi¼ÒÀÀ®É·|¥Î¨ì.
+	// å»ºç«‹ä¸€ç‰‡çŸ©å½¢, æ°´æ³¢æ¨¡æ“¬æ™‚æœƒç”¨åˆ°.
 	{
 		g_pVertexBuffer = GutCreateVertexBuffer_DX10(sizeof(Vertex_VT)*4, g_FullScreenQuad);
 
@@ -359,7 +359,7 @@ void RenderFrameDX10(void)
 	WaterSimulation();
 	HeightmapToNormal();
 	
-	// ¦^¨ì¥Dµe­±
+	// å›åˆ°ä¸»ç•«é¢
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView();
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView();
 	g_pDevice->OMSetRenderTargets(1, &pRenderTargetView, pDepthStencilView);
@@ -387,7 +387,7 @@ void RenderFrameDX10(void)
 		x+=w;
 	}
 
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); // front/back buffer
 	pSwapChain->Present(1, 0);
 }

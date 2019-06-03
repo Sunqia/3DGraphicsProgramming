@@ -31,26 +31,26 @@ bool InitResourceOpenGL(void)
 	g_iFrameBufferWidth = width * 2;
 	g_iFrameBufferHeight = height * 2;
 
-	// ¶}±Ò¤@­Óframebuffer object
+	// é–‹å•Ÿä¸€å€‹framebuffer object
 	glGenFramebuffersEXT(1, &g_framebuffer);
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_framebuffer);
 
-	// °tÓ_¤@¶ô¶K¹ÏªÅ¶¡µ¹framebuffer objectÃ¸¹Ï¨Ï¥Î 
+	// é…ç½ä¸€å¡Šè²¼åœ–ç©ºé–“çµ¦framebuffer objectç¹ªåœ–ä½¿ç”¨ 
 	{
 		glGenTextures(1, &g_texture);
 		glBindTexture(GL_TEXTURE_2D, g_texture);
-		// ³]©wfilter
+		// è¨­å®šfilter
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
-		// «Å§i¶K¹Ï¤j¤p¤Î®æ¦¡
+		// å®£å‘Šè²¼åœ–å¤§å°åŠæ ¼å¼
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8,  g_iFrameBufferWidth, g_iFrameBufferHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
-		// framebufferªºRGBAÃ¸¹Ï
+		// framebufferçš„RGBAç¹ªåœ–
 		glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_COLOR_ATTACHMENT0_EXT, GL_TEXTURE_2D, g_texture, 0);
 	}
 
-	// °t¸mzbufferµ¹framebuffer object¨Ï¥Î
+	// é…ç½®zbufferçµ¦framebuffer objectä½¿ç”¨
 	{
 		glGenRenderbuffersEXT(1, &g_depthbuffer);
 		glBindRenderbufferEXT(GL_RENDERBUFFER_EXT, g_depthbuffer);
@@ -58,7 +58,7 @@ bool InitResourceOpenGL(void)
 		glFramebufferRenderbufferEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_RENDERBUFFER_EXT, g_depthbuffer);
 	}
 
-	// ÀË¬dframebuffer object¦³¨S¦³°t¸m¦¨¥\
+	// æª¢æŸ¥framebuffer objectæœ‰æ²’æœ‰é…ç½®æˆåŠŸ
 	GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
 	if ( status!=GL_FRAMEBUFFER_COMPLETE_EXT )
 	{
@@ -98,10 +98,10 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
 }
 
@@ -109,7 +109,7 @@ void RenderModel(void)
 {
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf(&g_world_matrix[0][0]);
-	// µe¥X¼Ò«¬
+	// ç•«å‡ºæ¨¡å‹
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vector4), g_Triangle);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
@@ -118,12 +118,12 @@ void RenderModel(void)
 static void Antialiasing_None(void)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	// `³]©w§ë¼vÂà´«¯x°}`
+	// `è¨­å®šæŠ•å½±è½‰æ›çŸ©é™£`
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	// `µe¥X¼Ò«¬`
+	// `ç•«å‡ºæ¨¡å‹`
 	RenderModel();
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }
 
@@ -136,16 +136,16 @@ static void Antialiasing_MultiSampling(void)
 
 static void Antialiasing_SuperSampling(void)
 {
-	// `³]©w§ë¼vÂà´«¯x°}`
+	// `è¨­å®šæŠ•å½±è½‰æ›çŸ©é™£`
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 
 	{
-		// `¨Ï¥Î` g_framebuffer framebuffer object	
+		// `ä½¿ç”¨` g_framebuffer framebuffer object	
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_framebuffer);
 		glViewport(0, 0, g_iFrameBufferWidth, g_iFrameBufferHeight);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-		// `µe¥X¼Ò«¬`
+		// `ç•«å‡ºæ¨¡å‹`
 		RenderModel();
 	}
 	
@@ -154,7 +154,7 @@ static void Antialiasing_SuperSampling(void)
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	{
-		// `¨Ï¥Î` g_framebuffer framebuffer object	
+		// `ä½¿ç”¨` g_framebuffer framebuffer object	
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 		int w, h;
 		GutGetWindowSize(w, h);
@@ -177,13 +177,13 @@ static void Antialiasing_SuperSampling(void)
 		glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 		glDisable(GL_TEXTURE_2D);
 	}
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }
 
 void Antialiasing_SmoothLine(void)
 {
-	// `¨Ï¥Î OpenGL line smooth ¥\¯à`
+	// `ä½¿ç”¨ OpenGL line smooth åŠŸèƒ½`
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_POLYGON_SMOOTH);
 	glEnable(GL_BLEND);
@@ -196,7 +196,7 @@ void Antialiasing_SmoothLine(void)
 	glDisable(GL_LINE_SMOOTH);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
 	if ( g_bWireframe )

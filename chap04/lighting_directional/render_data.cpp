@@ -2,21 +2,21 @@
 #include "render_data.h"
 #include "gut.h"
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.0f, 2.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 Matrix4x4 g_world_matrix;
-// `¥ú·½¸ê®Æ`
+// `å…‰æºè³‡æ–™`
 Vector4 g_vLightAmbient(0.1f, 0.1f, 0.1f, 0.1f);
 Vector4 g_vLightDirection(0.0f, 0.0f, 1.0f, 0.0f);
 Vector4 g_vLightColor(1.0f, 1.0f, 1.0f, 1.0f);
-// ¯x§Îªº4­Ó³»ÂI
+// çŸ©å½¢çš„4å€‹é ‚é»
 // Position, Color, Normal
 Vertex_VCN g_Quad[4] =
 {
@@ -28,7 +28,7 @@ Vertex_VCN g_Quad[4] =
 
 Vertex_DX9 g_Quad_dx9[4];
 
-// `§âÃC¦âªì­È³]©w¦¨Àô¹Ò¥ú`
+// `æŠŠé¡è‰²åˆå€¼è¨­å®šæˆç’°å¢ƒå…‰`
 void CalculateAmbientLight(Vertex_VCN *pVertices, int num_vertices)
 {
 	for ( int i=0; i<num_vertices; i++ )
@@ -37,18 +37,18 @@ void CalculateAmbientLight(Vertex_VCN *pVertices, int num_vertices)
 	}
 }
 
-// `­pºâ¤è¦V¥ú, ¥¦¥u¸ò³»ÂI­±¦V©M¥ú·½¤è¦V¦³Ãö.`
+// `è¨ˆç®—æ–¹å‘å…‰, å®ƒåªè·Ÿé ‚é»é¢å‘å’Œå…‰æºæ–¹å‘æœ‰é—œ.`
 void CalculateDirectionalLight(Vertex_VCN *pVertices, int num_vertices)
 {
 	for ( int i=0; i<num_vertices; i++ )
 	{
-		// `¨D¥XÂà´««á¦b¥@¬É®y¼Ğ¨tªº³»ÂI­±¦V, RotateVector¨ç¦¡¥u°µ±ÛÂà, ©¿²¤¦ì²¾.`
+		// `æ±‚å‡ºè½‰æ›å¾Œåœ¨ä¸–ç•Œåº§æ¨™ç³»çš„é ‚é»é¢å‘, RotateVectorå‡½å¼åªåšæ—‹è½‰, å¿½ç•¥ä½ç§».`
 		Vector4 vNormal = g_world_matrix.RotateVector(pVertices[i].m_Normal);
-		// `³»ÂI­±¦V¸ò¥ú½u¤è¦Vªº¥æ¨¤, ¨M©w¤Ï®g¥úªº±j«×.`
+		// `é ‚é»é¢å‘è·Ÿå…‰ç·šæ–¹å‘çš„äº¤è§’, æ±ºå®šåå°„å…‰çš„å¼·åº¦.`
 		Vector4 vIntensity = Vector3Dot(vNormal, g_vLightDirection);
-		// `§âintensity§½­­¦b0-1ªº½d³ò`
+		// `æŠŠintensityå±€é™åœ¨0-1çš„ç¯„åœ`
 		vIntensity.Clamp_to_0();
-		// `²Ö¥[¤W­pºâ¥X¨Ó¤è¦V¥úªº±j«×`
+		// `ç´¯åŠ ä¸Šè¨ˆç®—å‡ºä¾†æ–¹å‘å…‰çš„å¼·åº¦`
 		pVertices[i].m_Color += vIntensity * g_vLightColor;
 		pVertices[i].m_Color = pVertices[i].m_Color.Clamp_to_1();
 	}

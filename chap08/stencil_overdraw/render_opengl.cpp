@@ -15,9 +15,9 @@ static CGutModel_OpenGL g_Model_OpenGL;
 
 bool InitResourceOpenGL(void)
 {
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, 1.0f, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 	glMatrixMode(GL_MODELVIEW);	
@@ -36,23 +36,23 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClearStencil(0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
@@ -61,24 +61,24 @@ void RenderFrameOpenGL(void)
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 world_view_matrix = world_matrix * view_matrix;
 
-	// `µe¥X¯ùÜò, ¨Ã§ó·s Stencil Buffer.`
+	// `ç•«å‡ºèŒ¶å£¼, ä¸¦æ›´æ–° Stencil Buffer.`
 	{
-		// `µe¥X¯ùÜò`
+		// `ç•«å‡ºèŒ¶å£¼`
 		glMatrixMode(GL_PROJECTION);
 		glLoadMatrixf( (float *) &g_projection_matrix);
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadMatrixf( (float *) &world_view_matrix);
 
-		// `±Ò°Ê Stencil Test`
+		// `å•Ÿå‹• Stencil Test`
 		glEnable(GL_STENCIL_TEST);
-		// `³]©w Stencil Test ±ø¥ó, Åı¥¦¥Ã»·¦¨¥ß.`
+		// `è¨­å®š Stencil Test æ¢ä»¶, è®“å®ƒæ°¸é æˆç«‹.`
 		glStencilFunc(GL_ALWAYS, 1, 0xff);
-		// `»¼¼W Stencil Buffer ¤º®e`
+		// `éå¢ Stencil Buffer å…§å®¹`
 		glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
-		// `µe¥X¯ùÜò`
+		// `ç•«å‡ºèŒ¶å£¼`
 		g_Model_OpenGL.Render();
-		// `¤£¦A¥hÅÜ§ó Stencil Buffer ¤º®e`
+		// `ä¸å†å»è®Šæ›´ Stencil Buffer å…§å®¹`
 		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 	}
 
@@ -90,44 +90,44 @@ void RenderFrameOpenGL(void)
 	sModelMaterial_OpenGL material;
 	material.Submit(NULL);
 
-	// `Åı¥¦»\º¡¾ã­Óµe­±, ¤£»İ­nÁôÂÃ­±´ú¸Õ.`
+	// `è®“å®ƒè“‹æ»¿æ•´å€‹ç•«é¢, ä¸éœ€è¦éš±è—é¢æ¸¬è©¦.`
 	glDepthFunc(GL_ALWAYS);
 
-	// `³]©w³»ÂI¸ê®Æ®æ¦¡`
+	// `è¨­å®šé ‚é»è³‡æ–™æ ¼å¼`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_V), &g_Quad[0].m_Position);
 
-	// `¥Îºñ¦â¼Ğ¥Ü¥u§ó·s¹L1¦¸ªº¹³¯À`
+	// `ç”¨ç¶ è‰²æ¨™ç¤ºåªæ›´æ–°é1æ¬¡çš„åƒç´ `
 	{
 		glStencilFunc(GL_EQUAL, 1, 0xff);
 		glColor4f(0.0f, 1.0f, 0.0f, 1.0f);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
-	// `¥ÎÂÅ¦â¼Ğ¥Ü§ó·s¹L2¦¸ªº¹³¯À`
+	// `ç”¨è—è‰²æ¨™ç¤ºæ›´æ–°é2æ¬¡çš„åƒç´ `
 	{
 		glStencilFunc(GL_EQUAL, 2, 0xff);
 		glColor4f(0.0f, 0.0f, 1.0f, 1.0f);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
-	// `¥Î¬õ¦â¨Ó¼Ğ¥Ü§ó·s¶W¹L3¦¸¥H¤Wªº¹³¯À`
+	// `ç”¨ç´…è‰²ä¾†æ¨™ç¤ºæ›´æ–°è¶…é3æ¬¡ä»¥ä¸Šçš„åƒç´ `
 	{
 		glStencilFunc(GL_EQUAL, 3, 0xff);
 		glColor4f(1.0f, 0.0f, 0.0f, 1.0f);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
-	// `¥Î¬õ¦â¨Ó¼Ğ¥Ü§ó·s¶W¹L3¦¸¥H¤Wªº¹³¯À`
+	// `ç”¨ç´…è‰²ä¾†æ¨™ç¤ºæ›´æ–°è¶…é3æ¬¡ä»¥ä¸Šçš„åƒç´ `
 	{
-		// `¦pªG3¤p©óstencil bufferªº­È, ±ø¥ó¤~¦¨¥ß. `
-		// `¤]´N¬Ostencil buffer­È­n¤j©ó3ªº·N«ä`
+		// `å¦‚æœ3å°æ–¼stencil bufferçš„å€¼, æ¢ä»¶æ‰æˆç«‹. `
+		// `ä¹Ÿå°±æ˜¯stencil bufferå€¼è¦å¤§æ–¼3çš„æ„æ€`
 		glStencilFunc(GL_LESS, 3, 0xff); 
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
-	// `ÁÙ­ì³]©w`
+	// `é‚„åŸè¨­å®š`
 	glEnable(GL_DEPTH_TEST);
 	glDisable(GL_STENCIL_TEST);
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glDepthFunc(GL_LESS);
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

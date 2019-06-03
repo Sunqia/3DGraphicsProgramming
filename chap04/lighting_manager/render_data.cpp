@@ -9,17 +9,17 @@ float g_fOrthoSize = 10.0f;
 float g_fOrthoWidth = g_fOrthoSize;
 float g_fOrthoHeight = g_fOrthoSize;
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.0f, 10.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 Matrix4x4 g_view_matrix;
-// ª«¥ó²¾°Ê¯x°}
+// ç‰©ä»¶ç§»å‹•çŸ©é™£
 Matrix4x4 g_world_matrix;
-// ¥ú·½¸ê®Æ
+// å…‰æºè³‡æ–™
 Vector4 g_vLightAmbient(0.1f, 0.1f, 0.1f, 0.1f);
 Vector4 g_vLightDirection(0.0f, 0.0f, 1.0f, 0.0f);
 Vector4 g_vLightColor(1.0f, 1.0f, 1.0f, 1.0f);
@@ -27,7 +27,7 @@ Vector4 g_vLightColor(1.0f, 1.0f, 1.0f, 1.0f);
 Vertex_VCN g_LightPosition[NUM_LIGHTS];
 Vertex_DX9 g_LightPosition_dx9[NUM_LIGHTS];
 
-// ¯x§Îªº4­Ó³»ÂI
+// çŸ©å½¢çš„4å€‹é ‚é»
 // Position, Normal
 Vertex_VCN g_Quad[4] =
 {

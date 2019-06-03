@@ -261,7 +261,7 @@ int CGutShadowVolume::BuildShadowVolume(Matrix4x4 &light_view, Matrix4x4 &light_
 		m_pFaceArray[f].m_Normal = Vector3CrossProduct(vDiff1, vDiff2);
 	}
 
-	// §ä¥XÃä½u
+	// æ‰¾å‡ºé‚Šç·š
 	for ( int e=0; e<m_iNumEdges; e++ )
 	{
 		sEdge *pEdge = &m_EdgeArray[e];
@@ -365,7 +365,7 @@ int CGutShadowVolume::BuildShadowVolume(Matrix4x4 &light_view, Matrix4x4 &light_
 		}
 	}
 
-	// ¨Ï¥Îzfail®É,­n§â¾ã­Ó¼Ò«¬«e«á¥[¤W»\¤l
+	// ä½¿ç”¨zfailæ™‚,è¦æŠŠæ•´å€‹æ¨¡åž‹å‰å¾ŒåŠ ä¸Šè“‹å­
 	if ( bCaps )
 	{
 		for ( int f=0; f<m_iNumFaces; f++ )
@@ -414,7 +414,7 @@ int CGutShadowVolume::BuildShadowVolume_DirectionalLight(Matrix4x4 &light_view, 
 	int shadowvolume_quads = 0;
 	Vector4 light_dir(0.0f, 0.0f, -1.0f);
 	
-	// §â3¨¤§ÎªºnormalÂà´«¨ìlight view space
+	// æŠŠ3è§’å½¢çš„normalè½‰æ›åˆ°light view space
 	for ( int f=0; f<m_iNumFaces; f++ )
 	{
 		sFace *pFace = m_pFaceArray + f;
@@ -422,7 +422,7 @@ int CGutShadowVolume::BuildShadowVolume_DirectionalLight(Matrix4x4 &light_view, 
 		pFace->m_bFrontFace = pFace->m_Normal.GetZ() >= 0.0f;
 	}
 
-	// §ä¥XÃä½u
+	// æ‰¾å‡ºé‚Šç·š
 	for ( int e=0; e<m_iNumEdges; e++ )
 	{
 		sEdge *pEdge = &m_EdgeArray[e];
@@ -507,7 +507,7 @@ int CGutShadowVolume::BuildShadowVolume_DirectionalLight(Matrix4x4 &light_view, 
 		}
 	}
 
-	// ¨Ï¥Îzfail®É,­n§â¾ã­Ó¼Ò«¬«e«á¥[¤W»\¤l
+	// ä½¿ç”¨zfailæ™‚,è¦æŠŠæ•´å€‹æ¨¡åž‹å‰å¾ŒåŠ ä¸Šè“‹å­
 	if ( bCaps )
 	{
 		for ( int f=0; f<m_iNumFaces; f++ )
@@ -543,14 +543,14 @@ int CGutShadowVolume::BuildShadowVolume_PointLight(Vector4 &light_pos, Matrix4x4
 	//
 	Vector4 light_dir(0.0f, 0.0f, -1.0f);
 
-	// §â3¨¤§ÎªºnormalÂà´«world space
+	// æŠŠ3è§’å½¢çš„normalè½‰æ›world space
 	for ( int f=0; f<m_iNumFaces; f++ )
 	{
 		sFace *pFace = m_pFaceArray + f;
 		pFace->m_Normal = world_matrix.RotateVector(pFace->m_Normal_ObjectSpace);
 	}
 
-	// ¥ý­pºâ¨Ã¼Ð¥Ü¥XÃä¬É
+	// å…ˆè¨ˆç®—ä¸¦æ¨™ç¤ºå‡ºé‚Šç•Œ
 	for ( int e=0; e<m_iNumEdges; e++ )
 	{
 		sEdge *pEdge = &m_EdgeArray[e];
@@ -640,7 +640,7 @@ int CGutShadowVolume::BuildShadowVolume_PointLight(Vector4 &light_pos, Matrix4x4
 		}
 	}
 
-	// ¨Ï¥Îzfail®É,­n§â¾ã­Ó¼Ò«¬«e«á¥[¤W»\¤l
+	// ä½¿ç”¨zfailæ™‚,è¦æŠŠæ•´å€‹æ¨¡åž‹å‰å¾ŒåŠ ä¸Šè“‹å­
 	if ( bCaps )
 	{
 		for ( int f=0; f<m_iNumFaces; f++ )

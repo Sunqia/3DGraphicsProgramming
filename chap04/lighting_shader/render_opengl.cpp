@@ -20,32 +20,32 @@ static GLuint g_FragmentProgramID = 0;
 
 bool InitResourceOpenGL(void)
 {
-	// `¸ü¤Jpixel program, ¥¦¥i¥H¸ò¤£¦Pªº¥´¥úvertex shader¦@¥Î.`
+	// `è¼‰å…¥pixel program, å®ƒå¯ä»¥è·Ÿä¸åŒçš„æ‰“å…‰vertex shaderå…±ç”¨.`
 	g_FragmentProgramID = GutLoadFragmentProgramOpenGL_ASM("../../shaders/vertex_lighting_directional.glpp");
 	if ( g_FragmentProgramID==0 )
 		return false;
-	// `¸ü¤Jdiretional light vertex program`
+	// `è¼‰å…¥diretional light vertex program`
 	g_DirLight_VP = GutLoadVertexProgramOpenGL_ASM("../../shaders/vertex_lighting_directional.glvp");
 	if ( g_DirLight_VP==0 )
 		return false;
-	// `¸ü¤Jpoint light vertex program`
+	// `è¼‰å…¥point light vertex program`
 	g_PointLight_VP = GutLoadVertexProgramOpenGL_ASM("../../shaders/vertex_lighting_point.glvp");
 	if ( g_PointLight_VP==0 )
 		return false;
-	// `¸ü¤Jspot light vertex program`
+	// `è¼‰å…¥spot light vertex program`
 	g_SpotLight_VP = GutLoadVertexProgramOpenGL_ASM("../../shaders/vertex_lighting_spot.glvp");
 	if ( g_SpotLight_VP==0 )
 		return false;
 
-	// `Âà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}`
+	// `è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// `³]©w§ë¼v¯x°}`
+	// `è¨­å®šæŠ•å½±çŸ©é™£`
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, 1.0f, 0.1f, 100.0f);
-	// `§âview_matrix¸òproj_matrix¬Û­¼, ¥i¥H·À¤Ö¤é«áªº­pºâ.`
+	// `æŠŠview_matrixè·Ÿproj_matrixç›¸ä¹˜, å¯ä»¥æ»…å°‘æ—¥å¾Œçš„è¨ˆç®—.`
 	g_view_proj_matrix = g_view_matrix * g_proj_matrix;
-	// `§â¥¿¦V¸ò¤Ï¦Vªº­±³£µe¥X¨Ó`
+	// `æŠŠæ­£å‘è·Ÿåå‘çš„é¢éƒ½ç•«å‡ºä¾†`
 	glDisable(GL_CULL_FACE);
-	// `±Ò°Êzbuffer test`
+	// `å•Ÿå‹•zbuffer test`
 	glEnable(GL_DEPTH_TEST);
 
 	return true;
@@ -80,15 +80,15 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, aspect, 0.1f, 100.0f);
-	// §âview_matrix¸òproj_matrix¬Û­¼, ¥i¥H·À¤Ö¤é«áªº­pºâ
+	// æŠŠview_matrixè·Ÿproj_matrixç›¸ä¹˜, å¯ä»¥æ»…å°‘æ—¥å¾Œçš„è¨ˆç®—
 	g_view_proj_matrix = g_view_matrix * g_proj_matrix;
 }
 
@@ -97,13 +97,13 @@ static void SetupLightingOpenGL(void)
 	int base = 12;
 	Vector4 vShininess = g_fMaterialShininess;
 	Vector4 vAmbient, vDiffuse, vSpecular, vSpotLightCoeff;
-	// `³]©wÀô¹Ò¥ú`
+	// `è¨­å®šç’°å¢ƒå…‰`
 	glProgramLocalParameters4fvEXT(GL_VERTEX_PROGRAM_ARB, base, 1, &g_vAmbientLight[0]);
 	
-	//` ³]©w¥ú·½`
+	//` è¨­å®šå…‰æº`
 	switch(g_iSelectedLight)
 	{
-	// `¤è¦V¥ú`
+	// `æ–¹å‘å…‰`
 	default:
 	case 0:
 		g_Selected_VP = g_DirLight_VP;
@@ -119,7 +119,7 @@ static void SetupLightingOpenGL(void)
 		glProgramLocalParameters4fvEXT(GL_VERTEX_PROGRAM_ARB, base + 5, 1, &vShininess.x);
 
 		break;
-	// `ÂI¥ú·½`
+	// `é»å…‰æº`
 	case 1:
 		g_Selected_VP = g_PointLight_VP;
 		
@@ -135,7 +135,7 @@ static void SetupLightingOpenGL(void)
 		glProgramLocalParameters4fvEXT(GL_VERTEX_PROGRAM_ARB, base + 6, 1, &vShininess.x);
 
 		break;
-	// `»E¥ú¿O`
+	// `èšå…‰ç‡ˆ`
 	case 2:
 		g_Selected_VP = g_SpotLight_VP;
 		
@@ -159,32 +159,32 @@ static void SetupLightingOpenGL(void)
 	}
 }
 
-// `¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨OpenGLä¾†ç¹ªåœ–`
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// `«ü©w­n¨Ï¥ÎShader¥iµ{¦¡¤Æ¬yµ{`
+	// `æŒ‡å®šè¦ä½¿ç”¨Shaderå¯ç¨‹å¼åŒ–æµç¨‹`
 	glEnable(GL_VERTEX_PROGRAM_ARB);
 	glEnable(GL_FRAGMENT_PROGRAM_ARB);
-	// `³]©w¥ú·½`	
+	// `è¨­å®šå…‰æº`	
 	SetupLightingOpenGL();
-	// `³]©w¨Ï¥Î­ş­ÓVertex¸òFragment Program`
+	// `è¨­å®šä½¿ç”¨å“ªå€‹Vertexè·ŸFragment Program`
 	glBindProgramARB(GL_VERTEX_PROGRAM_ARB, g_Selected_VP);
 	glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, g_FragmentProgramID);
-	// `³]©w­n¥Î°}¦Cªº¤è¦¡¶Ç¤J³»ÂI¦ì¸m¸òÃC¦â`
+	// `è¨­å®šè¦ç”¨é™£åˆ—çš„æ–¹å¼å‚³å…¥é ‚é»ä½ç½®è·Ÿé¡è‰²`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_V3N3), &g_pGridVertices[0].m_Position);
 	glNormalPointer (GL_FLOAT, sizeof(Vertex_V3N3), &g_pGridVertices[0].m_Normal);
-	// `­pºâ¨Ã®M¤JÂà´«¯x°}`
+	// `è¨ˆç®—ä¸¦å¥—å…¥è½‰æ›çŸ©é™£`
 	Matrix4x4 world_view_proj_matrix = g_world_matrix * g_view_proj_matrix; 
 	glProgramLocalParameters4fvEXT(GL_VERTEX_PROGRAM_ARB, 0, 4, &world_view_proj_matrix[0][0]);
 	glProgramLocalParameters4fvEXT(GL_VERTEX_PROGRAM_ARB, 4, 4, &g_world_matrix[0][0]);
-	// `ÃèÀY¦ì¸m, ­pºâSpecular·|¥Î¨ì.`
+	// `é¡é ­ä½ç½®, è¨ˆç®—Specularæœƒç”¨åˆ°.`
 	glProgramLocalParameters4fvEXT(GL_VERTEX_PROGRAM_ARB, 8, 1, &g_eye[0]);
-	// `µe¥X®æ¤l`
+	// `ç•«å‡ºæ ¼å­`
 	glDrawElements (GL_TRIANGLE_STRIP, g_iNumGridIndices, GL_UNSIGNED_SHORT, g_pGridIndices);
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

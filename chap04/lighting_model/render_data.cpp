@@ -3,7 +3,7 @@
 #include "Gut.h"
 #include "GutUserControl.h"
 
-// Åª¨ú¼Ò«¬ªºª«¥ó
+// è®€å–æ¨¡å‹çš„ç‰©ä»¶
 CGutModel g_Model;
 // controller object
 CGutUserControl g_Control;

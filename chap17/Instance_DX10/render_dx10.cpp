@@ -79,7 +79,7 @@ void RenderFrameDX10(void)
 	instance_pos[2].Set( 1.0f,  1.0f, 0.0f, 0.0f);
 	instance_pos[3].Set(-1.0f,  1.0f, 0.0f, 0.0f);
 
-	// ¨ú±o¥Dµe­±
+	// å–å¾—ä¸»ç•«é¢
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView();
 	ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); 
 

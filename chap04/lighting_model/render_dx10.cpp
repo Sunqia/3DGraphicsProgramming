@@ -29,7 +29,7 @@ bool InitResourceDX10(void)
 	ID3D10Blob *pVSCode = NULL;
 
 	
-	// ­pºâ§ë¼v¯x°}
+	// è¨ˆç®—æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, 1.0f, g_fNear, g_fFar);
 
 	if ( !CGutModel_DX10::LoadDefaultShader("../../shaders/gmodel_dx10.hlsl") )
@@ -56,7 +56,7 @@ void ResizeWindowDX10(int width, int height)
 void RenderFrameDX10(void)
 {
 	Vector4 vClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	// ¨ú±o©I¥sGutCreateGraphicsDeviceDX10®É©Ò²£¥ÍªºD3D10ª«¥ó
+	// å–å¾—å‘¼å«GutCreateGraphicsDeviceDX10æ™‚æ‰€ç”¢ç”Ÿçš„D3D10ç‰©ä»¶
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView(); //frame buffer
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); //depth/stencil buffer
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); // front/back buffer
@@ -80,7 +80,7 @@ void RenderFrameDX10(void)
 
 	g_Model_DX10.Render();
 
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	pSwapChain->Present(1, 0);
 }
 

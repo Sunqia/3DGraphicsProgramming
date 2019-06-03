@@ -2,11 +2,11 @@
 #include "render_data.h"
 #include "gut.h"
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.0f, 2.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
 
 GraphicsDevice_Simulation g_Simulation;
@@ -19,7 +19,7 @@ Vertex_VCN *g_pGridVertices = NULL;
 Vertex_DX9 *g_pGridVerticesDX9 = NULL;
 unsigned short *g_pGridIndices = NULL;
 
-// ²£¥Íx_grids * y_grids­Ó®æ¤lªº´Ñ½L®æ¼Ò«¬
+// ç”¢ç”Ÿx_grids * y_gridså€‹æ ¼å­çš„æ£‹ç›¤æ ¼æ¨¡å‹
 bool GenerateGrids(int x_grids, int y_grids, Vertex_VCN **ppVertices, int &num_vertices, unsigned short **ppIndices, int &num_indices, int &num_triangles)
 {
 	const int triangles_per_row = x_grids * 2;
@@ -39,7 +39,7 @@ bool GenerateGrids(int x_grids, int y_grids, Vertex_VCN **ppVertices, int &num_v
 		GutRelease16BytesAlignedMemory(pVertices);
 		return false;
 	}
-	// ¨Ï¥Îtriangle strip®É, ¤T¨¤§Î¼Æ¥Ø¥Ã»·µ¥©ó¯Á¤Ş­È¼Æ¥Ø´î¥h2
+	// ä½¿ç”¨triangle stripæ™‚, ä¸‰è§’å½¢æ•¸ç›®æ°¸é ç­‰æ–¼ç´¢å¼•å€¼æ•¸ç›®æ¸›å»2
 	num_triangles = num_indices-2;
 
 	Vector4 vCorner(-0.5f, 0.5f, 0.0f, 1.0f);
@@ -72,7 +72,7 @@ bool GenerateGrids(int x_grids, int y_grids, Vertex_VCN **ppVertices, int &num_v
 	{
 		if ( from_left_to_right )
 		{
-			// ¦b©_¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥ª±Æ¨ì¥k
+			// åœ¨å¥‡æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å·¦æ’åˆ°å³
 			pIndices[index_index++] = y * vertices_per_row;
 			pIndices[index_index++] = y * vertices_per_row + vertices_per_row;
 
@@ -85,7 +85,7 @@ bool GenerateGrids(int x_grids, int y_grids, Vertex_VCN **ppVertices, int &num_v
 		}
 		else
 		{
-			// ¦b°¸¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥k±Æ¨ì¥ª
+			// åœ¨å¶æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å³æ’åˆ°å·¦
 			pIndices[index_index++] = y * vertices_per_row + x_grids;
 			pIndices[index_index++] = (y+1) * vertices_per_row + x_grids;
 
@@ -133,11 +133,11 @@ void GraphicsDevice_Simulation::SetWorldMatrix(Matrix4x4 &matrix)
 
 void GraphicsDevice_Simulation::CalculateLighting(Vertex_VCN *pVertices, int num_vertices)
 {
-	// °O¿ıÂà´««áªº¥ú·½¸ê®Æ
+	// è¨˜éŒ„è½‰æ›å¾Œçš„å…‰æºè³‡æ–™
 	Light_Info lights[g_iNumMaxLights];
 
-	// ¥ı§â¥ú·½Âà´«¨ìÃèÀY®y¼Ğ«Y
-	// ¨Ã§â§÷½è¸ò¥ú·½ÃC¦â°µ¬Û­¼, ¥i¥H¬Ù²¤­«½Æªº­pºâ.
+	// å…ˆæŠŠå…‰æºè½‰æ›åˆ°é¡é ­åº§æ¨™ä¿‚
+	// ä¸¦æŠŠæè³ªè·Ÿå…‰æºé¡è‰²åšç›¸ä¹˜, å¯ä»¥çœç•¥é‡è¤‡çš„è¨ˆç®—.
 	for ( int l=0; l<g_iNumMaxLights; l++ )
 	{
 		if ( m_Lights[l].m_bEnabled )
@@ -157,7 +157,7 @@ void GraphicsDevice_Simulation::CalculateLighting(Vertex_VCN *pVertices, int num
 
 	Vector4 vDefaultCameraDir(0.0f, 0.0f, 1.0f);
 
-	// ­pºâ°ò¥»ªº¥´¥ú­È
+	// è¨ˆç®—åŸºæœ¬çš„æ‰“å…‰å€¼
 	Vector4 vGlobalAmbient = m_vAmbientLight * m_vMaterialAmbient;
 	Vector4 vInitialLighting = m_vMaterialEmissive + vGlobalAmbient;
 
@@ -177,7 +177,7 @@ void GraphicsDevice_Simulation::CalculateLighting(Vertex_VCN *pVertices, int num
 			Vector4 vLightDir;
 			Vector4 vCameraDir;
 
-			// §â¥´¥úªì­È³]©w¦¨³o·ø¿OªºÀô¹Ò¥ú
+			// æŠŠæ‰“å…‰åˆå€¼è¨­å®šæˆé€™ç›ç‡ˆçš„ç’°å¢ƒå…‰
 			Vector4 vLighting = pLight->m_vAmbientColor;
 			
 			switch(pLight->m_eType)
@@ -207,7 +207,7 @@ void GraphicsDevice_Simulation::CalculateLighting(Vertex_VCN *pVertices, int num
 
 					if ( m_bPhongSpecular )
 					{
-						// `¤ñ¸ûºë½Tªº¤½¦¡`
+						// `æ¯”è¼ƒç²¾ç¢ºçš„å…¬å¼`
 						Vector4 vProjectedLightDir = vNormal * Vector3Dot(pLight->m_vDirection, vNormal);
 						Vector4 vReflectDir = 2.0f * vProjectedLightDir - vLightDir;
 						vReflectDir.Normalize();
@@ -218,7 +218,7 @@ void GraphicsDevice_Simulation::CalculateLighting(Vertex_VCN *pVertices, int num
 					}
 					else
 					{
-						// `Direct3D¸òOpenGL¨Ï¥ÎªºÂ²¤Æ¤½¦¡`
+						// `Direct3Dè·ŸOpenGLä½¿ç”¨çš„ç°¡åŒ–å…¬å¼`
 						Vector4 vHalfDir = (pLight->m_vDirection + vCameraDir);
 						vHalfDir.Normalize();
 						Vector4 vSpecularCosine = Vector3Dot(vHalfDir, vNormal);
@@ -253,19 +253,19 @@ void GraphicsDevice_Simulation::CalculateLighting(Vertex_VCN *pVertices, int num
 						// specular lighting
 						if ( m_bLocalViewer )
 						{
-							// `¹ê»Ú­pºâ³»ÂI¨ìÃèÀYªº¤è¦V`
+							// `å¯¦éš›è¨ˆç®—é ‚é»åˆ°é¡é ­çš„æ–¹å‘`
 							vCameraDir = -vPosition;
 							vCameraDir.Normalize();
 						}
 						else
 						{
-							// `°²³]³»ÂI¥Ã»·¦bÃèÀYªº¥¿«e¤è`
+							// `å‡è¨­é ‚é»æ°¸é åœ¨é¡é ­çš„æ­£å‰æ–¹`
 							vCameraDir = vDefaultCameraDir;
 						}
 
 						if ( m_bPhongSpecular )
 						{
-							// `¤ñ¸ûºë½Tªº¤½¦¡`
+							// `æ¯”è¼ƒç²¾ç¢ºçš„å…¬å¼`
 							Vector4 vProjectedLightDir = vNormal * Vector3Dot(vLightDir, vNormal);
 							Vector4 vReflectDir = 2.0f * vProjectedLightDir - vLightDir;
 							vReflectDir.Normalize();
@@ -276,7 +276,7 @@ void GraphicsDevice_Simulation::CalculateLighting(Vertex_VCN *pVertices, int num
 						}
 						else
 						{
-							// `Direct3D¸òOpenGL¨Ï¥ÎªºÂ²¤Æ¤½¦¡`
+							// `Direct3Dè·ŸOpenGLä½¿ç”¨çš„ç°¡åŒ–å…¬å¼`
 							Vector4 vHalfDir = (vLightDir + vCameraDir);
 							vHalfDir.Normalize();
 							Vector4 vSpecularCosine = Vector3Dot(vHalfDir, vNormal);
@@ -317,19 +317,19 @@ void GraphicsDevice_Simulation::CalculateLighting(Vertex_VCN *pVertices, int num
 							// specular lighting
 							if ( m_bLocalViewer )
 							{
-								// `°²³]³»ÂI¥Ã»·¦bÃèÀYªº¥¿«e¤è`
+								// `å‡è¨­é ‚é»æ°¸é åœ¨é¡é ­çš„æ­£å‰æ–¹`
 								vCameraDir = -vPosition;
 								vCameraDir.Normalize();
 							}
 							else
 							{
-								// `°²³]³»ÂI¥Ã»·¦bÃèÀYªº¥¿«e¤è`
+								// `å‡è¨­é ‚é»æ°¸é åœ¨é¡é ­çš„æ­£å‰æ–¹`
 								vCameraDir = vDefaultCameraDir;
 							}
 
 							if ( m_bPhongSpecular )
 							{
-								// `¤ñ¸ûºë½Tªº¤½¦¡`
+								// `æ¯”è¼ƒç²¾ç¢ºçš„å…¬å¼`
 								Vector4 vProjectedLightDir = vNormal * Vector3Dot(vLightDir, vNormal);
 								Vector4 vReflectDir = 2.0f * vProjectedLightDir - vLightDir;
 								vReflectDir.Normalize();

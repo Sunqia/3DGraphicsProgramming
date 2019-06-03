@@ -10,20 +10,20 @@ uniform vec4 Rand[3];
 uniform float fTimeAdvance;
 uniform float fTan;
 
-// `µo®g¥X·sªº particle`
+// `ç™¼å°„å‡ºæ–°çš„ particle`
 void EmitParticle(out vec4 position, out vec4 velocity, vec2 texcoord)
 {
-	// `±q¶K¹Ï¤¤¨ú¥X¶Ã¼Æ, CPU ©Ò¶Ç¤Jªº seed ·|´£¨Ñ¶Ã¼Æªº seed ®ÄªG.`
+	// `å¾è²¼åœ–ä¸­å–å‡ºäº‚æ•¸, CPU æ‰€å‚³å…¥çš„ seed æœƒæä¾›äº‚æ•¸çš„ seed æ•ˆæœ.`
 	vec4 rand0 = texture2D(NoiseSampler, texcoord + Rand[0].xy);
 	rand0 = frac(rand0 + Rand[1]);
 	vec4 rand1 = texture2D(NoiseSampler, texcoord + Rand[0].zw);
 	rand1 = frac(rand1 + Rand[2]);
 	
-	// `¤U­±·|¨Ï¥Î¶Ã¼Æ¨Ó³]©w particle Äİ©Ê`
+	// `ä¸‹é¢æœƒä½¿ç”¨äº‚æ•¸ä¾†è¨­å®š particle å±¬æ€§`
 	float  fSize = SizeRange.x + rand1.z * SizeRange.y;
-	// `¦ì¸m¸ò¤j¤p`
+	// `ä½ç½®è·Ÿå¤§å°`
 	position = vec4(0.0, 0.0, 0.0, fSize);
-	// `¤è¦V¸ò³t«×`
+	// `æ–¹å‘è·Ÿé€Ÿåº¦`
 	vec4 dir = (rand0 - 0.5) * 2.0;
 	vec2 xz = normalize(dir.xz) * fTan * rand1.x;
 	float  fLife = LifeRange.x +  LifeRange.y * rand0.w;
@@ -39,7 +39,7 @@ void EmitParticle(out vec4 position, out vec4 velocity, vec2 texcoord)
 
 void main(void)
 {
-	// `±q¶K¹Ï¤¤¨ú¥X³t«×­È¸ò¹Ø©R­È`
+	// `å¾è²¼åœ–ä¸­å–å‡ºé€Ÿåº¦å€¼è·Ÿå£½å‘½å€¼`
 	vec4 velocity = texture2D(VelocitySampler, gl_TexCoord[0].xy);
 	
 	vec4 NewPosition;
@@ -49,15 +49,15 @@ void main(void)
 		
 	if ( velocity.w <= 0.0 )
 	{
-		// `¹Ø©R²×¤î, ¦A²£¥Í·sªº particle .`	
+		// `å£½å‘½çµ‚æ­¢, å†ç”¢ç”Ÿæ–°çš„ particle .`	
 		EmitParticle(NewPosition, NewVelocity, gl_TexCoord[0].xy);
 	}
 	else
 	{
-		// `±q¶K¹Ï¤¤¨ú¥X¦ì¸m`
+		// `å¾è²¼åœ–ä¸­å–å‡ºä½ç½®`
 		vec4 position = texture2D(PositionSampler, gl_TexCoord[0].xy);
 
-		// `¹ï particle °µ¹B°Ê­pºâ`
+		// `å° particle åšé‹å‹•è¨ˆç®—`
 		NewPosition.xyz = position.xyz + velocity.xyz * fTimeAdvance;
 		NewPosition.w = position.w;
 		

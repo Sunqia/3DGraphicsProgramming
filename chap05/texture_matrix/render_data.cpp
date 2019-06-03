@@ -4,10 +4,10 @@
 
 // controller object
 CGutUserControl g_Control;
-// ¶K¹Ï®y¼ĞÂà´«¯x°}
+// è²¼åœ–åº§æ¨™è½‰æ›çŸ©é™£
 Matrix4x4 g_texture_matrix;
 
-// ¯x§Îªº4­Ó³»ÂI
+// çŸ©å½¢çš„4å€‹é ‚é»
 // Position, Texcoord
 Vertex_VT g_Quad[4] =
 {

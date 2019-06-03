@@ -84,7 +84,7 @@ bool InitResourceDX10(void)
 	g_pDevice = GutGetGraphicsDeviceDX10();
 	ID3D10Blob *pVSCode = NULL;
 
-	// ¸ü¤JShader
+	// è¼‰å…¥Shader
 	{
 		g_pEffect = GutLoadFXShaderDX10("../../shaders/Posteffect_dx10.fx");
 		if ( NULL==g_pEffect )
@@ -98,7 +98,7 @@ bool InitResourceDX10(void)
 			return false;
 	}
 
-    // ³]©wVertex¸ê®Æ®æ¦¡
+    // è¨­å®šVertexè³‡æ–™æ ¼å¼
 	{
 		D3D10_INPUT_ELEMENT_DESC layout[] =
 		{
@@ -206,7 +206,7 @@ static ID3D10ShaderResourceView *BlurImage(ID3D10ShaderResourceView *pTexture, s
 	g_pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	g_pDevice->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
 
-	// ¤ô¥­¼Ò½k
+	// æ°´å¹³æ¨¡ç³Š
 	{
 		device->OMSetRenderTargets(1, &g_pFrameRTView[0], NULL);
 
@@ -216,7 +216,7 @@ static ID3D10ShaderResourceView *BlurImage(ID3D10ShaderResourceView *pTexture, s
 
 		g_pDevice->Draw(4, 0);
 	}
-	// ««ª½¼Ò½k
+	// å‚ç›´æ¨¡ç³Š
 	{
 		device->OMSetRenderTargets(1, &g_pFrameRTView[1], NULL);
 
@@ -304,16 +304,16 @@ void RenderFrameDX10(void)
 
 		g_pDOFShader->GetPassByIndex(0)->Apply(0);
 
-		// ³]©wvertex¸ê®Æ®æ¦¡
+		// è¨­å®švertexè³‡æ–™æ ¼å¼
 		g_pDevice->IASetInputLayout(g_pVertexLayout);
-		// ³]©w¤T¨¤§Î³»ÂI¯Á¤Ş­È¸ê®Æ±Æ¦C¬Otriangle strip
+		// è¨­å®šä¸‰è§’å½¢é ‚é»ç´¢å¼•å€¼è³‡æ–™æ’åˆ—æ˜¯triangle strip
 		g_pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 
 		g_pDevice->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
 		g_pDevice->Draw(4, 0);
 	}
 
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain();
 	pSwapChain->Present(1, 0);
 }

@@ -1,7 +1,7 @@
 /*
-	¼ÒÀÀfixed pipelineªºShader
+	æ¨¡æ“¬fixed pipelineçš„Shader
 	
-			´^°ê­Û Peter Pon 
+			å½­åœ‹å€« Peter Pon 
 */
 
 #ifndef _VERTEXCOLOR
@@ -26,7 +26,7 @@
 
 #include "DefaultConstantBuffers.h"
 
-// ³]©w³»ÂIªº¸ê®Æ®æ¦¡
+// è¨­å®šé ‚é»çš„è³‡æ–™æ ¼å¼
 struct VS_INPUT
 {
 	float3 Position : POSITION;
@@ -48,7 +48,7 @@ struct VS_INPUT
 #endif
 };
 
-// ³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -93,14 +93,14 @@ void CalculateLighting(float3 vWorldPos, float3 vWorldNormal, out float4 vDiffus
 			float  fSpotLightEffect = 1.0f;
 						
 			if ( lighttype==LIGHT_DIRECTIONAL )
-			// ¤è¦V¥ú
+			// æ–¹å‘å…‰
 			{
 				vLightDir = -Lights[i].m_vDirection;
 			}
 			else
-			// ÂI¥ú·½¸ò»E¥ú¿O
+			// é»å…‰æºè·Ÿèšå…‰ç‡ˆ
 			{
-				// ­pºâ¥úªº¤è¦V¸ò¶ZÂ÷
+				// è¨ˆç®—å…‰çš„æ–¹å‘è·Ÿè·é›¢
 				float3 vDiff = Lights[i].m_vPosition.xyz - vWorldPos;
 				float fLightDistance = length(vDiff);
 				vLightDir = vDiff / fLightDistance;
@@ -108,9 +108,9 @@ void CalculateLighting(float3 vWorldPos, float3 vWorldNormal, out float4 vDiffus
 				fLightAttenuation = dot(float3(1.0f, fLightDistance, fLightDistance * fLightDistance), Lights[i].m_vAttenuation);
 				
 				if( lighttype==LIGHT_SPOT )
-				// »E¥ú¿O
+				// èšå…‰ç‡ˆ
 				{
-					// ­pºâ»E¥ú¿Oªº®ÄªG
+					// è¨ˆç®—èšå…‰ç‡ˆçš„æ•ˆæœ
 					float fSpotLightCosine = dot(-vLightDir, Lights[i].m_vDirection);
 					fSpotLightCosine = fSpotLightCosine > Lights[i].m_fSpotlightCutoffCosine 
 							? fSpotLightCosine : 0.0f;
@@ -118,9 +118,9 @@ void CalculateLighting(float3 vWorldPos, float3 vWorldNormal, out float4 vDiffus
 				}
 			}
 
-			// ¥ú·½ªºDiffuse³¡¥÷
+			// å…‰æºçš„Diffuseéƒ¨ä»½
 			vDiffuse = Lights[i].m_vDiffuse * saturate(dot(vLightDir, vWorldNormal));
-			// ¤è·½ªºSpcular³¡¥÷
+			// æ–¹æºçš„Spcularéƒ¨ä»½
 			float3 vCameraDir = normalize(vCameraPos - vWorldPos);
 			float3 vHalfDir = normalize(vLightDir + vCameraDir);
 			float  fSpecularCosine = saturate(dot(vHalfDir, vWorldNormal));
@@ -141,7 +141,7 @@ VS_OUTPUT VS(VS_INPUT In)
 {
 	VS_OUTPUT Out = (VS_OUTPUT)0;
 
-	// ¦ì¸m®y¼ĞÂà´«
+	// ä½ç½®åº§æ¨™è½‰æ›
 	Out.Position = mul( float4(In.Position, 1.0f), wvp_matrix);
 	
 	#if (_VERTEXCOLOR)
@@ -167,7 +167,7 @@ VS_OUTPUT VS(VS_INPUT In)
 		
 		#if ( _DIFFUSETEX0 )
 		{
-			// ¶K¹Ï®y¼ĞÂà´«
+			// è²¼åœ–åº§æ¨™è½‰æ›
 			float4 UV0 = mul(float4(In.UV0, 0.0f, 1.0f), texcoord_matrix[0]);
 			UV0 /= UV0.w;
 			UV.xy = UV0.xy;
@@ -176,7 +176,7 @@ VS_OUTPUT VS(VS_INPUT In)
 		
 		#if ( _DIFFUSETEX1 )
 		{
-			// ¶K¹Ï®y¼ĞÂà´«
+			// è²¼åœ–åº§æ¨™è½‰æ›
 			float4 UV1 = mul(float4(In.UV1, 0.0f, 1.0f), texcoord_matrix[1]);
 			UV1 /= UV1.w;
 			UV.zw = UV1.xy;

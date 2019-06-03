@@ -38,12 +38,12 @@ void GetUserInput(void)
 {
 	//
 	GutReadKeyboard();
-	// Åª¨ú·Æ¹«
+	// è®€å–æ»‘é¼ 
 	GutMouseInfo mouse;
 
 	if ( GutReadMouse(&mouse) )
 	{
-		// ¨ú±oµe§¹«e¤@­Óµe­±¨ì²{¦b©Ò¸g¾úªº®É¶¡
+		// å–å¾—ç•«å®Œå‰ä¸€å€‹ç•«é¢åˆ°ç¾åœ¨æ‰€ç¶“æ­·çš„æ™‚é–“
 		g_fFrame_Time = g_Timer.Stop();
 		g_Timer.Restart();
 
@@ -51,7 +51,7 @@ void GetUserInput(void)
 		float rotation_speed = 1.0 * g_fFrame_Time;
 
 
-		// ¦pªG«ö¤U·Æ¹«¥ªÁä¡A´N±ÛÂàÃèÀY
+		// å¦‚æœæŒ‰ä¸‹æ»‘é¼ å·¦éµï¼Œå°±æ—‹è½‰é¡é ­
 		if ( mouse.button[0] ) 
 		{
 			Matrix4x4 rotate_matrix;
@@ -60,7 +60,7 @@ void GetUserInput(void)
 			g_world_matrix = g_world_matrix * rotate_matrix;
 		}
 
-		// ºu½ü¥i¥H¼W¥[/´î¤Ö´Ñ½L®æ¤lªº¼Æ¥Ø
+		// æ»¾è¼ªå¯ä»¥å¢åŠ /æ¸›å°‘æ£‹ç›¤æ ¼å­çš„æ•¸ç›®
 		if ( mouse.z )
 		{
 			g_iNumGrids += mouse.z > 0 ? 1 : -1;
@@ -85,7 +85,7 @@ void GetUserInput(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -131,10 +131,10 @@ void main(void)
 
 	GutResizeFunc( resize_func );
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
@@ -157,7 +157,7 @@ void main(void)
 	GutRegisterKeyDown(GUTKEY_2, KeyDown_2);
 	GutRegisterKeyDown(GUTKEY_3, KeyDown_3);
 
-	// ¸ü¤JÃ¸¹Ï¸ê®Æ
+	// è¼‰å…¥ç¹ªåœ–è³‡æ–™
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -165,7 +165,7 @@ void main(void)
 		exit(0);
 	}
 
-	// `³]©w¥ú·½¸ê®Æ`
+	// `è¨­å®šå…‰æºè³‡æ–™`
 	g_vLightAmbient.Set(0.1f, 0.1f, 0.1f, 0.1f);
 	g_vLightDirection.Set(0.0f, 0.0f, 1.0f);
 	g_vLightPosition.Set(0.0f, 0.0f, 0.5f);
@@ -174,13 +174,13 @@ void main(void)
 	g_fSpotLightCutoff = 30.0f;
 	g_fSpotLightExponent = 30.0f;
 
-	// `¥D°j°é`
+	// `ä¸»è¿´åœˆ`
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
-		// `§â¨C­Ó³»ÂIªºÃC¦â¥ı³]©w¦¨g_vLightAmbientªº­È`
+		// `æŠŠæ¯å€‹é ‚é»çš„é¡è‰²å…ˆè¨­å®šæˆg_vLightAmbientçš„å€¼`
 		CalculateAmbientLight(g_pGridVertices, g_iNumGridVertices);
-		// `¦A¥[¤W©Ò¿ï¾Üªº¥ú·½`
+		// `å†åŠ ä¸Šæ‰€é¸æ“‡çš„å…‰æº`
 		switch(g_iLightSource)
 		{
 		case LIGHT_DIRECTIONAL:
@@ -197,12 +197,12 @@ void main(void)
 		render();
 	}
 	
-	// `ÄÀ©ñ´Ñ½L®æ¼Ò«¬°O¾ĞÅéªÅ¶¡	`
+	// `é‡‹æ”¾æ£‹ç›¤æ ¼æ¨¡å‹è¨˜æ†¶é«”ç©ºé–“	`
 	ReleaseGridsResource(&g_pGridVertices, &g_pGridIndices);
 	delete [] g_pGridVerticesDX9;
 
-	// ¨ø¸üÃ¸¹Ï¸ê®Æ
+	// å¸è¼‰ç¹ªåœ–è³‡æ–™
 	release_resource();
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

@@ -114,22 +114,22 @@ void sModelMaterial_OpenGL::Submit(sModelVertexChunk_OpenGL *pVChunk)
 				glEnable(GL_TEXTURE_GEN_T);
 				glDisable(GL_TEXTURE_GEN_R);
 				glDisable(GL_TEXTURE_GEN_Q);
-				// ¦Û°Ê²£¥Íspheremap¶K¹Ï®y¼Ğ
+				// è‡ªå‹•ç”¢ç”Ÿspheremapè²¼åœ–åº§æ¨™
 				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 				glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_SPHERE_MAP);
 				break;
 			case -2: // cube map
-				// S/T/R¤À§O¥Nªí¶K¹Ï®y¼ĞªºX/Y/Z¶b
+				// S/T/Råˆ†åˆ¥ä»£è¡¨è²¼åœ–åº§æ¨™çš„X/Y/Zè»¸
 				glEnable(GL_TEXTURE_GEN_S);
 				glEnable(GL_TEXTURE_GEN_T);
 				glEnable(GL_TEXTURE_GEN_R);
 				glDisable(GL_TEXTURE_GEN_Q);
-				// ¥H¥ú½uªº¤Ï®g¦V¶q¨Ó°µ¬°¶K¹Ï®y¼Ğ
+				// ä»¥å…‰ç·šçš„åå°„å‘é‡ä¾†åšç‚ºè²¼åœ–åº§æ¨™
 				glTexGeni(GL_S, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP);
 				glTexGeni(GL_T, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP);
 				glTexGeni(GL_R, GL_TEXTURE_GEN_MODE, GL_REFLECTION_MAP);
 			default:
-				// ¥Ñ¥~³¡±±¨î
+				// ç”±å¤–éƒ¨æ§åˆ¶
 				break;
 			}
 		}

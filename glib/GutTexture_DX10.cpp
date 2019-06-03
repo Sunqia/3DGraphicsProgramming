@@ -17,14 +17,14 @@
 
 ID3D10ShaderResourceView *GutLoadDDSTexture_DX10(const char *filename, sImageInfo *pInfo)
 {
-  	// `¨ú±oDirect3D10¸Ë¸m`
+  	// `å–å¾—Direct3D10è£ç½®`
 	ID3D10Device *device = GutGetGraphicsDeviceDX10();
     DDS_IMAGE_DATA *pDDSImageData = loadDDSTextureFile(filename);
 
 	if ( pDDSImageData==NULL )
 		return NULL;
 
-	// ¥u¥Ü½dDXn¼Ò¦¡, ¨ä¥¦¼Ò¦¡¥æµ¹Direct3D10¨ç¦¡¨Ó¸ü¤J.
+	// åªç¤ºç¯„DXnæ¨¡å¼, å…¶å®ƒæ¨¡å¼äº¤çµ¦Direct3D10å‡½å¼ä¾†è¼‰å…¥.
 	if ( !pDDSImageData->bBlock )
 	{
 		//
@@ -82,7 +82,7 @@ ID3D10ShaderResourceView *GutLoadDDSTexture_DX10(const char *filename, sImageInf
 	D3D10_SUBRESOURCE_DATA init_data[20];
 	ZeroMemory(init_data, sizeof(init_data));
 
-	// `¸ü¤J`mipmap
+	// `è¼‰å…¥`mipmap
 	for( int i = 0; i < nNumMipMaps; ++i )
 	{
 		if( nWidth  == 0 ) nWidth  = 1;
@@ -95,7 +95,7 @@ ID3D10ShaderResourceView *GutLoadDDSTexture_DX10(const char *filename, sImageInf
 
 		nOffset += nSize;
 
-		// mipmap`¤U¤@¼hªº¸ÑªR«×·|´î¥b`
+		// mipmap`ä¸‹ä¸€å±¤çš„è§£æåº¦æœƒæ¸›åŠ`
 		nWidth  = (nWidth  / 2);
 		nHeight = (nHeight / 2);
 	}
@@ -162,7 +162,7 @@ ID3D10ShaderResourceView *GutLoadNoCompressedTexture_DX10(const char *filename, 
 		return NULL;
 	}
 
-	// ¨ú±oDirect3D 10¸Ë¸m
+	// å–å¾—Direct3D 10è£ç½®
 	ID3D10Device *device = GutGetGraphicsDeviceDX10();
 
 	int bytes_per_pixel = pLoader->GetBPP()/8;
@@ -193,7 +193,7 @@ ID3D10ShaderResourceView *GutLoadNoCompressedTexture_DX10(const char *filename, 
 
 	for (int i=0; i<mipmap_levels; i++)
 	{
-		// §âmipmap¨C­Ó¹Ï¼hªº¶K¹Ï¸ê®Æ½Æ»s,¨ÃÂà´«¨ìABGR±Æ¦Cªº°O¾ĞÅé¤º
+		// æŠŠmipmapæ¯å€‹åœ–å±¤çš„è²¼åœ–è³‡æ–™è¤‡è£½,ä¸¦è½‰æ›åˆ°ABGRæ’åˆ—çš„è¨˜æ†¶é«”å…§
 		layers_w[i] = pLoader->GetWidth();
 		layers_h[i] = pLoader->GetHeight();
 
@@ -251,12 +251,12 @@ ID3D10ShaderResourceView *GutLoadNoCompressedTexture_DX10(const char *filename, 
 	desc.Usage = D3D10_USAGE_IMMUTABLE;
 	desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
 
-	// ³z¹L³]©wªì­Èªº¤èªk¨Ó«ş³Æ¶K¹Ï¸ê®Æ
+	// é€éè¨­å®šåˆå€¼çš„æ–¹æ³•ä¾†æ‹·å‚™è²¼åœ–è³‡æ–™
 	D3D10_SUBRESOURCE_DATA init_data[20];
 
 	for ( int i=0; i<mipmap_levels; i++ )
 	{
-		// ©ñ¤J¨C­Ó¹Ï¼hªº¸ê®Æ
+		// æ”¾å…¥æ¯å€‹åœ–å±¤çš„è³‡æ–™
 		init_data[i].pSysMem = layers[i];
 		init_data[i].SysMemPitch = layers_w[i] * 4;
 		init_data[i].SysMemSlicePitch = 0;
@@ -298,7 +298,7 @@ ID3D10ShaderResourceView *GutLoadCubemapTexture_DX10(const char **texture_array,
 
 	int mipmap_levels = 1;
 
-	// `¨ú±oDirect3D10¸Ë¸m`
+	// `å–å¾—Direct3D10è£ç½®`
 	ID3D10Device *device = GutGetGraphicsDeviceDX10();
 
 	D3D10_SUBRESOURCE_DATA init_data[6*15];
@@ -331,7 +331,7 @@ ID3D10ShaderResourceView *GutLoadCubemapTexture_DX10(const char **texture_array,
 			return NULL;
 		}
 
-		// `¨ú±oDirect3D10¸Ë¸m`
+		// `å–å¾—Direct3D10è£ç½®`
 		ID3D10Device *device = GutGetGraphicsDeviceDX10();
 
 		int bytes_per_pixel = pLoader->GetBPP()/8;
@@ -352,7 +352,7 @@ ID3D10ShaderResourceView *GutLoadCubemapTexture_DX10(const char **texture_array,
 
 		for (int i=0; i<mipmap_levels; i++)
 		{
-			// `§âmipmap¨C­Ó¹Ï¼hªº¶K¹Ï¸ê®Æ½Æ»s,¨ÃÂà´«¨ìABGR±Æ¦Cªº°O¾ĞÅé¤º`
+			// `æŠŠmipmapæ¯å€‹åœ–å±¤çš„è²¼åœ–è³‡æ–™è¤‡è£½,ä¸¦è½‰æ›åˆ°ABGRæ’åˆ—çš„è¨˜æ†¶é«”å…§`
 			mipmap_info[f][i].w = pLoader->GetWidth();
 			mipmap_info[f][i].h = pLoader->GetHeight();
 			mipmap_info[f][i].pBuffer = new unsigned char[pLoader->GetWidth() * pLoader->GetHeight() * 4];
@@ -360,7 +360,7 @@ ID3D10ShaderResourceView *GutLoadCubemapTexture_DX10(const char **texture_array,
 			unsigned char *target = mipmap_info[f][i].pBuffer;
 			unsigned char *source = pLoader->GetImg();
 
-			// `©ñ¤J¨C­Ó¹Ï¼hªº¸ê®Æ`
+			// `æ”¾å…¥æ¯å€‹åœ–å±¤çš„è³‡æ–™`
 			init_data[index].pSysMem = mipmap_info[f][i].pBuffer;
 			init_data[index].SysMemPitch = mipmap_info[f][i].w * 4;
 			init_data[index].SysMemSlicePitch = 0;
@@ -406,7 +406,7 @@ ID3D10ShaderResourceView *GutLoadCubemapTexture_DX10(const char **texture_array,
 		delete pLoader;
 	}
 
-	// `³]©w¶K¹Ï®æ¦¡`
+	// `è¨­å®šè²¼åœ–æ ¼å¼`
 	D3D10_TEXTURE2D_DESC desc;
 	ZeroMemory( &desc, sizeof(desc) );
 
@@ -420,7 +420,7 @@ ID3D10ShaderResourceView *GutLoadCubemapTexture_DX10(const char **texture_array,
 	desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
 	desc.MiscFlags = D3D10_RESOURCE_MISC_TEXTURECUBE;
 
-	// `³z¹L³]©wªì­Èªº¤èªk¨Ó«ş³Æ¶K¹Ï¸ê®Æ`
+	// `é€éè¨­å®šåˆå€¼çš„æ–¹æ³•ä¾†æ‹·å‚™è²¼åœ–è³‡æ–™`
 	ID3D10Texture2D *pTexture = NULL;
 	device->CreateTexture2D( &desc, init_data, &pTexture );
 
@@ -432,7 +432,7 @@ ID3D10ShaderResourceView *GutLoadCubemapTexture_DX10(const char **texture_array,
 		}
 	}
 
-	// `°t¸mµ¹Shader¨Ï¥Îªº¸ê·½«¬ºA`
+	// `é…ç½®çµ¦Shaderä½¿ç”¨çš„è³‡æºå‹æ…‹`
 	ID3D10ShaderResourceView *pEnvMapSRV;
 
     D3D10_SHADER_RESOURCE_VIEW_DESC SRVDesc;
@@ -475,7 +475,7 @@ ID3D10ShaderResourceView *GutLoadTexture_DX10(const char *filename, sImageInfo *
 
 ID3D10ShaderResourceView *GutLoadCubemapTexture_DX10(const char *filename)
 {
-	// ¨ú±oDirect3D 10¸Ë¸m
+	// å–å¾—Direct3D 10è£ç½®
 	ID3D10Device *device = GutGetGraphicsDeviceDX10();
 
 	char file_ext[16];
@@ -494,7 +494,7 @@ ID3D10ShaderResourceView *GutLoadCubemapTexture_DX10(const char *filename)
 
 ID3D10ShaderResourceView *GutLoadVolumeTexture_DX10(const char *filename)
 {
-	// ¨ú±oDirect3D 10¸Ë¸m
+	// å–å¾—Direct3D 10è£ç½®
 	ID3D10Device *device = GutGetGraphicsDeviceDX10();
 
 	DDS_IMAGE_DATA *pDDSImageData = loadDDSTextureFile(filename);
@@ -513,7 +513,7 @@ ID3D10ShaderResourceView *GutLoadVolumeTexture_DX10(const char *filename)
 	desc.Usage = D3D10_USAGE_IMMUTABLE;
 	desc.BindFlags = D3D10_BIND_SHADER_RESOURCE;
 
-	// ³z¹L³]©wªì­Èªº¤èªk¨Ó«ş³Æ¶K¹Ï¸ê®Æ
+	// é€éè¨­å®šåˆå€¼çš„æ–¹æ³•ä¾†æ‹·å‚™è²¼åœ–è³‡æ–™
 	D3D10_SUBRESOURCE_DATA init_data;
 	init_data.pSysMem = pDDSImageData->pixels;
 	init_data.SysMemPitch = desc.Width;

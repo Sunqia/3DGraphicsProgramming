@@ -16,7 +16,7 @@ void GetUserInput(void)
 	
 	if ( mouse.button[0] )
 	{
-		// ¦pªG¦³«ö¤U¥ªÁä, ´N±ÛÂàª«¥ó
+		// å¦‚æœæœ‰æŒ‰ä¸‹å·¦éµ, å°±æ—‹è½‰ç‰©ä»¶
 		float rz = mouse.x * 0.01f;
 		float rx = mouse.y * -0.01f;
 
@@ -29,7 +29,7 @@ void GetUserInput(void)
 
 	if ( mouse.z )
 	{
-		// ¦pªGºu½ü¦³¦b°Ê, ´N¨Ï¥Îºu½ü¨ÓÁY©ñª«¥ó
+		// å¦‚æœæ»¾è¼ªæœ‰åœ¨å‹•, å°±ä½¿ç”¨æ»¾è¼ªä¾†ç¸®æ”¾ç‰©ä»¶
 		float scale = 1.0f + mouse.z * 0.001f;
 		g_object_matrix.Scale(scale, scale, scale);
 	}
@@ -37,7 +37,7 @@ void GetUserInput(void)
 
 void main(int argc, char *argv[])
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -75,10 +75,10 @@ void main(int argc, char *argv[])
 		break;
 	}
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
@@ -86,7 +86,7 @@ void main(int argc, char *argv[])
 	}
 
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -94,23 +94,23 @@ void main(int argc, char *argv[])
 		exit(0);
 	}
 
-	// ªì©l¤ÆDirectX Inputª«¥ó
+	// åˆå§‹åŒ–DirectX Inputç‰©ä»¶
 	GutInputInit();
-	// ¥ı§â¯x°}³]¬°³æ¦ì¯x°}
+	// å…ˆæŠŠçŸ©é™£è¨­ç‚ºå–®ä½çŸ©é™£
 	g_object_matrix.Identity();
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
-		// Åª¨ú·Æ¹«, ¨Ã­pºâ·sªº±ÛÂà¤ÎÁY©ñ¯x°}
+		// è®€å–æ»‘é¼ , ä¸¦è¨ˆç®—æ–°çš„æ—‹è½‰åŠç¸®æ”¾çŸ©é™£
 		GetUserInput();
-		// µe¹Ï
+		// ç•«åœ–
 		render();
 	}
 	
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
 
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

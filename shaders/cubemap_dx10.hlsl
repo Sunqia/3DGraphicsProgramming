@@ -1,11 +1,11 @@
-// ³]©w³»ÂIªº¸ê®Æ®æ¦¡
+// è¨­å®šé ‚é»çš„è³‡æ–™æ ¼å¼
 struct VS_INPUT
 {
 	float3 Position : POSITION;
 	float3 Normal : NORMAL;
 };
 
-// ³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -16,7 +16,7 @@ struct VS_OUTPUT
 TextureCube CubemapTexture;
 SamplerState CubemapSampler;
 
-// Âà´«¯x°}
+// è½‰æ›çŸ©é™£
 uniform row_major float4x4 wvp_matrix;
 uniform row_major float4x4 world_matrix;
 uniform row_major float4x4 inv_view_matrix;

@@ -1,4 +1,4 @@
-// ³»ÂIªº¸ê®Æ¿é¤J®æ¦¡
+// é ‚é»çš„è³‡æ–™è¼¸å…¥æ ¼å¼
 struct sParticle
 {
 	float4 Position : POSITION;
@@ -54,7 +54,7 @@ void GS_billboard(point sParticle input[1], inout TriangleStream<GS_OUTPUT> stre
 	GS_OUTPUT Out[4];
 	float4 v[4];
 	
-	// §Q¥ÎÃèÀY¯x°}¨Ó«Ø¥ß billboard
+	// åˆ©ç”¨é¡é ­çŸ©é™£ä¾†å»ºç«‹ billboard
 	v[0] = position - fSize * camera_matrix[0] - fSize * camera_matrix[1];
 	v[1] = position + fSize * camera_matrix[0] - fSize * camera_matrix[1];
 	v[2] = position + fSize * camera_matrix[0] + fSize * camera_matrix[1];

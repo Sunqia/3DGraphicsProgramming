@@ -52,16 +52,16 @@ void frame_move(void)
 	const float PI_double = PI * 2.0f;
 	const float days_a_year = 365.0f;
 	const float days_a_month = 28.0f;
-	const float earth_to_sun_distance = 5.0f; // `¦a²yÂ÷¤Ó¶§ªº°²³]­È`
-	const float simulation_speed = 60.0f; // `1¬í¬Û·í©ó60¤Ñ`
+	const float earth_to_sun_distance = 5.0f; // `åœ°çƒé›¢å¤ªé™½çš„å‡è¨­å€¼`
+	const float simulation_speed = 60.0f; // `1ç§’ç›¸ç•¶æ–¼60å¤©`
 
 	static float simulation_days = 0;
 	simulation_days += g_fFrame_Time * simulation_speed;
 	
-	// `§â¤Ó¶§©ñ¦b¥@¬É®y¼Ğ¨t­ìÂI`
+	// `æŠŠå¤ªé™½æ”¾åœ¨ä¸–ç•Œåº§æ¨™ç³»åŸé»`
 	g_sun_matrix.Identity();
-	// `ºâ¥X¦a²yªº¦ì¸m`
-	g_earth_matrix = g_sun_matrix; // `§â¦a²y©ñ¨ì¤Ó¶§ªº®y¼Ğ¨t¤W`
+	// `ç®—å‡ºåœ°çƒçš„ä½ç½®`
+	g_earth_matrix = g_sun_matrix; // `æŠŠåœ°çƒæ”¾åˆ°å¤ªé™½çš„åº§æ¨™ç³»ä¸Š`
 	g_earth_matrix.RotateY( 2.0f * PI * simulation_days / days_a_year); 
 	g_earth_matrix.TranslateX( earth_to_sun_distance );
 
@@ -69,7 +69,7 @@ void frame_move(void)
 	g_rot_matrix = m;
 
 	Vector4 eye = g_Control.GetCameraPosition();
-	// `±Æ§Ç`
+	// `æ’åº`
 	if ( g_bSorting )
 	{
 		float distance[2];
@@ -106,7 +106,7 @@ void frame_move(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -149,10 +149,10 @@ void main(void)
 
 	GutResizeFunc( resize_func );
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
@@ -181,7 +181,7 @@ void main(void)
 	float blue[]={0.2f, 0.2f, 1.0f, 0.7f};
 	CreateSphere(1.0f, &g_pEarthVertices, NULL, blue);
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -189,7 +189,7 @@ void main(void)
 		exit(0);
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
@@ -197,9 +197,9 @@ void main(void)
 		render();
 	}
 	
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
 
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

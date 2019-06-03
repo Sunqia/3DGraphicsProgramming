@@ -36,16 +36,16 @@ bool CGutFontDX10::LoadShader(const char *filename)
 	ID3D10Device *pDevice = GutGetGraphicsDeviceDX10();
 	ID3D10Blob *pVSCode = NULL;
 
-	// ¸ü¤JVertex Shader
+	// è¼‰å…¥Vertex Shader
 	m_pVertexShader = GutLoadVertexShaderDX10_HLSL(filename, "VS", "vs_4_0", &pVSCode);
 	if ( NULL==m_pVertexShader )
 		return false;
-	// ¸ü¤JPixel Shader
+	// è¼‰å…¥Pixel Shader
 	m_pPixelShader = GutLoadPixelShaderDX10_HLSL(filename, "PS", "ps_4_0");
 	if ( NULL==m_pPixelShader )
 		return false;
 
-	// Shader±`¼Æªº°O¾ÐÅéªÅ¶¡
+	// Shaderå¸¸æ•¸çš„è¨˜æ†¶é«”ç©ºé–“
 	{
 		D3D10_BUFFER_DESC desc;
 		//
@@ -90,7 +90,7 @@ bool CGutFontDX10::LoadShader(const char *filename)
 		if ( D3D_OK != pDevice->CreateBuffer( &desc, &subDesc, &m_pIndexBuffer ) )
 			return false;
 	}
-	// rasterizer stateª«¥ó
+	// rasterizer stateç‰©ä»¶
 	{
 		D3D10_RASTERIZER_DESC desc;
 		GutSetDX10DefaultRasterizerDesc(desc);
@@ -100,7 +100,7 @@ bool CGutFontDX10::LoadShader(const char *filename)
 		if ( D3D_OK != pDevice->CreateRasterizerState(&desc, &m_pRasterizerState) )
 			return false;
 	}
-	// ³]©wVertex¸ê®Æ®æ¦¡
+	// è¨­å®šVertexè³‡æ–™æ ¼å¼
 	{
 		D3D10_INPUT_ELEMENT_DESC layout[] =
 		{
@@ -119,7 +119,7 @@ void CGutFontDX10::BuildMesh(void)
 {
 	CGutFont::BuildMesh();
 
-	// §ó·sshader°Ñ¼Æ
+	// æ›´æ–°shaderåƒæ•¸
 	_FontVertex *pVertices;
 	m_pVertexBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pVertices );
 	memcpy(pVertices, m_pVertexArray, sizeof(_FontVertex) * m_iNumCharacters * 4);
@@ -138,33 +138,33 @@ void CGutFontDX10::Render(void)
 	UINT offset = 0;
 	//
 	ID3D10Device *pDevice = GutGetGraphicsDeviceDX10();
-	// ¨Ï¥Î¥­¦æµø¨¤	
+	// ä½¿ç”¨å¹³è¡Œè¦–è§’	
 	Matrix4x4 proj_matrix = GutMatrixOrthoRH_DirectX(m_fWidth, m_fHeight, 0.0f, 1.0f);
 	Matrix4x4 view_matrix; view_matrix.Identity();
 	view_matrix[3].Set(-m_fWidth/2.0f, -m_fHeight/2.0f, 0.0f, 1.0f);
 	Matrix4x4 vp_matrix = view_matrix * proj_matrix;
-	// §ó·sshader°Ñ¼Æ
+	// æ›´æ–°shaderåƒæ•¸
 	Matrix4x4 *pConstData;
 	m_pShaderConstant->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 	*pConstData = vp_matrix;
 	m_pShaderConstant->Unmap();
 	// 
 	pDevice->RSSetState(m_pRasterizerState);
-	// ³]©wShader
+	// è¨­å®šShader
 	pDevice->VSSetShader(m_pVertexShader);
 	pDevice->PSSetShader(m_pPixelShader);
-	// ³]©wvertex shaderÅª¨ú°Ñ¼Æªº°O¾ÐÅé¦ìÓ_
+	// è¨­å®švertex shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ä½ç½
     pDevice->VSSetConstantBuffers(0, 1, &m_pShaderConstant);
-	// ®M¥Î¦r«¬¶K¹Ï
+	// å¥—ç”¨å­—åž‹è²¼åœ–
 	pDevice->PSSetShaderResources(0, 1, &m_pFontTexture);
-	// ³]©wvertex¸ê®Æ®æ¦¡
+	// è¨­å®švertexè³‡æ–™æ ¼å¼
 	pDevice->IASetInputLayout(m_pVertexLayout);
-	// ³]©wvertex buffer
+	// è¨­å®švertex buffer
 	pDevice->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 	pDevice->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
-	// ³]©w¤T¨¤§Î³»ÂI¯Á¤Þ­È¸ê®Æ±Æ¦C¬Otriangle list
+	// è¨­å®šä¸‰è§’å½¢é ‚é»žç´¢å¼•å€¼è³‡æ–™æŽ’åˆ—æ˜¯triangle list
 	pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	// µe¥X¤å¦r
+	// ç•«å‡ºæ–‡å­—
 	pDevice->DrawIndexed(m_iNumCharacters*6, 0, 0);
 }
 
@@ -204,16 +204,16 @@ bool CGutFontUniCodeDX10::LoadShader(const char *filename)
 	ID3D10Device *pDevice = GutGetGraphicsDeviceDX10();
 	ID3D10Blob *pVSCode = NULL;
 
-	// ¸ü¤JVertex Shader
+	// è¼‰å…¥Vertex Shader
 	m_pVertexShader = GutLoadVertexShaderDX10_HLSL(filename, "VS", "vs_4_0", &pVSCode);
 	if ( NULL==m_pVertexShader )
 		return false;
-	// ¸ü¤JPixel Shader
+	// è¼‰å…¥Pixel Shader
 	m_pPixelShader = GutLoadPixelShaderDX10_HLSL(filename, "PS", "ps_4_0");
 	if ( NULL==m_pPixelShader )
 		return false;
 
-	// Shader±`¼Æªº°O¾ÐÅéªÅ¶¡
+	// Shaderå¸¸æ•¸çš„è¨˜æ†¶é«”ç©ºé–“
 	{
 		D3D10_BUFFER_DESC desc;
 		//
@@ -258,7 +258,7 @@ bool CGutFontUniCodeDX10::LoadShader(const char *filename)
 		if ( D3D_OK != pDevice->CreateBuffer( &desc, &subDesc, &m_pIndexBuffer ) )
 			return false;
 	}
-	// rasterizer stateª«¥ó
+	// rasterizer stateç‰©ä»¶
 	{
 		D3D10_RASTERIZER_DESC desc;
 		GutSetDX10DefaultRasterizerDesc(desc);
@@ -268,7 +268,7 @@ bool CGutFontUniCodeDX10::LoadShader(const char *filename)
 		if ( D3D_OK != pDevice->CreateRasterizerState(&desc, &m_pRasterizerState) )
 			return false;
 	}
-	// ³]©wVertex¸ê®Æ®æ¦¡
+	// è¨­å®šVertexè³‡æ–™æ ¼å¼
 	{
 		D3D10_INPUT_ELEMENT_DESC layout[] =
 		{
@@ -287,7 +287,7 @@ void CGutFontUniCodeDX10::BuildMesh(void)
 {
 	CGutFont::BuildMesh();
 
-	// §ó·sshader°Ñ¼Æ
+	// æ›´æ–°shaderåƒæ•¸
 	_FontVertex *pVertices;
 	m_pVertexBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pVertices );
 	memcpy(pVertices, m_pVertexArray, sizeof(_FontVertex) * m_iNumCharacters * 4);
@@ -398,33 +398,33 @@ void CGutFontUniCodeDX10::Render(void)
 	UINT offset = 0;
 	//
 	ID3D10Device *pDevice = GutGetGraphicsDeviceDX10();
-	// ¨Ï¥Î¥­¦æµø¨¤	
+	// ä½¿ç”¨å¹³è¡Œè¦–è§’	
 	Matrix4x4 proj_matrix = GutMatrixOrthoRH_DirectX(m_fWidth, m_fHeight, 0.0f, 1.0f);
 	Matrix4x4 view_matrix; view_matrix.Identity();
 	view_matrix[3].Set(-m_fWidth/2.0f, -m_fHeight/2.0f, 0.0f, 1.0f);
 	Matrix4x4 vp_matrix = view_matrix * proj_matrix;
-	// §ó·sshader°Ñ¼Æ
+	// æ›´æ–°shaderåƒæ•¸
 	Matrix4x4 *pConstData;
 	m_pShaderConstant->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 	*pConstData = vp_matrix;
 	m_pShaderConstant->Unmap();
 	// 
 	pDevice->RSSetState(m_pRasterizerState);
-	// ³]©wShader
+	// è¨­å®šShader
 	pDevice->VSSetShader(m_pVertexShader);
 	pDevice->PSSetShader(m_pPixelShader);
-	// ³]©wvertex shaderÅª¨ú°Ñ¼Æªº°O¾ÐÅé¦ìÓ_
+	// è¨­å®švertex shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ä½ç½
     pDevice->VSSetConstantBuffers(0, 1, &m_pShaderConstant);
-	// ®M¥Î¦r«¬¶K¹Ï
+	// å¥—ç”¨å­—åž‹è²¼åœ–
 	pDevice->PSSetShaderResources(0, 1, &m_pFontTexture);
-	// ³]©wvertex¸ê®Æ®æ¦¡
+	// è¨­å®švertexè³‡æ–™æ ¼å¼
 	pDevice->IASetInputLayout(m_pVertexLayout);
-	// ³]©wvertex buffer
+	// è¨­å®švertex buffer
 	pDevice->IASetVertexBuffers(0, 1, &m_pVertexBuffer, &stride, &offset);
 	pDevice->IASetIndexBuffer(m_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
-	// ³]©w¤T¨¤§Î³»ÂI¯Á¤Þ­È¸ê®Æ±Æ¦C¬Otriangle list
+	// è¨­å®šä¸‰è§’å½¢é ‚é»žç´¢å¼•å€¼è³‡æ–™æŽ’åˆ—æ˜¯triangle list
 	pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	// µe¥X¤å¦r
+	// ç•«å‡ºæ–‡å­—
 	pDevice->DrawIndexed(m_iNumCharacters*6, 0, 0);
 }
 

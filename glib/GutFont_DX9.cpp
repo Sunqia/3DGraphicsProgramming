@@ -26,27 +26,27 @@ void CGutFontDX9::Render(void)
 		return;
 
 	LPDIRECT3DDEVICE9 pDevice = GutGetGraphicsDeviceDX9();
-	// `®M¥Î¦r«¬¶K¹Ï`
+	// `å¥—ç”¨å­—åž‹è²¼åœ–`
 	sModelMaterial_DX9 mtl;
 	mtl.m_bCullFace = false;
 	mtl.m_pTextures[0] = m_pFontTexture;
 	mtl.Submit();
-	// `¶}±ÒAlpha Test`
+	// `é–‹å•ŸAlpha Test`
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	pDevice->SetRenderState(D3DRS_ALPHAREF, 128);
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-	// `¨Ï¥Î¥­¦æµø¨¤ÃèÀY`
+	// `ä½¿ç”¨å¹³è¡Œè¦–è§’é¡é ­`
 	Matrix4x4 proj_matrix = GutMatrixOrthoRH_DirectX(m_fWidth, m_fHeight, 0.0f, 1.0f);
 	Matrix4x4 view_matrix; view_matrix.Identity();
 	Matrix4x4 ident_matrix; ident_matrix.Identity();
 	view_matrix[3].Set(-m_fWidth/2.0f, -m_fHeight/2.0f, 0.0f, 1.0f);
-	// `³]©wÂà´«¯x°}`
+	// `è¨­å®šè½‰æ›çŸ©é™£`
 	pDevice->SetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&proj_matrix);
 	pDevice->SetTransform(D3DTS_VIEW, (D3DMATRIX*)&view_matrix);
 	pDevice->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&ident_matrix);
-	// `³]©w³»ÂI¸ê®Æ®æ¦¡`
+	// `è¨­å®šé ‚é»žè³‡æ–™æ ¼å¼`
 	pDevice->SetFVF(D3DFVF_XYZ|D3DFVF_TEX1); 
-	// `µe¥X©Ò¦³ªº¤å¦r`
+	// `ç•«å‡ºæ‰€æœ‰çš„æ–‡å­—`
 	pDevice->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, 
 		m_iNumCharacters*4, m_iNumCharacters*2, 
 		m_pIndexArray, D3DFMT_INDEX16, 
@@ -136,27 +136,27 @@ void CGutFontUniCodeDX9::Render(void)
 		return;
 
 	LPDIRECT3DDEVICE9 pDevice = GutGetGraphicsDeviceDX9();
-	// ®M¥Î¦r«¬¶K¹Ï
+	// å¥—ç”¨å­—åž‹è²¼åœ–
 	sModelMaterial_DX9 mtl;
 	mtl.m_bCullFace = false;
 	mtl.m_pTextures[0] = m_pFontTexture;
 	mtl.Submit();
-	// ¶}±ÒAlpha Test
+	// é–‹å•ŸAlpha Test
 	pDevice->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
 	pDevice->SetRenderState(D3DRS_ALPHAREF, 128);
 	pDevice->SetRenderState(D3DRS_ALPHAFUNC, D3DCMP_GREATER);
-	// ¨Ï¥Î¥­¦æµø¨¤ÃèÀY
+	// ä½¿ç”¨å¹³è¡Œè¦–è§’é¡é ­
 	Matrix4x4 proj_matrix = GutMatrixOrthoRH_DirectX(m_fWidth, m_fHeight, 0.0f, 1.0f);
 	Matrix4x4 view_matrix; view_matrix.Identity();
 	Matrix4x4 ident_matrix; ident_matrix.Identity();
 	view_matrix[3].Set(-m_fWidth/2.0f, -m_fHeight/2.0f, 0.0f, 1.0f);
-	// ³]©wÂà´«¯x°}
+	// è¨­å®šè½‰æ›çŸ©é™£
 	pDevice->SetTransform(D3DTS_PROJECTION, (D3DMATRIX*)&proj_matrix);
 	pDevice->SetTransform(D3DTS_VIEW, (D3DMATRIX*)&view_matrix);
 	pDevice->SetTransform(D3DTS_WORLD, (D3DMATRIX*)&ident_matrix);
-	// ³]©w³»ÂI¸ê®Æ®æ¦¡
+	// è¨­å®šé ‚é»žè³‡æ–™æ ¼å¼
 	pDevice->SetFVF(D3DFVF_XYZ|D3DFVF_TEX1); 
-	// µe¥X©Ò¦³ªº¤å¦r
+	// ç•«å‡ºæ‰€æœ‰çš„æ–‡å­—
 	pDevice->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, 
 		m_iNumCharacters*4, m_iNumCharacters*2, 
 		m_pIndexArray, D3DFMT_INDEX16, 

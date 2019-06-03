@@ -14,14 +14,14 @@ static D3DPRESENT_PARAMETERS g_pD3DPresent;
 
 LPDIRECT3DDEVICE9 GutGetGraphicsDeviceDX9(void)
 {
-	// `ª½±µ¶Ç¦^¤w¸gªì©l¤Æ¦nªºDirect3D 9¸Ë¸m`
+	// `ç›´æ¥å‚³å›å·²ç¶“åˆå§‹åŒ–å¥½çš„Direct3D 9è£ç½®`
 	return g_pD3DDevice;
 }
 
-// `Direct3D9 ªì¨Ï¤Æ.`
+// `Direct3D9 åˆä½¿åŒ–.`
 bool GutInitGraphicsDeviceDX9(GutDeviceSpec *pSpec)
 {
-	// `¶}±Òµøµ¡®É´N¤w¨ú±o³o­Ó¥Î¨Ó¥Nªíµøµ¡ªº«ü¼Ğ, ª½±µ®³¨Ó¨Ï¥Î.`
+	// `é–‹å•Ÿè¦–çª—æ™‚å°±å·²å–å¾—é€™å€‹ç”¨ä¾†ä»£è¡¨è¦–çª—çš„æŒ‡æ¨™, ç›´æ¥æ‹¿ä¾†ä½¿ç”¨.`
 	HWND hWnd = GutGetWindowHandleWin32();
 
 	RECT rect;
@@ -36,7 +36,7 @@ bool GutInitGraphicsDeviceDX9(GutDeviceSpec *pSpec)
 	if ( pSpec )
 		multisamples = pSpec->m_iMultiSamples;
 
-	// `¨ú±o¤@­ÓD3D9ª«¥ó, ¥¦ªº°ß¤@¥\¥Î¬O¥h¶}±Ò¯u¥¿¥i¥H®³¨ÓÃ¸¹ÏªºD3D9 Device.`
+	// `å–å¾—ä¸€å€‹D3D9ç‰©ä»¶, å®ƒçš„å”¯ä¸€åŠŸç”¨æ˜¯å»é–‹å•ŸçœŸæ­£å¯ä»¥æ‹¿ä¾†ç¹ªåœ–çš„D3D9 Device.`
 	if( NULL == ( g_pD3D = Direct3DCreate9( D3D_SDK_VERSION ) ) )
 		return false;
 
@@ -44,7 +44,7 @@ bool GutInitGraphicsDeviceDX9(GutDeviceSpec *pSpec)
 	g_pD3DPresent.Windowed = TRUE;
 	g_pD3DPresent.SwapEffect = D3DSWAPEFFECT_DISCARD;
 	g_pD3DPresent.BackBufferFormat = D3DFMT_UNKNOWN;
-	g_pD3DPresent.BackBufferCount = 1; // `´£¨Ñ¤@¶ôbackbuffer`
+	g_pD3DPresent.BackBufferCount = 1; // `æä¾›ä¸€å¡Šbackbuffer`
 	g_pD3DPresent.EnableAutoDepthStencil = TRUE;
 	g_pD3DPresent.AutoDepthStencilFormat = D3DFMT_D24S8;
 	g_pD3DPresent.MultiSampleType = (D3DMULTISAMPLE_TYPE) multisamples;
@@ -54,15 +54,15 @@ bool GutInitGraphicsDeviceDX9(GutDeviceSpec *pSpec)
 
 	/*
 
-	`¸ÕµÛ¥Î4ºØ¤£¦P¤èªk¨Ó¶}±Òd3d9`
+	`è©¦è‘—ç”¨4ç¨®ä¸åŒæ–¹æ³•ä¾†é–‹å•Ÿd3d9`
 	1. D3DDEVTYPE_HAL + D3DCREATE_HARDWARE_VERTEXPROCESSING 
-		`§¹¥ş¥æ¥ÑGPU³B²z`
+		`å®Œå…¨äº¤ç”±GPUè™•ç†`
 	2. D3DDEVTYPE_HAL + D3DCREATE_MIXED_VERTEXPROCESSING	
-		`Vertex¥i¥ÑCPU©ÎGPU¨Ó³B²z, ¨ä¥¦¬OGPU.`
+		`Vertexå¯ç”±CPUæˆ–GPUä¾†è™•ç†, å…¶å®ƒæ˜¯GPU.`
 	3. D3DDEVTYPE_HAL + D3DCREATE_SOFTWARE_VERTEXPROCESSING 
-		`Vertex¬OCPU, ¨ä¥¦¬OGPU.`
+		`Vertexæ˜¯CPU, å…¶å®ƒæ˜¯GPU.`
 	4. D3DDEVTYPE_REF + D3DCREATE_SOFTWARE_VERTEXPROCESSING	
-		`§¹¥ş¥ÑCPU³B²z, ³o¬O­Ó«D±`ºCªº¼Ò¦¡.`
+		`å®Œå…¨ç”±CPUè™•ç†, é€™æ˜¯å€‹éå¸¸æ…¢çš„æ¨¡å¼.`
 
 	*/
 
@@ -84,7 +84,7 @@ bool GutInitGraphicsDeviceDX9(GutDeviceSpec *pSpec)
 
 	for ( int type=0; type<device_types; type++ )
 	{
-		// `¸ÕµÛ¥h¶}±Ò¤@­ÓDirect3D9¸Ë¸m`
+		// `è©¦è‘—å»é–‹å•Ÿä¸€å€‹Direct3D9è£ç½®`
 		if( g_pD3D->CreateDevice( D3DADAPTER_DEFAULT, device_type[type].type, hWnd,
 							  device_type[type].behavior, &g_pD3DPresent, &g_pD3DDevice )==D3D_OK )
 		{
@@ -103,7 +103,7 @@ bool GutResetGraphicsDeviceDX9(void)
 	
 	g_pD3DPresent.BackBufferWidth = 0;
 	g_pD3DPresent.BackBufferHeight = 0;
-	g_pD3DPresent.BackBufferCount = 1; // `´£¨Ñ¤@¶ôbackbuffer`
+	g_pD3DPresent.BackBufferCount = 1; // `æä¾›ä¸€å¡Šbackbuffer`
 
 	if ( D3D_OK==g_pD3DDevice->Reset(&g_pD3DPresent) )
 		return true;
@@ -128,7 +128,7 @@ bool GutReleaseGraphicsDeviceDX9(void)
 	return true;
 }
 
-// ¸ü¤JVertex Shader
+// è¼‰å…¥Vertex Shader
 // file = HLSL shader file
 // entry = vertx shader entry point
 // profile = shader version
@@ -178,7 +178,7 @@ LPDIRECT3DVERTEXSHADER9 GutLoadVertexShaderDX9_HLSL(const char *filename, const 
 	return pVertexShader;
 }
 
-// ¸ü¤JPixel Shader
+// è¼‰å…¥Pixel Shader
 // file = HLSL shader file
 // entry = pixel shader entry point
 // profile = shader version

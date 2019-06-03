@@ -7,21 +7,21 @@ struct Vertex_VC
 	float m_Position[3];
 	// R,G,B,A in OpenGL
 	// B,G,R,A in Direct3D 9
-	// Direct3D 10¥i¬O¬O¨âºØ¨ä¤¤¤§1, ¬İ³]©w¦Ó©w.
+	// Direct3D 10å¯æ˜¯æ˜¯å…©ç¨®å…¶ä¸­ä¹‹1, çœ‹è¨­å®šè€Œå®š.
 	unsigned char m_RGBA[4];
 };
 
 struct Vertex_VT
 {
-	float m_Position[3]; // ³»ÂI¦ì¸m
-	float m_Texcoord[2]; // ¶K¹Ï®y¼Ğ
+	float m_Position[3]; // é ‚é»ä½ç½®
+	float m_Texcoord[2]; // è²¼åœ–åº§æ¨™
 };
 
-// ¯x§Î
+// çŸ©å½¢
 extern Vertex_VT g_Quad[4];
 extern Vertex_VT g_Quad_Inv[4];
 
-// ²yªº¸ê®Æ
+// çƒçš„è³‡æ–™
 extern Vertex_VC *g_pSunVertices;
 extern Vertex_VC *g_pEarthVertices;
 extern Vertex_VC *g_pMoonVertices;
@@ -37,5 +37,5 @@ extern float g_fFOV;
 // controller object
 extern CGutUserControl g_Control;
 
-// ²£¥Í²y¼Ò«¬ªºµ{¦¡
+// ç”¢ç”Ÿçƒæ¨¡å‹çš„ç¨‹å¼
 bool CreateSphere(float radius, Vertex_VC **ppVertices, unsigned short **ppIndices, float *color=NULL, int stacks = 20, int pieces = 20);

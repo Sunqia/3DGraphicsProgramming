@@ -8,9 +8,9 @@ bool g_bWireframe = false;
 CGutUserControl g_Control;
 // heightmap object
 CGutHeightmap g_Heightmap;
-// ¥ú·½¸ê®Æ
+// å…‰æºè³‡æ–™
 Vector4 g_vAmbientLight(0.1f, 0.1f, 0.1f, 0.1f);
-// §÷½è
+// æè³ª
 float g_fMaterialShininess = 60;
 //
 Light g_Lights[NUM_LIGHTS];

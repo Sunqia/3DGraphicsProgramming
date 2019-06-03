@@ -4,10 +4,10 @@
 
 struct Vertex
 {
-	float m_Position[3]; // ³»ÂI¦ì¸m
+	float m_Position[3]; // é ‚é»ä½ç½®
 };
 
-// ±`¼Æ©w¸q
+// å¸¸æ•¸å®šç¾©
 const float g_fFovW = 45.0f;
 // Vertex
 extern Vertex g_Quad[4];

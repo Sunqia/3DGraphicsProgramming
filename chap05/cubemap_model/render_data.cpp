@@ -3,23 +3,23 @@
 #include "gut.h"
 #include "GutModel.h"
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.0f, 30.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 Matrix4x4 g_world_matrix;
-// Åª¨ú¼Ò«¬ªºª«¥ó
+// è®€å–æ¨¡å‹çš„ç‰©ä»¶
 CGutModel g_Model;
 
-// Âà´«³»ÂI¸ê®Æªº¨ç¦¡, Direct3D¸òOpenGL¥i¥H¦@¥Î.
+// è½‰æ›é ‚é»è³‡æ–™çš„å‡½å¼, Direct3Dè·ŸOpenGLå¯ä»¥å…±ç”¨.
 void CopyVertexBuffer(void *target, sModelVertex *source, int num_vertices)
 {
-	// ³o­Ó½d¨Ò¤¤, OpenGL¸òDirect3D°õ¦æ®É¥u»İ­nPosition & Normal
+	// é€™å€‹ç¯„ä¾‹ä¸­, OpenGLè·ŸDirect3DåŸ·è¡Œæ™‚åªéœ€è¦Position & Normal
 	struct sRunTimeVertex
 	{
 		float m_Position[3];

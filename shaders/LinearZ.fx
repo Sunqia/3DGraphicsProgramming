@@ -1,4 +1,4 @@
-// §ó·sShadowmap¥ÎªºShader
+// æ›´æ–°Shadowmapç”¨çš„Shader
 
 struct VS_INPUT
 {
@@ -11,7 +11,7 @@ struct VS_OUTPUT
 	float4 ViewPos : TEXCOORD0;
 };
 
-// Âà´«¯x°}
+// è½‰æ›çŸ©é™£
 uniform row_major float4x4 wvp_matrix;
 uniform row_major float4x4 wv_matrix;
 

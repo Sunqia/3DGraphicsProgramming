@@ -17,24 +17,24 @@ GutTimer g_Timer;
 
 void GetUserInput(void)
 {
-	// `Åª¨ú·Æ¹«`
+	// `è®€å–æ»‘é¼ `
 	GutMouseInfo mouse;
 	GutReadMouse(&mouse);
-	// `Åª¨úÁä½L`
+	// `è®€å–éµç›¤`
 	char keyboard_state[256];
 	GutReadKeyboard(keyboard_state);
-	// `¨ú±oµe§¹«e¤@­Óµe­±¨ì²{¦b©Ò¸g¾úªº®É¶¡`
+	// `å–å¾—ç•«å®Œå‰ä¸€å€‹ç•«é¢åˆ°ç¾åœ¨æ‰€ç¶“æ­·çš„æ™‚é–“`
 	float time_diff = g_Timer.Stop();
 	g_Timer.Restart();
 
 	float moving_speed = 2.0f * time_diff;
 	float rotation_speed = 1.0 * time_diff;
 
-	// `·¥®y¼Ğ¨t²Î`
+	// `æ¥µåº§æ¨™ç³»çµ±`
 	static float theta = -MATH_PI * 0.5f;
 	static float phi = 0.0f;
 
-	// `¦pªG«ö¤U·Æ¹«¥ªÁä, ´N±ÛÂàÃèÀY.`
+	// `å¦‚æœæŒ‰ä¸‹æ»‘é¼ å·¦éµ, å°±æ—‹è½‰é¡é ­.`
 	if ( mouse.button[0] ) 
 	{
 		theta += mouse.x * rotation_speed;
@@ -47,14 +47,14 @@ void GetUserInput(void)
 	FastMath::SinCos(phi, sin_phi, cos_phi);
 	FastMath::SinCos(theta, sin_theta, cos_theta);
 
-	// `­pºâÃèÀYªº­±¦V`
+	// `è¨ˆç®—é¡é ­çš„é¢å‘`
 	Vector4 camera_facing;
 
 	camera_facing[0] = cos_phi * cos_theta;
 	camera_facing[1] = sin_phi;
 	camera_facing[2] = cos_phi * sin_theta;
 
-	// `­pºâÃèÀY¥¿¤W¤èªº¶b¦V`
+	// `è¨ˆç®—é¡é ­æ­£ä¸Šæ–¹çš„è»¸å‘`
 	Vector4 camera_up;
 	FastMath::SinCos(phi + MATH_PI*0.5f, sin_phi, cos_phi);
 
@@ -62,39 +62,39 @@ void GetUserInput(void)
 	camera_up[1] = sin_phi;
 	camera_up[2] = cos_phi * sin_theta;
 
-	// `¨ú±oÃè­±¥k¤èªº¤è¦V`
+	// `å–å¾—é¡é¢å³æ–¹çš„æ–¹å‘`
 	Vector4 camera_right = Vector3CrossProduct(camera_facing, camera_up);
 
-	// `«ö¤UW©Î¤è¦VÁä¦V¤W`
+	// `æŒ‰ä¸‹Wæˆ–æ–¹å‘éµå‘ä¸Š`
 	if ( keyboard_state[GUTKEY_W] || keyboard_state[GUTKEY_UP] )
 	{
 		g_eye += camera_facing * moving_speed;
 	}
-	// `«ö¤US©Î¤è¦VÁä¦V¤U`
+	// `æŒ‰ä¸‹Sæˆ–æ–¹å‘éµå‘ä¸‹`
 	if ( keyboard_state[GUTKEY_S] || keyboard_state[GUTKEY_DOWN] )
 	{
 		g_eye -= camera_facing * moving_speed;
 	}
-	// `«ö¤UA©Î¤è¦VÁä¦V¥ª`
+	// `æŒ‰ä¸‹Aæˆ–æ–¹å‘éµå‘å·¦`
 	if ( keyboard_state[GUTKEY_A] || keyboard_state[GUTKEY_LEFT] )
 	{
 		g_eye -= camera_right * moving_speed;
 	}
-	// `«ö¤UD©Î¤è¦VÁä¦V¥k`
+	// `æŒ‰ä¸‹Dæˆ–æ–¹å‘éµå‘å³`
 	if ( keyboard_state[GUTKEY_D] || keyboard_state[GUTKEY_RIGHT] )
 	{
 		g_eye += camera_right * moving_speed;
 	}
 
-	// `­pºâ¥XÃèÀY¹ï·ÇªºÂI, ²£¥ÍÃèÀYÂà´«¯x°}®É·|¥Î¨ì.`
+	// `è¨ˆç®—å‡ºé¡é ­å°æº–çš„é», ç”¢ç”Ÿé¡é ­è½‰æ›çŸ©é™£æ™‚æœƒç”¨åˆ°.`
 	g_lookat = g_eye + camera_facing;
-	// `¦]¬°¬O¹ï2­Ó¶bÂà°Ê, »İ­n§ó·sÃèÀY´Â¤Wªº¶b.`
+	// `å› ç‚ºæ˜¯å°2å€‹è»¸è½‰å‹•, éœ€è¦æ›´æ–°é¡é ­æœä¸Šçš„è»¸.`
 	g_up = camera_up;
 }
 
 void main(int argc, char *argv[])
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -132,10 +132,10 @@ void main(int argc, char *argv[])
 		break;
 	}
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
@@ -146,7 +146,7 @@ void main(int argc, char *argv[])
 
 	g_view_matrix.Identity();
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -154,16 +154,16 @@ void main(int argc, char *argv[])
 		exit(0);
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
 		render();
 	}
 	
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
 
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

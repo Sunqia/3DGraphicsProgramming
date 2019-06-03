@@ -6,14 +6,14 @@ static LPDIRECT3DINDEXBUFFER9 g_pIndexBuffer = NULL;
 
 bool InitResourceDX9(void)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `³]©wµø¨¤Âà´«¯x°}`
+	// `è¨­å®šè¦–è§’è½‰æ›çŸ©é™£`
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(90.0f, 1.0f, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
-	// `Ãö³¬¥´¥ú`
+	// `é—œé–‰æ‰“å…‰`
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// `§ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V`
+	// `æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘`
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 
 	for ( int i=0; i<g_iNumSphereVertices; i++ )
@@ -31,7 +31,7 @@ bool InitResourceDX9(void)
 	}
 
 	Vertex_VC *pVertexArray = NULL;
-	// `¨ú±oVertex Bufferªº°O¾ÐÅé¦ì¸m`
+	// `å–å¾—Vertex Bufferçš„è¨˜æ†¶é«”ä½ç½®`
 	g_pVertexBuffer->Lock(0, vsize, (void **)&pVertexArray, 0);
 	memcpy(pVertexArray, g_pSphereVertices, vsize);
 	g_pVertexBuffer->Unlock();
@@ -44,7 +44,7 @@ bool InitResourceDX9(void)
 	}
 
 	unsigned short *pIndexArray = NULL;
-	// `¨ú±oIndex Bufferªº°O¾ÐÅé¦ì¸m`
+	// `å–å¾—Index Bufferçš„è¨˜æ†¶é«”ä½ç½®`
 	g_pIndexBuffer->Lock(0, isize, (void **)&pIndexArray, 0);
 	memcpy(pIndexArray, g_pSphereIndices, isize);
 	g_pIndexBuffer->Unlock();
@@ -71,57 +71,57 @@ bool ReleaseResourceDX9(void)
 
 void ResizeWindowDX9(int width, int height)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	GutResetGraphicsDeviceDX9();
 
-	// `³]©wµø¨¤Âà´«¯x°}`
+	// `è¨­å®šè¦–è§’è½‰æ›çŸ©é™£`
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(90.0f, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
 
-	// `Ãö³¬¥´¥ú`
+	// `é—œé–‰æ‰“å…‰`
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// `§ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V`
+	// `æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘`
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 }
 
-// `¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–`
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->Clear(0, NULL, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
 	
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
 
-	// `­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ð¨tªº¯x°}`
+	// `è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 	Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
 
-	// `³]©w¸ê®Æ®æ¦¡`
-	// D3DFVF_XYZ = `¨Ï¥Î3­Ó¯BÂI¼Æ¨Ó°O¿ý¦ì¸m`
-	// D3DFVF_DIFFUSE = `¨Ï¥Î32bits¾ã¼Æ«¬ºA¨Ó°O¿ýBGRAÃC¦â`
+	// `è¨­å®šè³‡æ–™æ ¼å¼`
+	// D3DFVF_XYZ = `ä½¿ç”¨3å€‹æµ®é»žæ•¸ä¾†è¨˜éŒ„ä½ç½®`
+	// D3DFVF_DIFFUSE = `ä½¿ç”¨32bitsæ•´æ•¸åž‹æ…‹ä¾†è¨˜éŒ„BGRAé¡è‰²`
 	device->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE); 
 
 	device->SetStreamSource(0, g_pVertexBuffer, 0, sizeof(Vertex_VC));
 	device->SetIndices(g_pIndexBuffer);
 
-	// `µe¥X²y`
+	// `ç•«å‡ºçƒ`
 	device->DrawIndexedPrimitive(
-		D3DPT_TRIANGLELIST, // `«ü©w©Ò­nµeªº°ò¥»¹Ï§ÎºØÃþ`
+		D3DPT_TRIANGLELIST, // `æŒ‡å®šæ‰€è¦ç•«çš„åŸºæœ¬åœ–å½¢ç¨®é¡ž`
 		0, 
-		0, // `·|¨Ï¥Îªº³Ì¤p³»ÂI½s¸¹, ¨Æ¹ê¤W¨S¤Ó¤j¥Î³B.`
-		g_iNumSphereVertices, // `³»ÂI°}¦C¸Ì¦³´X­Ó³»ÂI`
+		0, // `æœƒä½¿ç”¨çš„æœ€å°é ‚é»žç·¨è™Ÿ, äº‹å¯¦ä¸Šæ²’å¤ªå¤§ç”¨è™•.`
+		g_iNumSphereVertices, // `é ‚é»žé™£åˆ—è£¡æœ‰å¹¾å€‹é ‚é»ž`
 		0, 
-		g_iNumSphereTriangles // `­nµe¥X´X­Ó°ò¥»¹Ï§Î`
+		g_iNumSphereTriangles // `è¦ç•«å‡ºå¹¾å€‹åŸºæœ¬åœ–å½¢`
 	);
 
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
 	
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

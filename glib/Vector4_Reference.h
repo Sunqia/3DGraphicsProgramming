@@ -689,7 +689,7 @@ inline Vector4CPU MirrorPoint(Vector4CPU &point, Vector4CPU &plane)
 	return mirrored_point;
 }
 
-// ­pºâvector¹ïplane¥­­±Ãè®g«áªº3D¤è¦V
+// è¨ˆç®—vectorå°planeå¹³é¢é¡å°„å¾Œçš„3Dæ–¹å‘
 inline Vector4CPU MirrorVector(Vector4CPU &vector, Vector4CPU &plane)
 {
 	Vector4CPU mirrored_a, mirrored_b, mirrored_vector;

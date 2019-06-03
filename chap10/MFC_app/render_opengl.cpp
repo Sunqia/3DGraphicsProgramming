@@ -9,23 +9,23 @@ static Matrix4x4 g_view_matrix;
 
 bool InitResourceOpenGL(void)
 {
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(90.0f, 1.0f, 1.0f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 	glEnable(GL_DEPTH_TEST);
-	//glShadeModel(GL_FLAT); // Ãö³¬¤º´¡
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // ¨Ï¥Î±ŞÃä½u¼Ò¦¡
-	// glEnable(GL_CULL_FACE); // ©¿²¤­I¹ïÃèÀYªº­±
+	//glShadeModel(GL_FLAT); // é—œé–‰å…§æ’
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE); // ä½¿ç”¨æ™é‚Šç·šæ¨¡å¼
+	// glEnable(GL_CULL_FACE); // å¿½ç•¥èƒŒå°é¡é ­çš„é¢
 	return true;
 }
 
 bool ReleaseResourceOpenGL(void)
 {
-	// ¨S¨Æ°µ
+	// æ²’äº‹åš
 	return true;
 }
 
@@ -33,43 +33,43 @@ void ResizeWindowOpenGL(int w, int h)
 {
 	glViewport(0, 0, w, h);
 	float aspect = (float) h / (float) w;
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(90.0f, aspect, 1.0f, 100.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 }
 
-// `¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨OpenGLä¾†ç¹ªåœ–`
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// `³]©w¦nGPU­n¥h­şÅª¨ú³»ÂI®y¼Ğ¸ê®Æ`
+	// `è¨­å®šå¥½GPUè¦å»å“ªè®€å–é ‚é»åº§æ¨™è³‡æ–™`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), &g_vertices[0].m_Position);
-	// `³]©w¦nGPU­n¥h­şÅª¨ú³»ÂIÃC¦â¸ê®Æ`
+	// `è¨­å®šå¥½GPUè¦å»å“ªè®€å–é ‚é»é¡è‰²è³‡æ–™`
 	glEnableClientState(GL_COLOR_ARRAY);
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), &g_vertices[0].m_RGBA);
-	// `³]©w­nÅÜ§óGL_MODELVIEW¯x°}`
+	// `è¨­å®šè¦è®Šæ›´GL_MODELVIEWçŸ©é™£`
 	glMatrixMode(GL_MODELVIEW);	
 
 	static float angle = 0.0f;
 	angle += 0.01f;
 
-	// `³]©wÂà´«¯x°}`
+	// `è¨­å®šè½‰æ›çŸ©é™£`
 	Matrix4x4 world_view_matrix = g_view_matrix;
-	// `­¼¤W±ÛÂà¯x°}`
+	// `ä¹˜ä¸Šæ—‹è½‰çŸ©é™£`
 	world_view_matrix.RotateZ(angle); 
 	glLoadMatrixf( (float *) &world_view_matrix);
-	// `µe¥Xª÷¦r¶ğªº8±øÃä½u`
+	// `ç•«å‡ºé‡‘å­—å¡”çš„8æ¢é‚Šç·š`
 	glDrawElements(
-		GL_TRIANGLES, // `«ü©w©Ò­nµeªº°ò¥»¹Ï§ÎºØÃş`
-		18, // `¦³´X­Ó¯Á¤Ş­È`
-		GL_UNSIGNED_SHORT, // `¯Á¤Ş­Èªº«¬ºA`
-		g_indices // `¯Á¤Ş­È°}¦C`
+		GL_TRIANGLES, // `æŒ‡å®šæ‰€è¦ç•«çš„åŸºæœ¬åœ–å½¢ç¨®é¡`
+		18, // `æœ‰å¹¾å€‹ç´¢å¼•å€¼`
+		GL_UNSIGNED_SHORT, // `ç´¢å¼•å€¼çš„å‹æ…‹`
+		g_indices // `ç´¢å¼•å€¼é™£åˆ—`
 	);
 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

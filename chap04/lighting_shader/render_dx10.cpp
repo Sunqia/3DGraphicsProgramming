@@ -32,16 +32,16 @@ bool InitResourceDX10(void)
 	g_pDevice = GutGetGraphicsDeviceDX10();
 	ID3D10Blob *pVSCode = NULL;
 
-	// `¸ü¤JVertex Shader`
+	// `è¼‰å…¥Vertex Shader`
 	g_pVertexShader = GutLoadVertexShaderDX10_HLSL("../../shaders/vertex_lighting_all_dx10.hlsl", "VS", "vs_4_0", &pVSCode);
 	if ( NULL==g_pVertexShader )
 		return false;
-	// `¸ü¤JPixel Shader`
+	// `è¼‰å…¥Pixel Shader`
 	g_pPixelShader = GutLoadPixelShaderDX10_HLSL("../../shaders/vertex_lighting_all_dx10.hlsl", "PS", "ps_4_0");
 	if ( NULL==g_pPixelShader )
 		return false;
 
-    // `³]©wVertex¸ê®Æ®æ¦¡`
+    // `è¨­å®šVertexè³‡æ–™æ ¼å¼`
     D3D10_INPUT_ELEMENT_DESC layout[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D10_INPUT_PER_VERTEX_DATA, 0 },
@@ -60,21 +60,21 @@ bool InitResourceDX10(void)
     cbDesc.BindFlags = D3D10_BIND_VERTEX_BUFFER;
     cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
     cbDesc.MiscFlags = 0;
-	// `°t¸m¤@¶ô¥i¥H¦s©ñVertexªº°O¾ĞÅé, ¤]´N¬OVertex Buffer.`
+	// `é…ç½®ä¸€å¡Šå¯ä»¥å­˜æ”¾Vertexçš„è¨˜æ†¶é«”, ä¹Ÿå°±æ˜¯Vertex Buffer.`
 	if ( D3D_OK != g_pDevice->CreateBuffer( &cbDesc, NULL, &g_pVertexBuffer ) )
 		return false;
 
-	// `³]©w¤@¶ô¥i¥H¥Î¨Ó©ñIndexªº°O¾ĞÅé.`
+	// `è¨­å®šä¸€å¡Šå¯ä»¥ç”¨ä¾†æ”¾Indexçš„è¨˜æ†¶é«”.`
     cbDesc.ByteWidth = sizeof(unsigned short) * g_iMaxNumGridIndices;
     cbDesc.Usage = D3D10_USAGE_DYNAMIC;
     cbDesc.BindFlags = D3D10_BIND_INDEX_BUFFER;
     cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
     cbDesc.MiscFlags = 0;
-    // `°t¸m¤@¶ô¥i¥H¦s©ñIndexªº°O¾ĞÅé, ¤]´N¬OIndex Buffer.`
+    // `é…ç½®ä¸€å¡Šå¯ä»¥å­˜æ”¾Indexçš„è¨˜æ†¶é«”, ä¹Ÿå°±æ˜¯Index Buffer.`
 	if ( D3D_OK != g_pDevice->CreateBuffer( &cbDesc, NULL, &g_pIndexBuffer ) )
 		return false;
 
-	// `°t¸mShaderÅª¨ú°Ñ¼Æªº°O¾ĞÅéªÅ¶¡`
+	// `é…ç½®Shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ç©ºé–“`
     cbDesc.ByteWidth = sizeof(Matrix4x4) * 3;
     cbDesc.Usage = D3D10_USAGE_DYNAMIC;
     cbDesc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
@@ -91,7 +91,7 @@ bool InitResourceDX10(void)
 	if ( D3D_OK != g_pDevice->CreateBuffer( &cbDesc, NULL, &g_pLightConstantBuffer ) )
 		return false;
 
-	// `rasterizer stateª«¥ó`
+	// `rasterizer stateç‰©ä»¶`
 	D3D10_RASTERIZER_DESC rasterizer_state_desc;
 	
 	rasterizer_state_desc.FillMode = D3D10_FILL_SOLID;
@@ -110,10 +110,10 @@ bool InitResourceDX10(void)
 
 	g_pDevice->RSSetState(g_pRasterizerState);
 
-	// `­pºâ§ë¼v¸òÃèÀYÂà´«¯x°}`
+	// `è¨ˆç®—æŠ•å½±è·Ÿé¡é ­è½‰æ›çŸ©é™£`
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, 1.0f, 0.1f, 100.0f);
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// `¥ı§â¨â­Ó¯x°}¬Û­¼`
+	// `å…ˆæŠŠå…©å€‹çŸ©é™£ç›¸ä¹˜`
 	g_view_proj_matrix = g_view_matrix * g_proj_matrix;
 
 	return true;
@@ -147,36 +147,36 @@ void RenderFrameDX10(void)
 	Vector4 vClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	UINT stride = sizeof(Vertex_V3N3);
 	UINT offset = 0;
-	// `¨ú±o©I¥sGutCreateGraphicsDeviceDX10®É©Ò²£¥ÍªºD3D10ª«¥ó`
+	// `å–å¾—å‘¼å«GutCreateGraphicsDeviceDX10æ™‚æ‰€ç”¢ç”Ÿçš„D3D10ç‰©ä»¶`
 	//frame buffer
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView(); 
 	//depth/stencil buffer
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); 
 	// front/back buffer
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); 
-	// `²M°£ÃC¦â`
+	// `æ¸…é™¤é¡è‰²`
 	g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
-	// `²M°£`Depth/Stencil buffer
+	// `æ¸…é™¤`Depth/Stencil buffer
 	g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
-	// `³]©w`vertex shader
+	// `è¨­å®š`vertex shader
 	g_pDevice->VSSetShader(g_pVertexShader);
-	// `³]©w`pixel shader
+	// `è¨­å®š`pixel shader
 	g_pDevice->PSSetShader(g_pPixelShader);
-	// `³]©wvertex shaderÅª¨ú°Ñ¼Æªº°O¾ĞÅé¦ìÓ_`
+	// `è¨­å®švertex shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ä½ç½`
     g_pDevice->VSSetConstantBuffers(0, 1, &g_pMatrixConstantBuffer);
     g_pDevice->VSSetConstantBuffers(1, 1, &g_pLightConstantBuffer);
-	// `³]©wvertex¸ê®Æ®æ¦¡`
+	// `è¨­å®švertexè³‡æ–™æ ¼å¼`
 	g_pDevice->IASetInputLayout(g_pVertexLayout);
-	// `³]©w`vertex buffer
+	// `è¨­å®š`vertex buffer
 	g_pDevice->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
-	// `³]©w`index buffer
+	// `è¨­å®š`index buffer
 	g_pDevice->IASetIndexBuffer(g_pIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
-	// `³]©w¤T¨¤§Î³»ÂI¯Á¤Ş­È¸ê®Æ±Æ¦C¬O`triangle strip
+	// `è¨­å®šä¸‰è§’å½¢é ‚é»ç´¢å¼•å€¼è³‡æ–™æ’åˆ—æ˜¯`triangle strip
 	g_pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-	// `­pºâ¯x°}`
+	// `è¨ˆç®—çŸ©é™£`
 	Matrix4x4 world_view_proj_matrix = g_world_matrix * g_view_proj_matrix;
 	
-	// `³]©wshader°Ñ¼Æ`
+	// `è¨­å®šshaderåƒæ•¸`
 	Matrix4x4 *pMatrices = NULL;
 	g_pMatrixConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pMatrices );
 	pMatrices[0] = world_view_proj_matrix;
@@ -200,19 +200,19 @@ void RenderFrameDX10(void)
 	}
 	g_pLightConstantBuffer->Unmap();
 
-	// `§ó·s³»ÂI¸ê®Æ`
+	// `æ›´æ–°é ‚é»è³‡æ–™`
 	Vertex_V3N3 *pVertex;
 	g_pVertexBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pVertex );
 	memcpy(pVertex, g_pGridVertices, sizeof(Vertex_V3N3) * g_iNumGridVertices);
 	g_pVertexBuffer->Unmap();
-	// `§ó·s¯Á¤Ş­È°}¦C`
+	// `æ›´æ–°ç´¢å¼•å€¼é™£åˆ—`
 	unsigned short *pIndex;
 	g_pIndexBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pIndex );
 	memcpy(pIndex, g_pGridIndices, sizeof(unsigned short) * g_iNumGridIndices);
 	g_pIndexBuffer->Unmap();
-	// `µe¥X®æ¤l`
+	// `ç•«å‡ºæ ¼å­`
 	g_pDevice->DrawIndexed(g_iNumGridIndices, 0, 0);
-	// `µ¥«İµwÅé±½´yµ²§ô, µM«á¤~§ó·sµe­±`
+	// `ç­‰å¾…ç¡¬é«”æƒæçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢`
 	pSwapChain->Present(1, 0);
 }
 

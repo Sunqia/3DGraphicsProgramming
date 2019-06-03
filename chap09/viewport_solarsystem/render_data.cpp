@@ -17,5 +17,5 @@ Vector4 g_vAmbientLight(0.3f, 0.3f, 0.3f, 1.0f);
 
 // controller object
 CGutUserControl g_Control;
-// ¼Ò«¬
+// æ¨¡åž‹
 CGutModel g_Models[3];

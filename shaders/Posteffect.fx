@@ -1,11 +1,11 @@
-// ³»ÂIªº¸ê®Æ¿é¤J®æ¦¡
+// é ‚é»çš„è³‡æ–™è¼¸å…¥æ ¼å¼
 struct VS_INPUT
 {
 	float3 Position : POSITION;
 	float2 Texcoord : TEXCOORD;
 };
 
-// Vertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// Vertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -72,7 +72,7 @@ VS_OUTPUT VS_Passthrough(VS_INPUT In)
 }
 
 
-// ¶K¹Ï®y¼Ğ¦ì²¾°Ñ¼Æ
+// è²¼åœ–åº§æ¨™ä½ç§»åƒæ•¸
 uniform float4 vTexOffset[KernelSize];
 //
 // Blur Pixel Shader
@@ -89,7 +89,7 @@ float4 PS_Blur(VS_OUTPUT In) : COLOR
 	return color;
 }
 
-// ½Õ¾ã«G«×°Ñ¼Æ
+// èª¿æ•´äº®åº¦åƒæ•¸
 uniform float4 IntensityOffset;
 uniform float4 IntensityScale;
 
@@ -100,11 +100,11 @@ float4 PS_Brightness(VS_OUTPUT In) : COLOR
 {
 	float4 rgba = tex2D(LinearSampler, In.Texcoord);
 	float3 table = float3(0.3f, 0.59f, 0.11f);
-	// ¥ıÂà¦¨¦Ç¶¥¨Ó¹î¬İ¥¦ªº«G«×
+	// å…ˆè½‰æˆç°éšä¾†å¯Ÿçœ‹å®ƒçš„äº®åº¦
 	float4 old_intensity = dot(rgba.rgb, table);
-	// §â«G«×°µ­Ó§ïÅÜ
+	// æŠŠäº®åº¦åšå€‹æ”¹è®Š
 	float4 new_intensity = (old_intensity + IntensityOffset) * IntensityScale;
-	// §â­ì©lªºÃC¦â­¼¤W·sªº«G«×
+	// æŠŠåŸå§‹çš„é¡è‰²ä¹˜ä¸Šæ–°çš„äº®åº¦
 	float4 color = rgba * new_intensity;
 	
 	return color;
@@ -170,9 +170,9 @@ sampler2D ZBufferSampler = sampler_state
 	AddressV  = Clamp;
 };
 
-// ±±¨î´º²`ÅÜ¤Æ°Ñ¼Æ
+// æ§åˆ¶æ™¯æ·±è®ŠåŒ–åƒæ•¸
 uniform float4 vDepthOfField;
-// §â«D½u©ÊªºZ­ÈÂà´«¦^¨ìÃèÀYªº½u©Ê¶ZÂ÷
+// æŠŠéç·šæ€§çš„Zå€¼è½‰æ›å›åˆ°é¡é ­çš„ç·šæ€§è·é›¢
 uniform float4 vZInv;
 
 // Pixel Shader

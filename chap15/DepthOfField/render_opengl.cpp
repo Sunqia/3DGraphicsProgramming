@@ -213,10 +213,10 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	ReInitResourceOpenGL();
 }
 
@@ -299,7 +299,7 @@ static GLuint BlurImage(GLuint texture, sImageInfo *pInfo)
 	glLoadIdentity();
 	*/
 
-	// ¤ô¥­¤è¦V¼Ò½k
+	// æ°´å¹³æ–¹å‘æ¨¡ç³Š
 	{
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_DownSampledFrameBuffer[0]);
 		glViewport(0, 0, w, h);
@@ -307,7 +307,7 @@ static GLuint BlurImage(GLuint texture, sImageInfo *pInfo)
 		glUniform4fv(reg, num_samples, (float *)vTexOffsetX);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
-	// ««ª½¤è¦V¼Ò½k
+	// å‚ç›´æ–¹å‘æ¨¡ç³Š
 	{
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_DownSampledFrameBuffer[1]);
 		glBindTexture(GL_TEXTURE_2D, g_DownSampledFrameTexture[0]);
@@ -328,7 +328,7 @@ static GLuint BlurImage(GLuint texture, sImageInfo *pInfo)
 
 static void SetupLighting(void)
 {
-	// ³]©wÀô¹Ò¥ú
+	// è¨­å®šç’°å¢ƒå…‰
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, (float *)&g_vAmbientLight);
 	
 	int LightID = GL_LIGHT0;
@@ -345,7 +345,7 @@ void RenderFrameOpenGL(void)
 	int w, h;
 	GutGetWindowSize(w, h);
 
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
@@ -402,19 +402,19 @@ void RenderFrameOpenGL(void)
 		
 		glDisable(GL_BLEND);
 
-		// ¨ú¥X¶K¹ÏÅÜ¼Æ³Q¤À°t¨ìªº¥N½X
+		// å–å‡ºè²¼åœ–è®Šæ•¸è¢«åˆ†é…åˆ°çš„ä»£ç¢¼
 		GLint image_reg = glGetUniformLocation(g_DoFProgram, "Image");
 		GLint z_reg = glGetUniformLocation(g_DoFProgram, "ZBuffer");
 
-		// §âimage_reg¥N½X©Òªí¥Üªº¶K¹Ï¡A³s±µ¨ì²Ä0¼h¶K¹Ï¤W¡C
+		// æŠŠimage_regä»£ç¢¼æ‰€è¡¨ç¤ºçš„è²¼åœ–ï¼Œé€£æ¥åˆ°ç¬¬0å±¤è²¼åœ–ä¸Šã€‚
 		glUniform1i(image_reg, 0);
-		// §âg_FrameTexture®M¥Î¦¨²Ä0¼h¶K¹Ï
+		// æŠŠg_FrameTextureå¥—ç”¨æˆç¬¬0å±¤è²¼åœ–
 		glActiveTexture(GL_TEXTURE0_ARB);
 		glBindTexture(GL_TEXTURE_2D, g_FrameTexture);
 
-		// §âz_reg¥N½X©Òªí¥Üªº¶K¹Ï¡A³s±µ¨ì²Ä1¼h¶K¹Ï¤W¡C
+		// æŠŠz_regä»£ç¢¼æ‰€è¡¨ç¤ºçš„è²¼åœ–ï¼Œé€£æ¥åˆ°ç¬¬1å±¤è²¼åœ–ä¸Šã€‚
 		glUniform1i(z_reg, 1);
-		// §âg_DepthTexture®M¥Î¦¨²Ä1¼h¶K¹Ï
+		// æŠŠg_DepthTextureå¥—ç”¨æˆç¬¬1å±¤è²¼åœ–
 		glActiveTexture(GL_TEXTURE1_ARB);
 		glBindTexture(GL_TEXTURE_2D, g_DepthTexture);
 

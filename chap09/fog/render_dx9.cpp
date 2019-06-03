@@ -10,13 +10,13 @@ static Matrix4x4 g_mirror_view_matrix;
 
 void InitStateDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// ¨Ï¥Îtrilinear
+	// ä½¿ç”¨trilinear
 	device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
@@ -24,9 +24,9 @@ void InitStateDX9(void)
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 
 	InitStateDX9();
@@ -46,9 +46,9 @@ void ResizeWindowDX9(int width, int height)
 {
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, aspect, 0.1f, 100.0f);
 
@@ -57,7 +57,7 @@ void ResizeWindowDX9(int width, int height)
 	InitStateDX9();
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	DWORD FogColor = D3DCOLOR_RGBA(128, 128, 128, 255);
@@ -65,16 +65,16 @@ void RenderFrameDX9(void)
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->BeginScene(); 
-	// ®ø°£µe­±
+	// æ¶ˆé™¤ç•«é¢
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, FogColor, 1.0f, 0);
-	// ³]©wÂà´«¯x°}
+	// è¨­å®šè½‰æ›çŸ©é™£
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 object_matrix = g_Control.GetObjectMatrix();
 
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &object_matrix);
-	// ³]©wÃú
+	// è¨­å®šéœ§
 	device->SetRenderState(D3DRS_FOGENABLE, TRUE);
 	device->SetRenderState(D3DRS_FOGCOLOR, FogColor);
 
@@ -85,41 +85,41 @@ void RenderFrameDX9(void)
 		break;
 	case 1:
 		{
-			// ÀH¶ZÂ÷½u©ÊÅÜ¿@ªºÃú
+			// éš¨è·é›¢ç·šæ€§è®Šæ¿ƒçš„éœ§
 			float fStart = 0.0f;
 			float fEnd = 10.0f;
 			device->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_LINEAR);
 			device->SetRenderState(D3DRS_FOGSTART, *(DWORD *)(&fStart));
 			device->SetRenderState(D3DRS_FOGEND, *(DWORD *)(&fEnd));
-			// ­pºâ¤½¦¡¬°
+			// è¨ˆç®—å…¬å¼ç‚º
 			// (fog_end - distance_to_camera) / (fog_end - fog_start)
 			break;
 		}
 	case 2:
 		{
-			// `®M¥Î«ü¼Æ¨ç¦¡¨ÓÅÜ¤ÆªºÃú `
+			// `å¥—ç”¨æŒ‡æ•¸å‡½å¼ä¾†è®ŠåŒ–çš„éœ§ `
 			float fFogDensity = 0.5f;
 			device->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_EXP);
 			device->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)&fFogDensity);
-			// ­pºâ¤½¦¡¬°
+			// è¨ˆç®—å…¬å¼ç‚º
 			// power(e, -(fog_density * distance_to_camera))
 			break;
 		}
 	case 3:
 		{
-			// `®M¥Î«ü¼Æ¨ç¦¡¨ÓÅÜ¤ÆªºÃú `
+			// `å¥—ç”¨æŒ‡æ•¸å‡½å¼ä¾†è®ŠåŒ–çš„éœ§ `
 			float fFogDensity = 0.5f;
 			device->SetRenderState(D3DRS_FOGVERTEXMODE, D3DFOG_EXP2);
 			device->SetRenderState(D3DRS_FOGDENSITY, *(DWORD *)&fFogDensity);
-			// ­pºâ¤½¦¡¬°
+			// è¨ˆç®—å…¬å¼ç‚º
 			// power(e, -(fog_density * distance_to_camera)^2)
 			break;
 		}
 	}
-	// µe¥X¼Ò«¬
+	// ç•«å‡ºæ¨¡åž‹
 	g_Model_DX9.Render();
-	// «Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F
+	// å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†
 	device->EndScene(); 
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
     device->Present( NULL, NULL, NULL, NULL );
 }

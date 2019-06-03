@@ -3,38 +3,38 @@
 
 struct Vertex_VCN
 {
-	Vector4 m_Position; // ³»ÂI¦ì¸m
-	Vector4 m_Color;	// ³»ÂIÃC¦â
-	Vector4 m_Normal;	// ³»ÂI­±¦V
+	Vector4 m_Position; // é ‚é»ä½ç½®
+	Vector4 m_Color;	// é ‚é»é¡è‰²
+	Vector4 m_Normal;	// é ‚é»é¢å‘
 };
 
 struct Vertex_DX9
 {
-	float m_Position[3];	// ³»ÂI¦ì¸m
-	unsigned char m_Color[4]; // ³»ÂIÃC¦â
+	float m_Position[3];	// é ‚é»ä½ç½®
+	unsigned char m_Color[4]; // é ‚é»é¡è‰²
 };
 
-// ±`¼Æ©w¸q
+// å¸¸æ•¸å®šç¾©
 const float g_fFovW = 45.0f;
 extern Vertex_VCN g_Quad[4];
 extern Vertex_DX9 g_Quad_dx9[4];
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 extern Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 extern Matrix4x4 g_world_matrix;
-// ¥ú·½¸ê®Æ
+// å…‰æºè³‡æ–™
 extern Vector4 g_vLightAmbient;
 extern Vector4 g_vLightDirection;
 extern Vector4 g_vLightColor;
 
-// ­pºâ¥´¥úªº¨ç¦¡
+// è¨ˆç®—æ‰“å…‰çš„å‡½å¼
 void CalculateAmbientLight(Vertex_VCN *pVertices, int num_vertices);
 void CalculateDirectionalLight(Vertex_VCN *pVertices, int num_vertices);
 

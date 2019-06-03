@@ -13,7 +13,7 @@
 
 LPDIRECT3DTEXTURE9 GutLoadTextureDDS_DX9(const char *filename, sImageInfo *info)
 {
-  	// `®˙±oDirect3D 9∏À∏m`
+  	// `ÂèñÂæóDirect3D 9Ë£ùÁΩÆ`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
     DDS_IMAGE_DATA *pDDSImageData = loadDDSTextureFile(filename);
 	
@@ -53,7 +53,7 @@ LPDIRECT3DTEXTURE9 GutLoadTextureDDS_DX9(const char *filename, sImageInfo *info)
 			nBlockSize = 16;
 		}
 
-		// ∏¸§Jmipmapπœºh
+		// ËºâÂÖ•mipmapÂúñÂ±§
 		for( int i = 0; i < nNumMipMaps; ++i )
 		{
 			if( nWidth  == 0 ) nWidth  = 1;
@@ -74,7 +74,7 @@ LPDIRECT3DTEXTURE9 GutLoadTextureDDS_DX9(const char *filename, sImageInfo *info)
 			nHeight = (nHeight / 2);
 		}
 	}
-	// DDS§]•i•H¿x¶s®S¶≥¿£¡Y™∫ÆÊ¶°
+	// DDS‰πüÂèØ‰ª•ÂÑ≤Â≠òÊ≤íÊúâÂ£ìÁ∏ÆÁöÑÊ†ºÂºè
 	else
 	{
 		for( int i = 0; i < nNumMipMaps; ++i )
@@ -134,7 +134,7 @@ LPDIRECT3DTEXTURE9 GutLoadNoCompressedTexture_DX9(const char *filename, sImageIn
 		return NULL;
 	}
 
-	// ®˙±oDirect3D 9∏À∏m
+	// ÂèñÂæóDirect3D 9Ë£ùÁΩÆ
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	int bytes_per_pixel = pLoader->GetBPP()/8;
@@ -164,14 +164,14 @@ LPDIRECT3DTEXTURE9 GutLoadNoCompressedTexture_DX9(const char *filename, sImageIn
 		}
 	}
 
-	// ≤£•Õ∂Kπœ™´•Û
+	// Áî¢ÁîüË≤ºÂúñÁâ©‰ª∂
 	if ( D3D_OK!=device->CreateTexture(pLoader->GetWidth(), pLoader->GetHeight(), 
 		mipmap_levels, 0, D3DFMT_A8R8G8B8, D3DPOOL_MANAGED, &pTexture, NULL) )
 		return false;
 
 	for (int i=0; i<mipmap_levels; i++)
 	{
-		// ´˛®„∂Kπœ∏ÍÆ∆
+		// Êã∑ÂÖ∑Ë≤ºÂúñË≥áÊñô
 		D3DLOCKED_RECT locked_rect;
 		pTexture->LockRect(i, &locked_rect, NULL, 0);
 
@@ -236,7 +236,7 @@ LPDIRECT3DCUBETEXTURE9 GutLoadCubemapTexture_DX9(const char *filename)
 
 LPDIRECT3DCUBETEXTURE9 GutLoadCubemapTexture_DX9(const char **texture_array, bool mipmap_enabled)
 {
-	// `®˙±oDirect3D9∏À∏m`
+	// `ÂèñÂæóDirect3D9Ë£ùÁΩÆ`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	LPDIRECT3DCUBETEXTURE9 pCubemapTexture = NULL;
 
@@ -250,7 +250,7 @@ LPDIRECT3DCUBETEXTURE9 GutLoadCubemapTexture_DX9(const char **texture_array, boo
 		D3DCUBEMAP_FACE_NEGATIVE_Z
 	};
 
-	// `≠n∏¸§J6±i∂Kπœ`
+	// `Ë¶ÅËºâÂÖ•6ÂºµË≤ºÂúñ`
 	for ( int f=0; f<6; f++ )
 	{
 		const char *filename = texture_array[f];
@@ -274,7 +274,7 @@ LPDIRECT3DCUBETEXTURE9 GutLoadCubemapTexture_DX9(const char **texture_array, boo
 			return 0;
 		}
 
-		// `∏¸§J∂Kπœ`
+		// `ËºâÂÖ•Ë≤ºÂúñ`
 		if ( !pLoader->Load(filename) )
 		{
 			return 0;
@@ -306,7 +306,7 @@ LPDIRECT3DCUBETEXTURE9 GutLoadCubemapTexture_DX9(const char **texture_array, boo
 
 		for (int i=0; i<mipmap_levels; i++)
 		{
-			// `´˛®„∂Kπœ∏ÍÆ∆`
+			// `Êã∑ÂÖ∑Ë≤ºÂúñË≥áÊñô`
 			D3DLOCKED_RECT locked_rect;
 			pCubemapTexture->LockRect(face_table[f], i, &locked_rect, NULL, 0);
 
@@ -386,7 +386,7 @@ LPDIRECT3DTEXTURE9 GutLoadTexture_DX9(const char *filename, sImageInfo *info, bo
 
 LPDIRECT3DVOLUMETEXTURE9 GutLoadVolumeTexture_DX9(const char *filename)
 {
-  	// ®˙±oDirect3D 9∏À∏m
+  	// ÂèñÂæóDirect3D 9Ë£ùÁΩÆ
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
     DDS_IMAGE_DATA *pDDSImageData = loadDDSTextureFile(filename);
 	
@@ -400,7 +400,7 @@ LPDIRECT3DVOLUMETEXTURE9 GutLoadVolumeTexture_DX9(const char *filename)
 	LPDIRECT3DVOLUMETEXTURE9 pTexture = NULL;
 	device->CreateVolumeTexture(nWidth, nHeight, nDepth, 1, 0 , D3DFMT_L8, D3DPOOL_MANAGED, &pTexture, NULL);
 
-	// ´˛≥∆∂Kπœ
+	// Êã∑ÂÇôË≤ºÂúñ
 	D3DLOCKED_BOX locked_box;
 	pTexture->LockBox(0, &locked_box, 0, 0);
 	if ( locked_box.pBits )

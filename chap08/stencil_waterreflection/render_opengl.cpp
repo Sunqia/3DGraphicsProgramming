@@ -15,9 +15,9 @@ static CGutModel_OpenGL g_Model_OpenGL;
 
 bool InitResourceOpenGL(void)
 {
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, 1.0f, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 	glMatrixMode(GL_MODELVIEW);	
@@ -37,15 +37,15 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 }
@@ -61,115 +61,6 @@ static void RenderModelOpenGL(bool mirror, Vector4 *pPlane)
 	{
 		if ( g_bClip )
 		{
-			// ¥ı®M¤JÃèÀY¯x°}, clipplaneªº³]©w·|Âà´«¨ìÃèÀY®y¼Ğ¨t¤W
+			// å…ˆå¥—å…¥é¡é ­çŸ©é™£, clipplaneçš„è¨­å®šæœƒè½‰æ›åˆ°é¡é ­åº§æ¨™ç³»ä¸Š
 			glLoadMatrixf( (float *) &view_matrix);
-			// §â¤Ï®g®ÄªGùØ¤ô­±¤WªºªF¦èÂo±¼
-			glEnable(GL_CLIP_PLANE0);
-			double clip_plane[] = {0.0f, 0.0f, -1.0f, g_mirror_z};
-			glClipPlane(GL_CLIP_PLANE0, clip_plane);
-		}
-
-		Vector4 vEye = g_Control.GetCameraPosition();
-		Vector4 vLookAt = g_Control.m_vLookAt;
-		Vector4 vUp = g_Control.m_vUp;
-
-		Vector4 mirror_eye = MirrorPoint(vEye, *pPlane);
-		Vector4 mirror_lookat = MirrorPoint(vLookAt, *pPlane);
-		Vector4 mirror_up = MirrorVector(vUp, *pPlane);
-
-		Matrix4x4 temp_matrix = GutMatrixLookAtRH(mirror_eye, mirror_lookat, mirror_up);
-
-		// ¦]¬°¬OÃè®g, ¦bÂà´«¨ìÃèÀY®y¼Ğ¨t«á­n°µ­Ó¥ª¥k¹ï½Õªº°Ê§@.
-		Matrix4x4 mirror_x;
-		mirror_x.Identity();
-		mirror_x.Scale(-1.0f, 1.0f, 1.0f);
-
-		view_matrix = temp_matrix * mirror_x;
-
-		// ¥k¥ª¹ï½Õ«á, 3¨¤§Îªº³»ÂI±Æ¦C¶¶§Ç·|³Q¤Ï¹L¨Ó.
-		glFrontFace(GL_CW);
-	}
-	else
-	{
-		if ( g_bClip )
-		{
-			// ¥ı®M¤JÃèÀY¯x°}, clipplaneªº³]©w·|Âà´«¨ìÃèÀY®y¼Ğ¨t¤W
-			glLoadMatrixf( (float *) &view_matrix);
-			// §â¤Ï®g®ÄªGùØ¤ô­±¤UªºªF¦èÂo±¼
-			glEnable(GL_CLIP_PLANE0);
-			double clip_plane[] = {0.0f, 0.0f, 1.0f, -g_mirror_z};
-			glClipPlane(GL_CLIP_PLANE0, clip_plane);
-		}
-	}
-
-	Matrix4x4 world_view_matrix = world_matrix * view_matrix;
-	glLoadMatrixf( (float *) &world_view_matrix);
-
-	g_Model_OpenGL.Render();
-
-	glFrontFace(GL_CCW);
-	glDisable(GL_CLIP_PLANE0);
-}
-
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
-void RenderFrameOpenGL(void)
-{
-	Vector4 vPlane(0.0f, 0.0f, 1.0f, -g_mirror_z);
-
-	// ²M°£µe­±
-	glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	// µe¯ùÜò
-	RenderModelOpenGL(false, NULL);
-
-	// ³]©wÂà´«¯x°}
-	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
-	Matrix4x4 world_view_matrix = view_matrix;
-
-	glMatrixMode(GL_PROJECTION);
-	glLoadMatrixf( (float *) &g_projection_matrix);
-
-	glMatrixMode(GL_MODELVIEW);
-	glLoadMatrixf( (float *) &world_view_matrix);
-
-	sModelMaterial_OpenGL material;
-	material.Submit(NULL);
-
-	// ³]©w³»ÂI¸ê®Æ®æ¦¡
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VT), &g_Quad[0].m_Position);
-
-	// µe¥X¤ô­±, ¦P®É§âstencil buffer³]¬°1
-	{
-		glEnable(GL_STENCIL_TEST);
-		glStencilFunc(GL_ALWAYS, 1, 0xff);
-		glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-		glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-	}
-	// §â¤ô­±ªºzbuffer²M¬°1.0
-	{
-		glStencilFunc(GL_EQUAL, 1, 0xff);
-		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-		// §âz­Èªº¿é¥X½d³ò³]©w¬°1~1, ¤]´N¬O¥Ã»·¬°1
-		glDepthRange(1.0f, 1.0f);
-		glDepthFunc(GL_ALWAYS);
-		// ¥u§ó·szbuffer,¤£»İ­n§ó·sÃC¦â
-		glColorMask(false, false, false, false);
-		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-		// «ì´_§ó·sÃC¦âªº¥\¯à
-		glColorMask(true, true, true, true);
-		glDepthFunc(GL_LESS);
-		// §âz­Èªº½d³òÁÙ­ì¬°0~1
-		glDepthRange(0.0f, 1.0f);
-	}
-	// µe¥X¤ô­±¤Ï®g¸Ìªº¯ùÜò
-	{
-		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-		RenderModelOpenGL(true, &vPlane);
-		glDisable(GL_STENCIL_TEST);
-	}
-	// §â­I´ºbackbuffer§e²{¥X¨Ó
-	GutSwapBuffersOpenGL();
-}
+			// æŠŠåå°„æ•ˆæœ

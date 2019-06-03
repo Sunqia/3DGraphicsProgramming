@@ -9,19 +9,19 @@ static Matrix4x4 g_projection_matrix;
 
 void InitStateDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 
 	InitStateDX9();
@@ -42,9 +42,9 @@ void ResizeWindowDX9(int width, int height)
 {
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, aspect, 0.1f, 100.0f);
 
@@ -53,16 +53,16 @@ void ResizeWindowDX9(int width, int height)
 	InitStateDX9();
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->BeginScene(); 
-	// `®ø°£µe­±`
+	// `æ¶ˆé™¤ç•«é¢`
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_RGBA(0, 0, 0, 255), 1.0f, 0);
 
-	// `µe¥X¯ùÜò, ¨Ã§ó·s Stencil Buffer.`
+	// `ç•«å‡ºèŒ¶å£¼, ä¸¦æ›´æ–° Stencil Buffer.`
 	{
 		Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 		Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
@@ -71,15 +71,15 @@ void RenderFrameDX9(void)
 		device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_matrix);
 
-		// `±Ò°Ê Stencil Test`
+		// `å•Ÿå‹• Stencil Test`
 		device->SetRenderState(D3DRS_STENCILENABLE, TRUE);
-		// `³]©w Stencil Test ±ø¥ó, Åý¥¦¥Ã»·¦¨¥ß.`
+		// `è¨­å®š Stencil Test æ¢ä»¶, è®“å®ƒæ°¸é æˆç«‹.`
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
-		// `»¼¼W Stencil Buffer ¤º®e`
+		// `éžå¢ž Stencil Buffer å…§å®¹`
 		device->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
-		// `µe¥X¯ùÜò`
+		// `ç•«å‡ºèŒ¶å£¼`
 		g_Model_DX9.Render();
-		// `¤£¦A¥hÅÜ§ó Stencil Buffer ¤º®e`
+		// `ä¸å†åŽ»è®Šæ›´ Stencil Buffer å…§å®¹`
 		device->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
 	}
 
@@ -90,52 +90,52 @@ void RenderFrameDX9(void)
 	device->SetFVF(D3DFVF_XYZ);
 	device->SetRenderState(D3DRS_ZENABLE, FALSE);
 
-	// `ÁÙ­ì§÷½è³]©w`
+	// `é‚„åŽŸæè³ªè¨­å®š`
 	sModelMaterial_DX9 material;
 	material.Submit();
 
-	// `³]©wÃC¦â¨Ó·½¬° texture factor`
+	// `è¨­å®šé¡è‰²ä¾†æºç‚º texture factor`
 	device->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_TFACTOR);
 	device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG2);
 
-	// `¥Îºñ¦â¼Ð¥Ü¥X¥u§ó·s1¦¸ªº¹³¯À`
+	// `ç”¨ç¶ è‰²æ¨™ç¤ºå‡ºåªæ›´æ–°1æ¬¡çš„åƒç´ `
 	{	
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
 		device->SetRenderState(D3DRS_STENCILREF, 1);
 		device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(0,255,0,255));
 		device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(Vertex_V));
 	}
-	// `¥ÎÂÅ¦â¼Ð¥Ü¥X§ó·s2¦¸ªº¹³¯À`
+	// `ç”¨è—è‰²æ¨™ç¤ºå‡ºæ›´æ–°2æ¬¡çš„åƒç´ `
 	{	
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
 		device->SetRenderState(D3DRS_STENCILREF, 2);
 		device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(0,0,255,255));
 		device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(Vertex_V));
 	}
-	// `¥Î¬õ¦â¼Ð¥Ü¥X§ó·s3¦¸ªº¹³¯À`
+	// `ç”¨ç´…è‰²æ¨™ç¤ºå‡ºæ›´æ–°3æ¬¡çš„åƒç´ `
 	{	
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
 		device->SetRenderState(D3DRS_STENCILREF, 3);
 		device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(255,0,0,255));
 		device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(Vertex_V));
 	}
-	// `¥Î¥Õ¦â¼Ð¥Ü¥X§ó·s¶W¹L3¦¸ªº¹³¯À`
+	// `ç”¨ç™½è‰²æ¨™ç¤ºå‡ºæ›´æ–°è¶…éŽ3æ¬¡çš„åƒç´ `
 	{	
-		// `¦pªG3¤p©óstencil bufferªº­È, ±ø¥ó¤~¦¨¥ß.`
-		// `¤]´N¬Ostencil buffer­È­n¤j©ó3ªº·N«ä`
+		// `å¦‚æžœ3å°æ–¼stencil bufferçš„å€¼, æ¢ä»¶æ‰æˆç«‹.`
+		// `ä¹Ÿå°±æ˜¯stencil bufferå€¼è¦å¤§æ–¼3çš„æ„æ€`
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_LESS);
 		device->SetRenderState(D3DRS_STENCILREF, 3);
 		device->SetRenderState(D3DRS_TEXTUREFACTOR, D3DCOLOR_RGBA(255,255,255,255));
 		device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(Vertex_V));
 	}
-	// `ÁÙ­ì³]©w`
+	// `é‚„åŽŸè¨­å®š`
 	device->SetRenderState(D3DRS_ZENABLE, TRUE);
-	// `³]©wÃC¦â¨Ó·½¬°` diffuse * texture
+	// `è¨­å®šé¡è‰²ä¾†æºç‚º` diffuse * texture
 	device->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
 	device->SetTextureStageState(0, D3DTSS_COLORARG2, D3DTA_CURRENT);
 	device->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

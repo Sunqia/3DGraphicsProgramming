@@ -45,7 +45,7 @@ bool ReInitResourceDX10(void)
 	GutGetWindowSize(w, h);
 	float fAspect = (float)h/(float)w;
 
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, fAspect, 0.1f, 100.0f);
 
 	for ( int i=0; i<BUFFER_NUM; i++ )
@@ -86,7 +86,7 @@ bool InitResourceDX10(void)
 	pVertexDecl = g_Sphere.GetVertexFormat();
 	g_pFinalLayout = GutCreateInputLayoutDX10(pVertexDecl, PassDesc.pIAInputSignature, PassDesc.IAInputSignatureSize);
 
-	// «Ø¥ß¤@¤ù¯x§Î, µe ambient light ·|¥Î¨ì.
+	// å»ºç«‹ä¸€ç‰‡çŸ©å½¢, ç•« ambient light æœƒç”¨åˆ°.
 	{
 		g_pVertexBuffer = GutCreateVertexBuffer_DX10(sizeof(Vertex_VT)*4, g_FullScreenQuad);
 
@@ -108,7 +108,7 @@ bool InitResourceDX10(void)
 			return false;
 	}
 
-	// «Ø¥ßµe¥ú·½¦ì¸m¥Îªº Vertex Buffer.
+	// å»ºç«‹ç•«å…‰æºä½ç½®ç”¨çš„ Vertex Buffer.
 	{
 		g_pLightBuffer = GutCreateVertexBuffer_DX10(sizeof(Vertex_VC)*NUM_LIGHTS);
 
@@ -377,7 +377,7 @@ void RenderFrameDX10(void)
 		x+=w;
 	}
 
-	// µ¥«ÝµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æŽƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); // front/back buffer
 	pSwapChain->Present(1, 0);
 }

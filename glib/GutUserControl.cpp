@@ -80,7 +80,7 @@ void CGutUserControl::RotateObject(float time_advance)
 {
 	static float rx=0, ry=0;
 
-	// Åª¨ú·Æ¹«
+	// è®€å–æ»‘é¼ 
 	GutMouseInfo mouse;
 	if ( GutReadMouse(&mouse) )
 	{
@@ -88,7 +88,7 @@ void CGutUserControl::RotateObject(float time_advance)
 
 		m_eUP=UP_CUSTOMIZED;
 
-		// ¦pªG«ö¤U·Æ¹«¥ªÁä¡A´N±ÛÂàÃèÀY
+		// å¦‚æœæŒ‰ä¸‹æ»‘é¼ å·¦éµï¼Œå°±æ—‹è½‰é¡é ­
 		if ( mouse.button[0] ) 
 		{
 			Matrix4x4 rotate_matrix;
@@ -104,7 +104,7 @@ void CGutUserControl::RotateObject(float time_advance)
 			m_ObjectMatrix[3] = vPos;
 		}
 
-		// ¥Îºu½ü¨ÓÁY©ñª«¥ó
+		// ç”¨æ»¾è¼ªä¾†ç¸®æ”¾ç‰©ä»¶
 		if ( mouse.z )
 		{
 			float scale = 1.0f + mouse.z / 1000.0f;
@@ -127,13 +127,13 @@ void CGutUserControl::FPSCamera(float time_advance)
 
 	if ( time_advance )
 	{
-		// Åª¨ú·Æ¹«
+		// è®€å–æ»‘é¼ 
 		GutMouseInfo mouse;
 		GutReadMouse(&mouse);
-		// Åª¨úÁä½L
+		// è®€å–éµç›¤
 		GutReadKeyboard(keyboard_state);
-		// ³t«×
-		// ¦pªG«ö¤U·Æ¹«¥ªÁä¡A´N±ÛÂàÃèÀY
+		// é€Ÿåº¦
+		// å¦‚æœæŒ‰ä¸‹æ»‘é¼ å·¦éµï¼Œå°±æ—‹è½‰é¡é ­
 		if ( mouse.button[0] ) 
 		{
 			m_fCameraHeading -= mouse.x * rotation_speed;
@@ -142,7 +142,7 @@ void CGutUserControl::FPSCamera(float time_advance)
 	}
 
 	/*
-	// ·¥®y¼Ğ¨t²Î
+	// æ¥µåº§æ¨™ç³»çµ±
 	float heading_sin, heading_cos;
 	float pitch_sin, pitch_cos;
 	float up_sin, up_cos;
@@ -158,28 +158,28 @@ void CGutUserControl::FPSCamera(float time_advance)
 	case UP_X:
 		break;
 	case UP_Y:
-		// ­pºâÃèÀYªº­±¦V
+		// è¨ˆç®—é¡é ­çš„é¢å‘
 		camera_facing[0] = pitch_cos * heading_cos;
 		camera_facing[1] = pitch_sin;
 		camera_facing[2] = pitch_cos * heading_sin;
-		// ­pºâÃèÀY¥¿¤W¤èªº¶b¦V
+		// è¨ˆç®—é¡é ­æ­£ä¸Šæ–¹çš„è»¸å‘
 		camera_up[0] = up_cos * heading_cos;
 		camera_up[1] = up_sin;
 		camera_up[2] = up_cos * heading_sin;
 		break;
 	case UP_Z:
-		// ­pºâÃèÀYªº­±¦V
+		// è¨ˆç®—é¡é ­çš„é¢å‘
 		camera_facing[0] = pitch_cos * heading_cos;
 		camera_facing[2] = pitch_sin;
 		camera_facing[1] = -pitch_cos * heading_sin;
-		// ­pºâÃèÀY¥¿¤W¤èªº¶b¦V
+		// è¨ˆç®—é¡é ­æ­£ä¸Šæ–¹çš„è»¸å‘
 		camera_up[0] = up_cos * heading_cos;
 		camera_up[2] = up_sin;
 		camera_up[1] = -up_cos * heading_sin;
 		break;
 	}
 
-	// ¨ú±oÃè­±¥k¤èªº¤è¦V
+	// å–å¾—é¡é¢å³æ–¹çš„æ–¹å‘
 	Vector4 camera_right = Vector3CrossProduct(camera_up, camera_facing);
 	*/
 
@@ -196,33 +196,33 @@ void CGutUserControl::FPSCamera(float time_advance)
 
 	if ( time_advance )
 	{
-		// «ö¤UW©Î¤è¦VÁä¦V¤W
+		// æŒ‰ä¸‹Wæˆ–æ–¹å‘éµå‘ä¸Š
 		if ( keyboard_state[GUTKEY_W] || keyboard_state[GUTKEY_UP] )
 		{
 			m_vEye += camera_facing * moving_speed;
 		}
-		// «ö¤US©Î¤è¦VÁä¦V¤U
+		// æŒ‰ä¸‹Sæˆ–æ–¹å‘éµå‘ä¸‹
 		if ( keyboard_state[GUTKEY_S] || keyboard_state[GUTKEY_DOWN] )
 		{
 			m_vEye -= camera_facing * moving_speed;
 		}
-		// «ö¤UA©Î¤è¦VÁä¦V¥ª
+		// æŒ‰ä¸‹Aæˆ–æ–¹å‘éµå‘å·¦
 		if ( keyboard_state[GUTKEY_A] || keyboard_state[GUTKEY_LEFT] )
 		{
 			m_vEye -= camera_right * moving_speed;
 		}
-		// «ö¤UD©Î¤è¦VÁä¦V¥k
+		// æŒ‰ä¸‹Dæˆ–æ–¹å‘éµå‘å³
 		if ( keyboard_state[GUTKEY_D] || keyboard_state[GUTKEY_RIGHT] )
 		{
 			m_vEye += camera_right * moving_speed;
 		}
 	}
 
-	// ­pºâ¥XÃèÀY¹ï·ÇªºÂI, ²£¥ÍÃèÀYÂà´«¯x°}®É·|¥Î¨ì.
+	// è¨ˆç®—å‡ºé¡é ­å°æº–çš„é», ç”¢ç”Ÿé¡é ­è½‰æ›çŸ©é™£æ™‚æœƒç”¨åˆ°.
 	m_vLookAt = m_vEye + camera_facing;
-	// ¦]¬°¬O¹ï2­Ó¶bÂà°Ê, »İ­n§ó·sÃèÀY´Â¤Wªº¶b
+	// å› ç‚ºæ˜¯å°2å€‹è»¸è½‰å‹•, éœ€è¦æ›´æ–°é¡é ­æœä¸Šçš„è»¸
 	m_vUp = camera_up;
-	// ½T»{w = 1
+	// ç¢ºèªw = 1
 	m_vEye[3] = m_vUp[3] = m_vLookAt[3] = 1.0f;
 
 	UpdateViewMatrix();

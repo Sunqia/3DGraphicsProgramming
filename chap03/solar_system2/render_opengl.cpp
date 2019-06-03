@@ -9,11 +9,11 @@ static Matrix4x4 g_view_matrix;
 
 bool InitResourceOpenGL(void)
 {
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(90.0f, 1.0f, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 	glMatrixMode(GL_MODELVIEW);	
@@ -25,85 +25,85 @@ bool InitResourceOpenGL(void)
 
 bool ReleaseResourceOpenGL(void)
 {
-	// ¨S¨Æ°µ
+	// æ²’äº‹åš
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(60.0f, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 }
 
-// `¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨OpenGLä¾†ç¹ªåœ–`
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	// `³]©w­n¥Î°}¦Cªº¤è¦¡¶Ç¤J³»ÂI¦ì¸m¸òÃC¦â`
+	// `è¨­å®šè¦ç”¨é™£åˆ—çš„æ–¹å¼å‚³å…¥é ‚é»ä½ç½®è·Ÿé¡è‰²`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
-	// `­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}`
+	// `è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 	Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
 	Matrix4x4 world_view_matrix;
 
 	glMatrixMode(GL_MODELVIEW);
-	// `¸ü¤JÃèÀYÂà´«¯x°}`
+	// `è¼‰å…¥é¡é ­è½‰æ›çŸ©é™£`
 	glLoadMatrixf( (float *) &view_matrix );
-	glPushMatrix(); // `§â¥Ø«eªº¯x°}¦s¨ìstack¸Ì`
-		// `¤Ó¶§, ®M¤J·Æ¹«ªº±ÛÂà±±¨î.`
+	glPushMatrix(); // `æŠŠç›®å‰çš„çŸ©é™£å­˜åˆ°stackè£¡`
+		// `å¤ªé™½, å¥—å…¥æ»‘é¼ çš„æ—‹è½‰æ§åˆ¶.`
 		glRotatef(FastMath::RadianToDegree(g_fRotate_X), 1.0f, 0.0f, 0.0f);
 		glRotatef(FastMath::RadianToDegree(g_fRotate_Y), 0.0f, 1.0f, 0.0f);
 		glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), g_pSunVertices);
 		glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pSunVertices[0].m_RGBA);
 		glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
-		// `¤ô¬P`
-		glPushMatrix(); // `§â¥Ø«eªº¯x°}¦s¨ìstack¸Ì`
+		// `æ°´æ˜Ÿ`
+		glPushMatrix(); // `æŠŠç›®å‰çš„çŸ©é™£å­˜åˆ°stackè£¡`
 			float mercury_rotate_y = 360.0f * (g_simulation_days / days_a_year_mercury); 
 			glRotatef(mercury_rotate_y, 0.0f, 1.0f, 0.0f);
 			glTranslatef(mercury_to_sun_distance, 0.0f, 0.0f);
 			glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), g_pMoonVertices);
 			glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pMoonVertices[0].m_RGBA);
 			glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
-		// `±qstack¸Ìpop¥X¤@­Ó¯x°}, ¨Ã®M¥Î¨ì¥Ø«e©Ò«ü©w­n¾Ş§@ªº¯x°}`GL_MODELVIEW
+		// `å¾stackè£¡popå‡ºä¸€å€‹çŸ©é™£, ä¸¦å¥—ç”¨åˆ°ç›®å‰æ‰€æŒ‡å®šè¦æ“ä½œçš„çŸ©é™£`GL_MODELVIEW
 		glPopMatrix(); 
-		// `ª÷¬P`
-		glPushMatrix(); // `§â¥Ø«eªº¯x°}¦s¨ìstack¸Ì`
+		// `é‡‘æ˜Ÿ`
+		glPushMatrix(); // `æŠŠç›®å‰çš„çŸ©é™£å­˜åˆ°stackè£¡`
 			float venus_rotate_y = 360.0f * (g_simulation_days / days_a_year_venus); 
 			glRotatef(venus_rotate_y, 0.0f, 1.0f, 0.0f);
 			glTranslatef(venus_to_sun_distance, 0.0f, 0.0f);
 			glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), g_pMoonVertices);
 			glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pMoonVertices[0].m_RGBA);
 			glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
-		// `±qstack¸Ìpop¥X¤@­Ó¯x°}, ¨Ã®M¥Î¨ì¥Ø«e©Ò«ü©w­n¾Ş§@ªº¯x°}`GL_MODELVIEW
+		// `å¾stackè£¡popå‡ºä¸€å€‹çŸ©é™£, ä¸¦å¥—ç”¨åˆ°ç›®å‰æ‰€æŒ‡å®šè¦æ“ä½œçš„çŸ©é™£`GL_MODELVIEW
 		glPopMatrix(); 
-		// `¦a²y`
-		glPushMatrix();// `§â¥Ø«eªº¯x°}¦s¨ìstack¸Ì`
+		// `åœ°çƒ`
+		glPushMatrix();// `æŠŠç›®å‰çš„çŸ©é™£å­˜åˆ°stackè£¡`
 			float earth_rotate_y = 360.0f * (g_simulation_days / days_a_year); 
 			glRotatef(earth_rotate_y, 0.0f, 1.0f, 0.0f);
 			glTranslatef(earth_to_sun_distance, 0.0f, 0.0f);
 			glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), g_pEarthVertices);
 			glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pEarthVertices[0].m_RGBA);
 			glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
-			// `¤ë²y`
+			// `æœˆçƒ`
 			float moon_rotate_y = 360.0f * (g_simulation_days / days_a_month);
 			glRotatef(moon_rotate_y, 0.0f, 1.0f, 0.0f);
 			glTranslatef(moon_to_earth_distance, 0.0f, 0.0f);
 			glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), g_pMoonVertices);
 			glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pMoonVertices[0].m_RGBA);
 			glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
-			// `±qstack¸Ìpop¥X¤@­Ó¯x°}, ¨Ã®M¥Î¨ì¥Ø«e©Ò«ü©w­n¾Ş§@ªº¯x°}GL_MODELVIEW`
+			// `å¾stackè£¡popå‡ºä¸€å€‹çŸ©é™£, ä¸¦å¥—ç”¨åˆ°ç›®å‰æ‰€æŒ‡å®šè¦æ“ä½œçš„çŸ©é™£GL_MODELVIEW`
 		glPopMatrix(); 
 	glPopMatrix();
 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

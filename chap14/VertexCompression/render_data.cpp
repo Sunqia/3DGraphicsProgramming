@@ -5,7 +5,7 @@
 Matrix4x4 g_sun_matrix, g_earth_matrix, g_moon_matrix;
 // controller object
 CGutUserControl g_Control;
-// ²yªº¼Ò«¬
+// çƒçš„æ¨¡å‹
 CompressedVertex *g_pCompressedVertices = NULL;
 //
 unsigned short *g_pSphereIndices = NULL;
@@ -14,10 +14,10 @@ int g_iNumSphereVertices = 0;
 int g_iNumSphereTriangles = 0;
 int g_iNumSphereIndices = 0;
 //
-bool CreateSphere(CompressedVertex **ppVertices, // ¶Ç¦^²y­±ªº³»ÂI
-				  unsigned short **ppIndices, // ¶Ç¦^²y­±ªº¤T¨¤§Î¯Á¤Ş
-				  int stacks, // ½n«×ªº¤Á­±¼Æ¥Ø
-				  int slices // ®|«×ªº¤Á­±¼Æ¥Ø
+bool CreateSphere(CompressedVertex **ppVertices, // å‚³å›çƒé¢çš„é ‚é»
+				  unsigned short **ppIndices, // å‚³å›çƒé¢çš„ä¸‰è§’å½¢ç´¢å¼•
+				  int stacks, // ç·¯åº¦çš„åˆ‡é¢æ•¸ç›®
+				  int slices // å¾‘åº¦çš„åˆ‡é¢æ•¸ç›®
 				  )
 {
 	*ppVertices = NULL;
@@ -78,7 +78,7 @@ bool CreateSphere(CompressedVertex **ppVertices, // ¶Ç¦^²y­±ªº³»ÂI
 			pVertices[index].m_Position[1] = (unsigned char) vCompressedNormal[1];
 			pVertices[index].m_Position[2] = (unsigned char) vCompressedNormal[2];
 			pVertices[index].m_Position[3] = 255;
-			// ²y¦æªºvertex¸ònormal¦b¦¹­è¦n¬Û¦P
+			// çƒè¡Œçš„vertexè·Ÿnormalåœ¨æ­¤å‰›å¥½ç›¸åŒ
 			pVertices[index].m_Normal[0] = (unsigned char) vCompressedNormal[0];
 			pVertices[index].m_Normal[1] = (unsigned char) vCompressedNormal[1];
 			pVertices[index].m_Normal[2] = (unsigned char) vCompressedNormal[2];

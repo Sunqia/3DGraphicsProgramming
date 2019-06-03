@@ -25,16 +25,16 @@ bool InitResourceDX10(void)
 	g_pDevice = GutGetGraphicsDeviceDX10();
 	ID3D10Blob *pVSCode = NULL;
 
-	// ¸ü¤JVertex Shader
+	// è¼‰å…¥Vertex Shader
 	g_pVertexShader = GutLoadVertexShaderDX10_HLSL("../../shaders/vertex_color_dx10.hlsl", "VS", "vs_4_0", &pVSCode);
 	if ( NULL==g_pVertexShader )
 		return false;
-	// ¸ü¤JPixel Shader
+	// è¼‰å…¥Pixel Shader
 	g_pPixelShader = GutLoadPixelShaderDX10_HLSL("../../shaders/vertex_color_dx10.hlsl", "PS", "ps_4_0");
 	if ( NULL==g_pPixelShader )
 		return false;
 
-    // ³]©wVertex¸ê®Æ®æ¦¡
+    // è¨­å®šVertexè³‡æ–™æ ¼å¼
     D3D10_INPUT_ELEMENT_DESC layout[] =
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D10_INPUT_PER_VERTEX_DATA, 0 },
@@ -53,38 +53,38 @@ bool InitResourceDX10(void)
     cbDesc.BindFlags = D3D10_BIND_VERTEX_BUFFER;
     cbDesc.CPUAccessFlags = 0;
     cbDesc.MiscFlags = 0;
-	// ¶}±ÒVertex Buffer®É¦P®É§â¸ê®Æ«ş¨©¹L¥h
+	// é–‹å•ŸVertex Bufferæ™‚åŒæ™‚æŠŠè³‡æ–™æ‹·è²éå»
 	D3D10_SUBRESOURCE_DATA sbDesc;
 	sbDesc.pSysMem = g_pSunVertices;
-	// °t¸m¤@¶ô¥i¥H¦s©ñVertexªº°O¾ĞÅé, ¤]´N¬OVertex Buffer.
+	// é…ç½®ä¸€å¡Šå¯ä»¥å­˜æ”¾Vertexçš„è¨˜æ†¶é«”, ä¹Ÿå°±æ˜¯Vertex Buffer.
 	if ( D3D_OK != g_pDevice->CreateBuffer( &cbDesc, &sbDesc, &g_pSunVertexBuffer ) )
 		return false;
 
-	// ¶}±ÒVertex Buffer®É¦P®É§â¸ê®Æ«ş¨©¹L¥h
+	// é–‹å•ŸVertex Bufferæ™‚åŒæ™‚æŠŠè³‡æ–™æ‹·è²éå»
 	sbDesc.pSysMem = g_pEarthVertices;
-	// °t¸m¤@¶ô¥i¥H¦s©ñVertexªº°O¾ĞÅé, ¤]´N¬OVertex Buffer.
+	// é…ç½®ä¸€å¡Šå¯ä»¥å­˜æ”¾Vertexçš„è¨˜æ†¶é«”, ä¹Ÿå°±æ˜¯Vertex Buffer.
 	if ( D3D_OK != g_pDevice->CreateBuffer( &cbDesc, &sbDesc, &g_pEarthVertexBuffer ) )
 		return false;
 
-	// ¶}±ÒVertex Buffer®É¦P®É§â¸ê®Æ«ş¨©¹L¥h
+	// é–‹å•ŸVertex Bufferæ™‚åŒæ™‚æŠŠè³‡æ–™æ‹·è²éå»
 	sbDesc.pSysMem = g_pMoonVertices;
-	// °t¸m¤@¶ô¥i¥H¦s©ñVertexªº°O¾ĞÅé, ¤]´N¬OVertex Buffer.
+	// é…ç½®ä¸€å¡Šå¯ä»¥å­˜æ”¾Vertexçš„è¨˜æ†¶é«”, ä¹Ÿå°±æ˜¯Vertex Buffer.
 	if ( D3D_OK != g_pDevice->CreateBuffer( &cbDesc, &sbDesc, &g_pMoonVertexBuffer ) )
 		return false;
 
-	// ³]©w¤@¶ô¥i¥H¥Î¨Ó©ñIndexªº°O¾ĞÅé.
+	// è¨­å®šä¸€å¡Šå¯ä»¥ç”¨ä¾†æ”¾Indexçš„è¨˜æ†¶é«”.
     cbDesc.ByteWidth = sizeof(unsigned short) * g_iNumSphereIndices;
     cbDesc.Usage = D3D10_USAGE_IMMUTABLE;
     cbDesc.BindFlags = D3D10_BIND_INDEX_BUFFER;
     cbDesc.CPUAccessFlags = 0;
     cbDesc.MiscFlags = 0;
-	// ¶}±ÒIndex Buffer®É¦P®É§â¸ê®Æ«ş¨©¹L¥h
+	// é–‹å•ŸIndex Bufferæ™‚åŒæ™‚æŠŠè³‡æ–™æ‹·è²éå»
 	sbDesc.pSysMem = g_pSphereIndices;
-    // °t¸m¤@¶ô¥i¥H¦s©ñIndexªº°O¾ĞÅé, ¤]´N¬OIndex Buffer.
+    // é…ç½®ä¸€å¡Šå¯ä»¥å­˜æ”¾Indexçš„è¨˜æ†¶é«”, ä¹Ÿå°±æ˜¯Index Buffer.
 	if ( D3D_OK != g_pDevice->CreateBuffer( &cbDesc, &sbDesc, &g_pSphereIndexBuffer ) )
 		return false;
 
-	// °t¸mShaderÅª¨ú°Ñ¼Æªº°O¾ĞÅéªÅ¶¡
+	// é…ç½®Shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ç©ºé–“
     cbDesc.ByteWidth = sizeof(Matrix4x4);
     cbDesc.Usage = D3D10_USAGE_DYNAMIC;
     cbDesc.BindFlags = D3D10_BIND_CONSTANT_BUFFER;
@@ -93,10 +93,10 @@ bool InitResourceDX10(void)
 	if ( D3D_OK != g_pDevice->CreateBuffer( &cbDesc, NULL, &g_pConstantBuffer ) )
 		return false;
 	
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	D3DXMatrixPerspectiveFovRH(&g_proj_matrix, FastMath::DegreeToRadian(90.0f), 1.0f, 0.1f, 100.0f);
 
-	// ¶}?rasterizer stateª«¥ó
+	// é–‹?rasterizer stateç‰©ä»¶
 	D3D10_RASTERIZER_DESC rasterizer_state_desc;
 	
 	rasterizer_state_desc.FillMode = D3D10_FILL_SOLID;
@@ -146,41 +146,41 @@ void RenderFrameDX10(void)
 	UINT stride = sizeof(Vertex_VC);
 	UINT offset = 0;
 
-	// ¨ú±o©I¥sGutCreateGraphicsDeviceDX10®É©Ò²£¥ÍªºD3D10ª«¥ó
+	// å–å¾—å‘¼å«GutCreateGraphicsDeviceDX10æ™‚æ‰€ç”¢ç”Ÿçš„D3D10ç‰©ä»¶
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView(); //frame buffer
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); //depth/stencil buffer
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); // front/back buffer
 
-	// ²M°£ÃC¦â
+	// æ¸…é™¤é¡è‰²
 	g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
-	// ²M°£Depth/Stencil buffer
+	// æ¸…é™¤Depth/Stencil buffer
 	g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
-	// ³]©wvertex shader
+	// è¨­å®švertex shader
 	g_pDevice->VSSetShader(g_pVertexShader);
-	// ³]©wpixel shader
+	// è¨­å®špixel shader
 	g_pDevice->PSSetShader(g_pPixelShader);
-	// ³]©wvertex shaderÅª¨ú°Ñ¼Æªº°O¾ĞÅé¦ìÓ_
+	// è¨­å®švertex shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ä½ç½
     g_pDevice->VSSetConstantBuffers(0, 1, &g_pConstantBuffer);
-	// ³]©wvertex¸ê®Æ®æ¦¡
+	// è¨­å®švertexè³‡æ–™æ ¼å¼
 	g_pDevice->IASetInputLayout(g_pVertexLayout);
-	// ³]©windex buffer
+	// è¨­å®šindex buffer
 	g_pDevice->IASetIndexBuffer(g_pSphereIndexBuffer, DXGI_FORMAT_R16_UINT, 0);
-	// ³]©w¤T¨¤§Î³»ÂI¯Á¤Ş­È¸ê®Æ±Æ¦C¬Otriangle strip
+	// è¨­å®šä¸‰è§’å½¢é ‚é»ç´¢å¼•å€¼è³‡æ–™æ’åˆ—æ˜¯triangle strip
 	g_pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	D3DXMATRIX temp_matrix;
 	D3DXMATRIX view_matrix, view_proj_matrix, world_view_proj_matrix;
 	D3DXMatrixLookAtRH(&view_matrix, (D3DXVECTOR3 *)&g_eye, (D3DXVECTOR3 *)&g_lookat, (D3DXVECTOR3 *)&g_up);
 	D3DXMatrixMultiply(&view_proj_matrix, &view_matrix, &g_proj_matrix);
 
-	// ¤Ó¶§, ±a¤J·Æ¹«ªº±ÛÂà±±¨î
+	// å¤ªé™½, å¸¶å…¥æ»‘é¼ çš„æ—‹è½‰æ§åˆ¶
 	D3DXMATRIX sun_matrix, sun_ry, sun_rx;
 	D3DXMatrixRotationX(&sun_rx, g_fRotate_X);		
 	D3DXMatrixRotationY(&sun_ry, g_fRotate_Y);		
 	D3DXMatrixMultiply(&sun_matrix, &sun_ry, &sun_rx);
 	D3DXMatrixMultiply(&world_view_proj_matrix, &sun_matrix, &view_proj_matrix);
-	// ³]©wshader°Ñ¼Æ
+	// è¨­å®šshaderåƒæ•¸
 	D3DXMATRIX *pConstData;
 	g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 	*pConstData = world_view_proj_matrix;
@@ -189,7 +189,7 @@ void RenderFrameDX10(void)
 	g_pDevice->IASetVertexBuffers(0, 1, &g_pSunVertexBuffer, &stride, &offset);
 	g_pDevice->DrawIndexed(g_iNumSphereIndices, 0, 0);
 
-	// ¤ô¬P
+	// æ°´æ˜Ÿ
 	float mercury_rotate_y = 2.0f * MATH_PI * (g_simulation_days / days_a_year_mercury); 
 
 	D3DXMATRIX mercury_matrix, mercury_translate, mercury_rotate;
@@ -199,7 +199,7 @@ void RenderFrameDX10(void)
 	D3DXMatrixMultiply(&mercury_matrix, &temp_matrix, &sun_matrix);
 	D3DXMatrixMultiply(&world_view_proj_matrix, &mercury_matrix, &view_proj_matrix);
 
-	// ³]©wshader°Ñ¼Æ
+	// è¨­å®šshaderåƒæ•¸
 	g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 	*pConstData = world_view_proj_matrix;
 	g_pConstantBuffer->Unmap();
@@ -207,7 +207,7 @@ void RenderFrameDX10(void)
 	g_pDevice->IASetVertexBuffers(0, 1, &g_pMoonVertexBuffer, &stride, &offset);
 	g_pDevice->DrawIndexed(g_iNumSphereIndices, 0, 0);
 
-	// ª÷¬P
+	// é‡‘æ˜Ÿ
 	float venus_rotate_y = 2.0f * MATH_PI * (g_simulation_days / days_a_year_venus); 
 
 	D3DXMATRIX venus_matrix, venus_rotate, venus_translate;
@@ -217,7 +217,7 @@ void RenderFrameDX10(void)
 	D3DXMatrixMultiply(&venus_matrix, &temp_matrix, &sun_matrix);
 	D3DXMatrixMultiply(&world_view_proj_matrix, &venus_matrix, &view_proj_matrix);
 
-	// ³]©wshader°Ñ¼Æ
+	// è¨­å®šshaderåƒæ•¸
 	g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 	*pConstData = world_view_proj_matrix;
 	g_pConstantBuffer->Unmap();
@@ -225,7 +225,7 @@ void RenderFrameDX10(void)
 	g_pDevice->IASetVertexBuffers(0, 1, &g_pMoonVertexBuffer, &stride, &offset);
 	g_pDevice->DrawIndexed(g_iNumSphereIndices, 0, 0);
 
-	// ¦a²y
+	// åœ°çƒ
 	float earth_rotate_y = 2.0f * MATH_PI * (g_simulation_days / days_a_year); 
 
 	D3DXMATRIX earth_matrix, earth_rotate, earth_translate;
@@ -235,7 +235,7 @@ void RenderFrameDX10(void)
 	D3DXMatrixMultiply(&earth_matrix, &temp_matrix, &sun_matrix);
 	D3DXMatrixMultiply(&world_view_proj_matrix, &earth_matrix, &view_proj_matrix);
 
-	// ³]©wshader°Ñ¼Æ
+	// è¨­å®šshaderåƒæ•¸
 	g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 	*pConstData = world_view_proj_matrix;
 	g_pConstantBuffer->Unmap();
@@ -243,7 +243,7 @@ void RenderFrameDX10(void)
 	g_pDevice->IASetVertexBuffers(0, 1, &g_pEarthVertexBuffer, &stride, &offset);
 	g_pDevice->DrawIndexed(g_iNumSphereIndices, 0, 0);
 
-	// ¤ë«G
+	// æœˆäº®
 	float moon_rotate_y = 2.0f * MATH_PI * (g_simulation_days / days_a_month); 
 
 	D3DXMATRIX moon_matrix, moon_rotate, moon_translate;
@@ -253,7 +253,7 @@ void RenderFrameDX10(void)
 	D3DXMatrixMultiply(&moon_matrix, &temp_matrix, &earth_matrix);
 	D3DXMatrixMultiply(&world_view_proj_matrix, &moon_matrix, &view_proj_matrix);
 
-	// ³]©wshader°Ñ¼Æ
+	// è¨­å®šshaderåƒæ•¸
 	g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 	*pConstData = world_view_proj_matrix;
 	g_pConstantBuffer->Unmap();
@@ -261,7 +261,7 @@ void RenderFrameDX10(void)
 	g_pDevice->IASetVertexBuffers(0, 1, &g_pMoonVertexBuffer, &stride, &offset);
 	g_pDevice->DrawIndexed(g_iNumSphereIndices, 0, 0);
 
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	pSwapChain->Present(1, 0);
 }
 

@@ -12,16 +12,16 @@ static Matrix4x4 g_mirror_view_matrix;
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// §ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V
+	// æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	// ¨Ï¥Î¦Û°Ênormalize¥\¯à
+	// ä½¿ç”¨è‡ªå‹•normalizeåŠŸèƒ½
 	device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 
 	device->CreateTexture(512, 512, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &g_pTexture, NULL);
@@ -46,17 +46,17 @@ void ResizeWindowDX9(int width, int height)
 {
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// §ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V
+	// æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	// ¨Ï¥Î¦Û°Ênormalize¥\¯à
+	// ä½¿ç”¨è‡ªå‹•normalizeåŠŸèƒ½
 	device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 }
 
@@ -93,13 +93,13 @@ static void RenderModelDX9(bool mirror, Vector4 *pPlane)
 	g_Model_DX9.Render();
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	Vector4 vPlane(0.0f, 0.0f, 1.0f, -g_mirror_z);
 	
-	// ¶}©l¤UÃ¸¹Ï«ü¥O
+	// é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤
 	device->BeginScene(); 
 
 	{
@@ -122,9 +122,9 @@ void RenderFrameDX9(void)
 		device->SetDepthStencilSurface(pDepthBufferBackup);
 	}
 
-	// §â¤W¤@­Ó¨BÆJªºµ²ªG·í¦¨¶K¹Ï¨Ó¨Ï¥Î
+	// æŠŠä¸Šä¸€å€‹æ­¥é©Ÿçš„çµæžœç•¶æˆè²¼åœ–ä¾†ä½¿ç”¨
 	{
-		// ®ø°£µe­±
+		// æ¶ˆé™¤ç•«é¢
 		device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_RGBA(0, 0, 150, 255), 1.0f, 0);
 
 		RenderModelDX9(false, NULL);
@@ -155,23 +155,23 @@ void RenderFrameDX9(void)
 
 		device->SetTransform(D3DTS_TEXTURE0, (D3DMATRIX *) &texture_matrix);
 		device->SetTextureStageState(0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
-		// D3DTTFF_PROJECTED§iª¾direct3d¸Ë¸mtexcoord»Ý­n°£¥Hw
+		// D3DTTFF_PROJECTEDå‘ŠçŸ¥direct3dè£ç½®texcoordéœ€è¦é™¤ä»¥w
 		device->SetTextureStageState(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT4|D3DTTFF_PROJECTED);
 		float v[12];
 		for ( int i=0; i<4; i++ )
 		{
 			g_Quad[i].m_Position.StoreXYZ(&v[i*3]);
 		}
-		// µe¥X¯x§Î
+		// ç•«å‡ºçŸ©å½¢
 		device->SetFVF(D3DFVF_XYZ);
 		//device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(Vertex_V));
 		device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, v, 12);
 
 	}
 
-	// «Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F
+	// å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†
 	device->EndScene(); 
 	
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
     device->Present( NULL, NULL, NULL, NULL );
 }

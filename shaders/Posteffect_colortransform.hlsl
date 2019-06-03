@@ -1,4 +1,4 @@
-// §âÃC¦â¦V¶q(r,g,b,a)¸ò¯x°}¬Û­¼
+// æŠŠé¡è‰²å‘é‡(r,g,b,a)è·ŸçŸ©é™£ç›¸ä¹˜
 
 struct VS_INPUT
 {
@@ -14,7 +14,7 @@ struct VS_OUTPUT
 
 sampler2D RGBSampler : register(s0);
 
-// Âà´«¯x°}
+// è½‰æ›çŸ©é™£
 // VS
 uniform row_major float4x4 wvp_matrix : register(c0);
 // PS

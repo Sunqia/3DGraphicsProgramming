@@ -2,36 +2,36 @@
 #include "render_data.h"
 #include "gut.h"
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.0f, 2.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 Matrix4x4 g_world_matrix;
-// ¥ú·½¸ê®Æ
+// å…‰æºè³‡æ–™
 Vector4 g_vGlobal_AmbientLight(0.1f, 0.1f, 0.1f, 1.0f);
 Vector4 g_vLightDirection(0.0f, 0.0f, -1.0f, 0.0f);
 Vector4 g_vLightAmbient(0.0f, 0.0f, 0.0f, 0.0f);
 Vector4 g_vLightDiffuse(1.0f, 1.0f, 1.0f, 1.0f);
 Vector4 g_vLightSpecular(0.0f, 0.0f, 0.0f, 0.0f);
-// ¥¿­±§÷½è
+// æ­£é¢æè³ª
 Vector4 g_vMaterialAmbient(1.0f, 0.0f, 0.0f, 1.0f);
 Vector4 g_vMaterialDiffuse(1.0f, 0.0f, 0.0f, 1.0f);
 Vector4 g_vMaterialSpecular(0.0f, 0.0f, 0.0f, 1.0f);
 Vector4 g_vMaterialEmissive(0.0f, 0.0f, 0.0f, 0.0f);
 float	g_fMaterialShininess = 0.0f;
-// ­I­±§÷½è
+// èƒŒé¢æè³ª
 Vector4 g_vMaterialAmbient_Back(0.0f, 1.0f, 0.0f, 1.0f);
 Vector4 g_vMaterialDiffuse_Back(0.0f, 1.0f, 0.0f, 1.0f);
 Vector4 g_vMaterialSpecular_Back(0.0f, 0.0f, 0.0f, 1.0f);
 Vector4 g_vMaterialEmissive_Back(0.0f, 0.0f, 0.0f, 0.0f);
 float	g_fMaterialShininess_Back = 0.0f;
 
-// ¯x§Îªº4­Ó³»ÂI
+// çŸ©å½¢çš„4å€‹é ‚é»
 // Position, Normal
 Vertex_VN g_Quad[4] =
 {

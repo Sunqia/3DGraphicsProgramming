@@ -99,7 +99,7 @@ void sModelMaterial_DX9::Submit(int mask)
 
 		if ( bSubmitMtl )
 		{
-			// ¨S¦³¨Ï¥ÎPixel Shader®É¤~»Ý­n®M¥Îmulti-texture²V¦â³]©w.
+			// æ²’æœ‰ä½¿ç”¨Pixel Shaderæ™‚æ‰éœ€è¦å¥—ç”¨multi-textureæ··è‰²è¨­å®š.
 			if ( NULL==pPixelShader )
 			{
 				pDevice->SetTextureStageState(tex_stage, D3DTSS_COLORARG1, D3DTA_TEXTURE);
@@ -358,11 +358,11 @@ bool CGutModel_DX9::ConvertToDX9Model(CGutModel *pModel)
 
 			pVertexChunk->m_iNumVertices = pVertexChunkTarget->m_iNumVertices;
 			int vbuffer_size = pVertexChunk->m_iNumVertices * pVertexChunk->m_iVertexSize;
-			// °t¸m¤@¶ôÅã¥Ü¥d°O¾ÐÅé
+			// é…ç½®ä¸€å¡Šé¡¯ç¤ºå¡è¨˜æ†¶é«”
 			pDevice->CreateVertexBuffer(vbuffer_size, 0, 0, D3DPOOL_MANAGED, &pVertexChunk->m_pVertexBuffer, NULL);
 			if ( D3D_OK==pVertexChunk->m_pVertexBuffer->Lock(0, vbuffer_size, &vbuffer_pointer, 0) )
 			{
-				// §â³»ÂI¸ê®Æ±q¥D°O¾ÐÅé«þ¨ã¨ìÅã¥Ü¥d¤W
+				// æŠŠé ‚é»žè³‡æ–™å¾žä¸»è¨˜æ†¶é«”æ‹·å…·åˆ°é¡¯ç¤ºå¡ä¸Š
 				pVertexChunkTarget->OutputVertexBuffer(vbuffer_pointer);
 				pVertexChunk->m_pVertexBuffer->Unlock();
 			}
@@ -373,11 +373,11 @@ bool CGutModel_DX9::ConvertToDX9Model(CGutModel *pModel)
 			
 			pVertexChunk->m_iNumIndices = pVertexChunkTarget->m_iNumIndices;
 			int ibuffer_size = pVertexChunk->m_iNumIndices * 2;
-			// °t¸m¤@¶ôÅã¥Ü¥d°O¾ÐÅé
+			// é…ç½®ä¸€å¡Šé¡¯ç¤ºå¡è¨˜æ†¶é«”
 			pDevice->CreateIndexBuffer(ibuffer_size, 0, D3DFMT_INDEX16, D3DPOOL_MANAGED, &pVertexChunk->m_pIndexBuffer, NULL);
 			if ( D3D_OK==pVertexChunk->m_pIndexBuffer->Lock(0, ibuffer_size, &ibuffer_pointer, 0) )
 			{
-				// §â¯Á¤Þ¸ê®Æ±q¥D°O¾ÐÅé«þ¨ã¨ìÅã¥Ü¥d¤W
+				// æŠŠç´¢å¼•è³‡æ–™å¾žä¸»è¨˜æ†¶é«”æ‹·å…·åˆ°é¡¯ç¤ºå¡ä¸Š
 				memcpy(ibuffer_pointer, pVertexChunkTarget->m_pIndexArray, ibuffer_size);
 				pVertexChunk->m_pIndexBuffer->Unlock();
 			}

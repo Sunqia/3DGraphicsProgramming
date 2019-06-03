@@ -80,11 +80,11 @@ void frame_move(void)
 	float speedB = 0.2f;
 	float speed = speedB * g_fTimeElapsed * MATH_PI;
 
-	// ­«³] seed
+	// é‡è¨­ seed
 	srand(1234);
 
 	// stateless particle
-	// ±q random number ¼Æ¦C¨Ó­««Ø¥X¨C­Ó¥ú·½ªº¦ì¸m¸òÃC¦â¸ê®Æ
+	// å¾ random number æ•¸åˆ—ä¾†é‡å»ºå‡ºæ¯å€‹å…‰æºçš„ä½ç½®è·Ÿé¡è‰²è³‡æ–™
 
 	for ( int i=1; i<NUM_LIGHTS; i++ )
 	{
@@ -113,11 +113,11 @@ void frame_move(void)
 		pLight->m_vDiffuse[2] = rnd()*3.0f + 0.5f;
 		pLight->m_vDiffuse[3] = rnd()*3.0f + 0.5f;
 
-		// §â¦ì¸m¸òÃC¦â©ñ¦b©ñ¦b¥t¤@­Ó°}¦C¤¤, ¤è«KÃ¸¹Ï.
+		// æŠŠä½ç½®è·Ÿé¡è‰²æ”¾åœ¨æ”¾åœ¨å¦ä¸€å€‹é™£åˆ—ä¸­, æ–¹ä¾¿ç¹ªåœ–.
 		g_LightsVC[i].m_Position = pLight->m_vPosition;
 		g_LightsVC[i].m_Color = pLight->m_vDiffuse;
 		
-		// ¥ú·½½d³ò©ñ¦bW
+		// å…‰æºç¯„åœæ”¾åœ¨W
 		pLight->m_vPosition[3] = rnd()*0.2f + 0.1f;
 	}
 
@@ -126,7 +126,7 @@ void frame_move(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -196,22 +196,22 @@ void main(void)
 	g_Model.Load_ASCII("..\\..\\models\\earth_normalmapped.gma");
 	g_Sphere.Load_ASCII("..\\..\\models\\sphere_simple.gma");
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
 		printf("Failed to load resources\n");
 		exit(0);
 	}
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
 		frame_move();
 		render();
 	}
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

@@ -15,18 +15,18 @@ float g_fFrame_Time = 0.0f;
 
 void GetUserInput(void)
 {
-	// Åª¨ú·Æ¹«
+	// è®€å–æ»‘é¼ 
 	GutMouseInfo mouse;
 	if ( GutReadMouse(&mouse) )
 	{
-		// ¨ú±oµe§¹«e¤@­Óµe­±¨ì²{¦b©Ò¸g¾úªº®É¶¡
+		// å–å¾—ç•«å®Œå‰ä¸€å€‹ç•«é¢åˆ°ç¾åœ¨æ‰€ç¶“æ­·çš„æ™‚é–“
 		g_fFrame_Time = g_Timer.Stop();
 		g_Timer.Restart();
 
 		float moving_speed = 2.0f * g_fFrame_Time;
 		float rotation_speed = 1.0 * g_fFrame_Time;
 
-		// ¦pªG«ö¤U·Æ¹«¥ªÁä¡A´N±ÛÂàÃèÀY
+		// å¦‚æœæŒ‰ä¸‹æ»‘é¼ å·¦éµï¼Œå°±æ—‹è½‰é¡é ­
 		if ( mouse.button[0] ) 
 		{
 			Matrix4x4 rotate_matrix;
@@ -51,7 +51,7 @@ void FrameMove(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -96,10 +96,10 @@ void main(void)
 
 	GutResizeFunc( resize_func );
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
@@ -112,7 +112,7 @@ void main(void)
 
 	GutInputInit();
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -120,17 +120,17 @@ void main(void)
 		exit(0);
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
 		//
 		FrameMove();
-		// µe¥X¯x§Î
+		// ç•«å‡ºçŸ©å½¢
 		render();
 	}
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

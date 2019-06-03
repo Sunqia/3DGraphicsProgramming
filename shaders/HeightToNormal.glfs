@@ -2,7 +2,7 @@
 // Pixel Shader
 //
 
-// §â°ª«×­È±q(r,g,b,a)4ºû¦V¶qÁÙ­ì¦¨³æ¤@¼Æ­È
+// æŠŠé«˜åº¦å€¼å¾(r,g,b,a)4ç¶­å‘é‡é‚„åŸæˆå–®ä¸€æ•¸å€¼
 float DecodeHeightmap(vec4 heightmap)
 {
 	vec4 table = vec4(1.0, -1.0, 1.0/256.0, -1.0/256.0);
@@ -23,11 +23,11 @@ vec4 EncodeHeightmap(float fHeight)
 
 	vec4 color = 0;
 
-	// Â²³æªº°µªk
+	// ç°¡å–®çš„åšæ³•
 	color.r = positive;
 	color.g = negative;
 	
-	// ­n¼W¥[ºë½T«×®É, ´N§â¤j©ó1ªº¼Æ­È©ñ¦b(b,a)¤¤.
+	// è¦å¢åŠ ç²¾ç¢ºåº¦æ™‚, å°±æŠŠå¤§æ–¼1çš„æ•¸å€¼æ”¾åœ¨(b,a)ä¸­.
 	color.ba = frac(color.rg*256);
 	color.rg -= color.ba/256.0;
 	

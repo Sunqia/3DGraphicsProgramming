@@ -3,16 +3,16 @@
 
 bool InitResourceDX9(void)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `­pºâ¥XÃèÀY®y¼Ð¨tªºÂà´«¯x°}`
+	// `è¨ˆç®—å‡ºé¡é ­åº§æ¨™ç³»çš„è½‰æ›çŸ©é™£`
 	Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(60.0f, 1.0f, 1.0f, 100.0f);
-	// `³]©wµø¨¤Âà´«¯x°}`
+	// `è¨­å®šè¦–è§’è½‰æ›çŸ©é™£`
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
-	// `³]©wÃèÀYÂà´«¯x°}`
+	// `è¨­å®šé¡é ­è½‰æ›çŸ©é™£`
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
-	// `Ãö³¬¥´¥ú`
+	// `é—œé–‰æ‰“å…‰`
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	return true;
@@ -23,42 +23,42 @@ bool ReleaseResourceDX9(void)
 	return true;
 }
 
-// `¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–`
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
 	
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
-	// `³]©w¸ê®Æ®æ¦¡`
+	// `è¨­å®šè³‡æ–™æ ¼å¼`
 	device->SetFVF(D3DFVF_XYZ); 
 
-	// `±ÛÂà¨¤«×`
+	// `æ—‹è½‰è§’åº¦`
 	static float angle = 0.0f;
 	angle += 0.01f;
 
-	// `³]©w±ÛÂà¯x°}`
+	// `è¨­å®šæ—‹è½‰çŸ©é™£`
 	Matrix4x4 world_matrix;
 	world_matrix.RotateZ_Replace(angle);
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_matrix);
 
-	// `µe¥Xª÷¦r¶ðªº8±øÃä½u`
+	// `ç•«å‡ºé‡‘å­—å¡”çš„8æ¢é‚Šç·š`
 	device->DrawIndexedPrimitiveUP(
-		D3DPT_LINELIST, // `«ü©w©Ò­nµeªº°ò¥»¹Ï§ÎºØÃþ `
-		0, // `·|¨Ï¥Îªº³Ì¤p³»ÂI½s¸¹, ¨Æ¹ê¤W¨S¤Ó¤j¥Î³B.`
-		5, // `³»ÂI°}¦C¸Ì¦³´X­Ó³»ÂI`
-		8, // `­nµe¥X´X­Ó°ò¥»¹Ï§Î`
-		g_indices,		// `¯Á¤Þ°}¦C`
-		D3DFMT_INDEX16, // `¯Á¤Þ°}¦Cªº«¬ºA`
-		g_vertices,		// `³»ÂI°}¦C`
-		sizeof(Vector4)	// `³»ÂI°}¦C¸Ì¨C­Ó³»ÂIªº°O¾ÐÅé¶¡¶Z`
+		D3DPT_LINELIST, // `æŒ‡å®šæ‰€è¦ç•«çš„åŸºæœ¬åœ–å½¢ç¨®é¡ž `
+		0, // `æœƒä½¿ç”¨çš„æœ€å°é ‚é»žç·¨è™Ÿ, äº‹å¯¦ä¸Šæ²’å¤ªå¤§ç”¨è™•.`
+		5, // `é ‚é»žé™£åˆ—è£¡æœ‰å¹¾å€‹é ‚é»ž`
+		8, // `è¦ç•«å‡ºå¹¾å€‹åŸºæœ¬åœ–å½¢`
+		g_indices,		// `ç´¢å¼•é™£åˆ—`
+		D3DFMT_INDEX16, // `ç´¢å¼•é™£åˆ—çš„åž‹æ…‹`
+		g_vertices,		// `é ‚é»žé™£åˆ—`
+		sizeof(Vector4)	// `é ‚é»žé™£åˆ—è£¡æ¯å€‹é ‚é»žçš„è¨˜æ†¶é«”é–“è·`
 	);
 
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
 	
-	// `§â­I´ºbackbuffer§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferå‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

@@ -6,7 +6,7 @@
 // mirror vertex type
 struct Vertex_V
 {
-	Vector4 m_Position; // ≥ª¬I¶Ï∏m
+	Vector4 m_Position; // È†ÇÈªû‰ΩçÁΩÆ
 };
 // model object
 extern CGutModel g_Model;
@@ -16,7 +16,7 @@ extern CGutUserControl g_Control;
 extern float g_fFOV;
 // mirror position
 extern float g_mirror_z;
-// ØxßŒ
+// Áü©ÂΩ¢
 extern Vertex_V g_Quad[4];
-// √Ë¿Y¶Ï∏m
+// Èè°È†≠‰ΩçÁΩÆ
 extern Vector4 g_eye; 

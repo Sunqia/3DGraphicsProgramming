@@ -52,7 +52,7 @@ void GetUserInput(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -86,23 +86,23 @@ void main(void)
 
 	GutResizeFunc( resize_func );
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
 		exit(0);
 	}
 
-	// ³]©w¤è¦V¥ú
+	// è¨­å®šæ–¹å‘å…‰
 	g_Light.m_Position.Set(0.0f, 1.0f, 1.0f, 0.0f);
 	g_Light.m_Position.Normalize();
 	g_Light.m_Diffuse.Set(0.6f, 0.6f, 0.6f, 1.0f);
 	g_Light.m_Specular.Set(1.0f, 1.0f, 1.0f, 1.0f);
 
-	// ³]©wÀô¹Ò¥úªº¦ì¸m¸òÃC¦â
+	// è¨­å®šç’°å¢ƒå…‰çš„ä½ç½®è·Ÿé¡è‰²
 	Vector4 vFirstLight(-10.0f, -10.0f, 3.0f, 1.0f);
 	Vector4 vLastLight ( 10.0f,  10.0f, 3.0f, 1.0f);
 	Vector4 vSpan = vLastLight - vFirstLight;
@@ -115,11 +115,11 @@ void main(void)
 		for ( int x=0; x<4; x++, i++ )
 		{
 			g_Lights[i].m_Position = vPos;
-			// ¥Î¶Ã¼Æ¨Ó²£¥Í¥úªº±j«×
-			int r = rand() & 1023; // 0-1023¶¡ªº¶Ã¼Æ
+			// ç”¨äº‚æ•¸ä¾†ç”¢ç”Ÿå…‰çš„å¼·åº¦
+			int r = rand() & 1023; // 0-1023é–“çš„äº‚æ•¸
 			int g = rand() & 1023;
 			int b = rand() & 1023;
-			// Åır,g,b ¸¨¦b0.5-1¤§¶¡
+			// è®“r,g,b è½åœ¨0.5-1ä¹‹é–“
 			g_Lights[i].m_Diffuse.Set(r/1024.0f, g/1024.0f, b/1024.0f, 1.0f);
 			g_Lights[i].m_Specular.Set(0.0f, 0.0f, 0.0f, 1.0f);
 			vPos[0] += vInc[0];
@@ -136,7 +136,7 @@ void main(void)
 	//g_Control.SetCamera(Vector4(0.0f, -10.0f, 3.0f), Vector4(0.0f, 0.0f, 3.0f), Vector4(0.0f, 0.0f, 1.0f));
 	g_Control.SetCamera(Vector4(0.0f, 0.0f, 30.0f), Vector4(0.0f, 0.0f, 0.0f), Vector4(0.0f, 1.0f, 0.0f));
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -144,15 +144,15 @@ void main(void)
 		exit(0);
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
-		// µe¥X¯x§Î
+		// ç•«å‡ºçŸ©å½¢
 		render();
 	}
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

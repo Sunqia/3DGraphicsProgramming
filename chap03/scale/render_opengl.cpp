@@ -9,11 +9,11 @@ static Matrix4x4 g_view_matrix;
 
 bool InitResourceOpenGL(void)
 {
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(90.0f, 1.0f, 1.0f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 
@@ -22,41 +22,41 @@ bool InitResourceOpenGL(void)
 
 bool ReleaseResourceOpenGL(void)
 {
-	// ¨S¨Æ°µ
+	// æ²’äº‹åš
 	return true;
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	// ³]©w¦nGPU­n¥h­şÅª¨ú³»ÂI¸ê®Æ
+	// è¨­å®šå¥½GPUè¦å»å“ªè®€å–é ‚é»è³‡æ–™
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(4, GL_FLOAT, sizeof(Vector4), g_vertices);
-	// ³]©w­nÅÜ§óGL_MODELVIEW¯x°}
+	// è¨­å®šè¦è®Šæ›´GL_MODELVIEWçŸ©é™£
 	glMatrixMode(GL_MODELVIEW);	
 
 	for ( int i=0; i<4; i++ )
 	{
-		// `«Ø¥ßÂà´«¯x°}`
+		// `å»ºç«‹è½‰æ›çŸ©é™£`
 		Matrix4x4 world_matrix;
-		world_matrix.Scale_Replace(g_scale[i]); // `«Ø¥ßÁY©ñ¯x°}`
-		world_matrix[3] = g_position[i]; // `ª½±µ§â¦ì²¾¶ñ¤J¯x°}¥ª¤U¨¤.`
+		world_matrix.Scale_Replace(g_scale[i]); // `å»ºç«‹ç¸®æ”¾çŸ©é™£`
+		world_matrix[3] = g_position[i]; // `ç›´æ¥æŠŠä½ç§»å¡«å…¥çŸ©é™£å·¦ä¸‹è§’.`
 
-		// `³]©wÂà´«¯x°}`
+		// `è¨­å®šè½‰æ›çŸ©é™£`
 		Matrix4x4 world_view_matrix = world_matrix * g_view_matrix;
 		glLoadMatrixf( (float *) &world_view_matrix);
 		
-		// µe¥Xª÷¦r¶ğªº8±øÃä½u
+		// ç•«å‡ºé‡‘å­—å¡”çš„8æ¢é‚Šç·š
 		glDrawElements(
-			GL_LINES, // «ü©w©Ò­nµeªº°ò¥»¹Ï§ÎºØÃş
-			16, // ¦³´X­Ó¯Á¤Ş­È
-			GL_UNSIGNED_SHORT, // ¯Á¤Ş­Èªº«¬ºA
-			g_indices // ¯Á¤Ş­È°}¦C
+			GL_LINES, // æŒ‡å®šæ‰€è¦ç•«çš„åŸºæœ¬åœ–å½¢ç¨®é¡
+			16, // æœ‰å¹¾å€‹ç´¢å¼•å€¼
+			GL_UNSIGNED_SHORT, // ç´¢å¼•å€¼çš„å‹æ…‹
+			g_indices // ç´¢å¼•å€¼é™£åˆ—
 		);
 	}
 
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
 	GutSwapBuffersOpenGL();
 }

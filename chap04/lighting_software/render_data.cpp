@@ -2,15 +2,15 @@
 #include "render_data.h"
 #include "gut.h"
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.0f, 2.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 Matrix4x4 g_world_matrix;
 
 Vector4 g_vLightAmbient(0.0f, 0.0f, 0.0f, 0.0f);
@@ -37,7 +37,7 @@ void ConvertToDX9(Vertex_VCN g_quad_in[], Vertex_DX9 g_quad_out[], int num_verti
 	}
 }
 
-// `²£¥Íx_grids * y_grids­Ó®æ¤lªº´Ñ½L®æ¼Ò«¬`
+// `ç”¢ç”Ÿx_grids * y_gridså€‹æ ¼å­çš„æ£‹ç›¤æ ¼æ¨¡å‹`
 bool GenerateGrids(int x_grids, int y_grids, Vertex_VCN **ppVertices, int &num_vertices, unsigned short **ppIndices, int &num_indices, int &num_triangles)
 {
 	const int triangles_per_row = x_grids * 2;
@@ -57,7 +57,7 @@ bool GenerateGrids(int x_grids, int y_grids, Vertex_VCN **ppVertices, int &num_v
 		GutRelease16BytesAlignedMemory(pVertices);
 		return false;
 	}
-	//` ¨Ï¥Îtriangle strip®É, ¤T¨¤§Î¼Æ¥Ø¥Ã»·µ¥©ó¯Á¤Ş­È¼Æ¥Ø´î¥h2`
+	//` ä½¿ç”¨triangle stripæ™‚, ä¸‰è§’å½¢æ•¸ç›®æ°¸é ç­‰æ–¼ç´¢å¼•å€¼æ•¸ç›®æ¸›å»2`
 	num_triangles = num_indices-2;
 
 	Vector4 vCorner(-0.5f, 0.5f, 0.0f, 1.0f);
@@ -90,7 +90,7 @@ bool GenerateGrids(int x_grids, int y_grids, Vertex_VCN **ppVertices, int &num_v
 	{
 		if ( from_left_to_right )
 		{
-			// `¦b©_¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥ª±Æ¨ì¥k.`
+			// `åœ¨å¥‡æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å·¦æ’åˆ°å³.`
 			pIndices[index_index++] = y * vertices_per_row;
 			pIndices[index_index++] = y * vertices_per_row + vertices_per_row;
 
@@ -103,7 +103,7 @@ bool GenerateGrids(int x_grids, int y_grids, Vertex_VCN **ppVertices, int &num_v
 		}
 		else
 		{
-			// `¦b°¸¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥k±Æ¨ì¥ª.`
+			// `åœ¨å¶æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å³æ’åˆ°å·¦.`
 			pIndices[index_index++] = y * vertices_per_row + x_grids;
 			pIndices[index_index++] = (y+1) * vertices_per_row + x_grids;
 
@@ -137,7 +137,7 @@ bool ReleaseGridsResource(Vertex_VCN **ppVertices, unsigned short **ppIndices)
 	return true;
 }
 
-// `§âÃC¦âªì­È³]©w¦¨Àô¹Ò¥ú`
+// `æŠŠé¡è‰²åˆå€¼è¨­å®šæˆç’°å¢ƒå…‰`
 void CalculateAmbientLight(Vertex_VCN *pVertices, int num_vertices)
 {
 	for ( int i=0; i<num_vertices; i++ )
@@ -146,81 +146,35 @@ void CalculateAmbientLight(Vertex_VCN *pVertices, int num_vertices)
 	}
 }
 
-// `­pºâ¤è¦V¥ú, ¥¦¥u¸ò³»ÂI­±¦V©M¥ú·½¤è¦V¦³Ãö.`
+// `è¨ˆç®—æ–¹å‘å…‰, å®ƒåªè·Ÿé ‚é»é¢å‘å’Œå…‰æºæ–¹å‘æœ‰é—œ.`
 void CalculateDirectionalLight(Vertex_VCN *pVertices, int num_vertices)
 {
 	for ( int i=0; i<num_vertices; i++ )
 	{
-		// `¨D¥XÂà´««á¦b¥@¬É®y¼Ğ¨tªº³»ÂI­±¦V, RotateVector¨ç¦¡¥u°µ±ÛÂà, ©¿²¤¦ì²¾.`
+		// `æ±‚å‡ºè½‰æ›å¾Œåœ¨ä¸–ç•Œåº§æ¨™ç³»çš„é ‚é»é¢å‘, RotateVectorå‡½å¼åªåšæ—‹è½‰, å¿½ç•¥ä½ç§».`
 		Vector4 normal = g_world_matrix.RotateVector(pVertices[i].m_Normal);
-		// `³»ÂI­±¦V¸ò¥ú½u¤è¦Vªº¥æ¨¤, ¨M©w¤Ï®g¥úªº±j«×.`
+		// `é ‚é»é¢å‘è·Ÿå…‰ç·šæ–¹å‘çš„äº¤è§’, æ±ºå®šåå°„å…‰çš„å¼·åº¦.`
 		Vector4 intensity = Vector3Dot(normal, g_vLightDirection);
-		// `§âintensity§½­­¦b¥Ã»·¤j©ó0ªº½d³ò`
+		// `æŠŠintensityå±€é™åœ¨æ°¸é å¤§æ–¼0çš„ç¯„åœ`
 		intensity.Clamp_to_0();
-		// `²Ö¥[¤W­pºâ¥X¨Ó¤è¦V¥úªº±j«×`
+		// `ç´¯åŠ ä¸Šè¨ˆç®—å‡ºä¾†æ–¹å‘å…‰çš„å¼·åº¦`
 		pVertices[i].m_Color += intensity * g_vLightColor;
 		pVertices[i].m_Color.Clamp_to_1();
 	}
 }
 
-// `­pºâÂI¥ú·½, ¥¦©M³»ÂI¦ì¸m, ³»ÂI­±¦V, ¥ú·½¦ì¸m¦³Ãö.`
+// `è¨ˆç®—é»å…‰æº, å®ƒå’Œé ‚é»ä½ç½®, é ‚é»é¢å‘, å…‰æºä½ç½®æœ‰é—œ.`
 void CalculatePointLight(Vertex_VCN *pVertices, int num_vertices)
 {
 	for ( int i=0; i<num_vertices; i++ )
 	{
-		// `¨D¥XÂà´««á¦b¥@¬É®y¼Ğ¨tªº³»ÂI¦ì¸m`
+		// `æ±‚å‡ºè½‰æ›å¾Œåœ¨ä¸–ç•Œåº§æ¨™ç³»çš„é ‚é»ä½ç½®`
 		Vector4 vPosition = pVertices[i].m_Position * g_world_matrix;
-		// `¨D¥XÂà´««á¦b¥@¬É®y¼Ğ¨tªº³»ÂI­±¦V, RotateVector¨ç¦¡¥u°µ±ÛÂà, ©¿²¤¦ì²¾.`
+		// `æ±‚å‡ºè½‰æ›å¾Œåœ¨ä¸–ç•Œåº§æ¨™ç³»çš„é ‚é»é¢å‘, RotateVectorå‡½å¼åªåšæ—‹è½‰, å¿½ç•¥ä½ç§».`
 		Vector4 vNormal = g_world_matrix.RotateVector(pVertices[i].m_Normal);
-		// `­pºâ¥X³»ÂI¦ì¸m¨ì¥ú·½ªº¤è¦V¸òªø«×`
+		// `è¨ˆç®—å‡ºé ‚é»ä½ç½®åˆ°å…‰æºçš„æ–¹å‘è·Ÿé•·åº¦`
 		Vector4 vVertex_to_Light = g_vLightPosition - vPosition; 
 		float light_distance = vVertex_to_Light.NormalizeAndGetLength();
-		// `vDistance¥Î¨Ó­pºâ¥ú½uÀH¶ZÂ÷°I´î¤½¦¡¤¤1/(a*1 + b*d + c*d^2)¤À¥Àªº(1, d, d^2)`
+		// `vDistanceç”¨ä¾†è¨ˆç®—å…‰ç·šéš¨è·é›¢è¡°æ¸›å…¬å¼ä¸­1/(a*1 + b*d + c*d^2)åˆ†æ¯çš„(1, d, d^2)`
 		Vector4 vDistance(1.0f, light_distance, light_distance * light_distance);
-		// `g_vLightAttenuationùØ°O¿ı¤F­pºâ°I´î¤½¦¡1/(a + b*d + c*d^2)ùØªº(a,b,c)`
-		// `Vector3Dot(vDistance, g_vLightAttenuation) = (a,b,c) dot (1,d,d^2) = (a + b*d + c*d^2)`
-		Vector4 vAttenuation = Vector3Dot(vDistance, g_vLightAttenuation);
-		// `³»ÂI­±¦V¸ò¥ú½u¤è¦Vªº¥æ¨¤, ¨M©w¤Ï®g¥úªº±j«×.`
-		Vector4 vIntensity = Vector3Dot(vNormal, vVertex_to_Light);
-		// `§âintensity§½­­¦b¥Ã»·¤j©ó0ªº½d³ò`
-		vIntensity.Clamp_to_0();
-		// `²Ö¥[¤WÀH¶ZÂ÷°I´îªº¥ú½u±j«×`
-		pVertices[i].m_Color += vIntensity * g_vLightColor / vAttenuation;
-		pVertices[i].m_Color.Clamp_to_1();
-	}
-}
-
-// `­pºâÂI¥ú·½, ¥¦©M³»ÂI¦ì¸m, ³»ÂI­±¦V, ¥ú·½¦ì¸m, ¥ú·½¤è¦V, ¥ú¬W¥æ¨¤¦³Ãö.`
-void CalculateSpotLight(Vertex_VCN *pVertices, int num_vertices)
-{
-	float fSpotLightCutoffCos = FastMath::Cos( FastMath::DegreeToRadian(g_fSpotLightCutoff) );
-	
-	for ( int i=0; i<num_vertices; i++ )
-	{
-		// `¨D¥XÂà´««á¦b¥@¬É®y¼Ğ¨tªº³»ÂI¦ì¸m`
-		Vector4 vPosition = pVertices[i].m_Position * g_world_matrix;
-		// `¨D¥XÂà´««á¦b¥@¬É®y¼Ğ¨tªº³»ÂI­±¦V, RotateVector¨ç¦¡¥u°µ±ÛÂà, ©¿²¤¦ì²¾.`
-		Vector4 vNormal = g_world_matrix.RotateVector(pVertices[i].m_Normal);
-		// `­pºâ¥X³»ÂI¦ì¸m¨ì¥ú·½ªº¤è¦V¸òªø«×`
-		Vector4 vVertex_to_Light = g_vLightPosition - vPosition; 
-		float light_distance = vVertex_to_Light.NormalizeAndGetLength();
-		// `³»ÂI­±¦V¸ò¥ú½u¤è¦Vªº¥æ¨¤, ¥i¥H¨M©w¤Ï®g¥úªº±j«×.`
-		Vector4 vCosine = Vector3Dot(g_vLightDirection, vVertex_to_Light);
-		// `§âvCosine§½­­¦b¥Ã»·¤j©ó0ªº½d³ò`
-		vCosine.Clamp_to_0();
-		float fCosine = vCosine.GetX();
-		if ( fCosine >= fSpotLightCutoffCos )
-		{
-			// `³»ÂI¸ò¥ú½uªº¥æ¨¤¤p©ófSpotightCutoffCos®É, ¤~¸¨¦b¥ú¬W½d³ò¤º.`
-			Vector4 vDistance(1.0f, light_distance, light_distance * light_distance);
-			// `g_vLightAttenuationùØ°O¿ı¤F­pºâ°I´î¤½¦¡1/(a + b*d + c*d^2)ùØªº(a,b,c)`
-			// `Vector3Dot(vDistance, g_vLightAttenuation) = (a,b,c) dot (1,d,d^2) = (a + b*d + c*d^2)`
-			Vector4 vAttenuation = Vector3Dot(vDistance, g_vLightAttenuation);
-			// `¤ñ¸û¾aªñ¥ú¬W¥~³ò³¡¤Àªº³»ÂI, ¥ú½u·|°I´î.`
-			float fFalloff = pow(fCosine, g_fSpotLightExponent);
-			Vector4 vIntensity = Vector3Dot(vNormal, vVertex_to_Light);
-			pVertices[i].m_Color += fFalloff * vIntensity * g_vLightColor / vAttenuation;
-			pVertices[i].m_Color.Clamp_to_1();
-		}
-	}
-}
+		// `g_vLightAttenuation

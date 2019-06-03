@@ -13,16 +13,16 @@ CGutModel_DX9 g_Model_DX9;
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	int w, h;
 	GutGetWindowSize(w, h);
 	float aspect = (float) h / (float) w;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
 
-	// µe¥X¥¿¦V¸ò¤Ï¦Vªº¤T¨¤§Î
+	// ç•«å‡ºæ­£å‘è·Ÿåå‘çš„ä¸‰è§’å½¢
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	CGutModel::SetTexturePath("../../textures/");
@@ -48,11 +48,11 @@ bool ReleaseResourceDX9(void)
 
 void ResizeWindowDX9(int width, int height)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	int w, h;
 	GutGetWindowSize(w, h);
 	float aspect = (float) h / (float) w;
@@ -77,18 +77,18 @@ D3DCOLOR ConvertToD3DCOLOR(Vector4 &vColor)
 
 void SetupLightingDX9(Light *pLightArray, int num_lights)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->SetRenderState(D3DRS_LIGHTING, TRUE);
-	// ³]©wÀô¹Ò¥ú
+	// è¨­å®šç’°å¢ƒå…‰
 	device->SetRenderState(D3DRS_AMBIENT, ConvertToD3DCOLOR(g_vAmbientLight));
 
 	int i;
 
 	for ( i=0; i<num_lights; i++ )
 	{
-		// ³]©w¥ú·½
+		// è¨­å®šå…‰æº
 		device->LightEnable(i, TRUE);
 
 		D3DLIGHT9 light;
@@ -110,43 +110,43 @@ void SetupLightingDX9(Light *pLightArray, int num_lights)
 
 }
 
-// ¨Ï¥ÎDirectX9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
 
-	// `§âÁôÂÃ­±´ú¸Õ³W«h³]¬°¤p©ó©Îµ¥©ó` <=
+	// `æŠŠéš±è—é¢æ¸¬è©¦è¦å‰‡è¨­ç‚ºå°æ–¼æˆ–ç­‰æ–¼` <=
 	device->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
 
-	// `³]©wÂà´«¯x°}`
+	// `è¨­å®šè½‰æ›çŸ©é™£`
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_matrix);
 
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
 
-	// `«e8·ø¥ú`
+	// `å‰8ç›žå…‰`
 	if ( g_iSwitch & 0x01 )
 	{
 		SetupLightingDX9(&g_Lights[0], 8);
 		g_Model_DX9.Render();
 	}
 
-	// `«á8·ø¥ú`
+	// `å¾Œ8ç›žå…‰`
 	if ( g_iSwitch & 0x02 )
 	{
 		SetupLightingDX9(&g_Lights[8], 8);
 
 		if ( g_iSwitch & 0x01 )
 		{
-			// ¦pªG«e8·ø¥ú¦³¶}, ­n¨Ï¥Î²V¦â¨Ó§â¤U8·ø¥úÅ|¥[¤W¥h.
+			// å¦‚æžœå‰8ç›žå…‰æœ‰é–‹, è¦ä½¿ç”¨æ··è‰²ä¾†æŠŠä¸‹8ç›žå…‰ç–ŠåŠ ä¸ŠåŽ».
 			device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
 			device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_ONE);
 			device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-			// ~SUBMIT_BLEND ·|¨ú®ø®M¥ÎÀÉ®×¤¤ªº²V¦â³]©w.
+			// ~SUBMIT_BLEND æœƒå–æ¶ˆå¥—ç”¨æª”æ¡ˆä¸­çš„æ··è‰²è¨­å®š.
 			g_Model_DX9.Render(~SUBMIT_BLEND);
 		}
 		else
@@ -155,9 +155,9 @@ void RenderFrameDX9(void)
 		}
 	}
 
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

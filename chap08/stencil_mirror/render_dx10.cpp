@@ -34,24 +34,24 @@ bool InitResourceDX10(void)
 	g_pDevice = GutGetGraphicsDeviceDX10();
 	ID3D10Blob *pVSCode = NULL;
 
-	// ¸ü¤JµeÃè­±¥ÎªºVertex Shader
+	// è¼‰å…¥ç•«é¡é¢ç”¨çš„Vertex Shader
 	g_pVertexShader = GutLoadVertexShaderDX10_HLSL("../../shaders/vertex_color_dx10.hlsl", "VS", "vs_4_0", &pVSCode);
 	if ( NULL==g_pVertexShader )
 		return false;
-	// ¸ü¤JµeÃè­±¥ÎªºPixel Shader
+	// è¼‰å…¥ç•«é¡é¢ç”¨çš„Pixel Shader
 	g_pPixelShader = GutLoadPixelShaderDX10_HLSL("../../shaders/vertex_color_dx10.hlsl", "PS", "ps_4_0");
 	if ( NULL==g_pPixelShader )
 		return false;
 
-	// ¸ü¤Jµe¼Ò«¬±M¥Î, ¼ÒÀÀfixed pipelineªºshader
+	// è¼‰å…¥ç•«æ¨¡å‹å°ˆç”¨, æ¨¡æ“¬fixed pipelineçš„shader
 	if ( !CGutModel_DX10::LoadDefaultShader("../../shaders/gmodel_dx10.hlsl") )
 		return false;
 
-	// Âà´«¯ùÜò®æ¦¡
+	// è½‰æ›èŒ¶å£¼æ ¼å¼
 	CGutModel::SetTexturePath("../../textures/");
 	g_Model_DX10.ConvertToDX10Model(&g_Model);
 
-    // ³]©wVertex¸ê®Æ®æ¦¡
+    // è¨­å®šVertexè³‡æ–™æ ¼å¼
 	{
 		D3D10_INPUT_ELEMENT_DESC layout[] =
 		{
@@ -73,13 +73,13 @@ bool InitResourceDX10(void)
 		if ( g_pVertexBuffer==NULL )
 			return false;
 	}
-	// °t¸mShader°Ñ¼Æªº°O¾ĞÅéªÅ¶¡
+	// é…ç½®Shaderåƒæ•¸çš„è¨˜æ†¶é«”ç©ºé–“
 	{
 		g_pConstantBuffer = GutCreateShaderConstant_DX10(sizeof(Matrix4x4));
 		if ( NULL==g_pConstantBuffer )
 			return false;
 	}
-	// rasterizer stateª«¥ó
+	// rasterizer stateç‰©ä»¶
 	{
 		D3D10_RASTERIZER_DESC desc;
 		GutSetDX10DefaultRasterizerDesc(desc);
@@ -102,17 +102,17 @@ bool InitResourceDX10(void)
 
 		desc.FrontFace.StencilPassOp = D3D10_STENCIL_OP_REPLACE;
 		desc.BackFace = desc.FrontFace;
-		// ¥Î¨Ó§âÀğ¾À©Ò¦û¾Úªº¹³¯Àstencil­È³]¬°1
+		// ç”¨ä¾†æŠŠç‰†å£æ‰€ä½”æ“šçš„åƒç´ stencilå€¼è¨­ç‚º1
 		g_pDevice->CreateDepthStencilState(&desc, &g_pZStencilState_Mark);
-		// ¥Î¨Ó§âÀğ¾À©Ò¦û¾Úªº¹³¯ÀZ­È³]¬°1
+		// ç”¨ä¾†æŠŠç‰†å£æ‰€ä½”æ“šçš„åƒç´ Zå€¼è¨­ç‚º1
 		desc.DepthFunc = D3D10_COMPARISON_ALWAYS;
 		desc.FrontFace.StencilFunc = D3D10_COMPARISON_EQUAL;
 		desc.BackFace = desc.FrontFace;
 		g_pDevice->CreateDepthStencilState(&desc, &g_pZStencilState_ZClear);
-		// ¥Î¨ÓµeÃè®gª«¥ó
+		// ç”¨ä¾†ç•«é¡å°„ç‰©ä»¶
 		desc.DepthFunc = D3D10_COMPARISON_LESS_EQUAL;
 		g_pDevice->CreateDepthStencilState(&desc, &g_pZStencilState_Mirror);
-		// ¥Î¨Óµe¤@¯ëªºª«¥óªº
+		// ç”¨ä¾†ç•«ä¸€èˆ¬çš„ç‰©ä»¶çš„
 		desc.StencilEnable = FALSE;
 		g_pDevice->CreateDepthStencilState(&desc, &g_pZStencilState_Regular);
 	}
@@ -133,7 +133,7 @@ bool InitResourceDX10(void)
 			g_pDevice->PSSetSamplers(i, 1, &g_pSamplerState);
 		}
 	}
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 
 	return true;
@@ -162,7 +162,7 @@ bool ReleaseResourceDX10(void)
 void ResizeWindowDX10(int width, int height)
 {
 	GutResetGraphicsDeviceDX10();
-	// ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤, ¨Ã­«·s­pºâ§ë¼v¯x°}
+	// é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’, ä¸¦é‡æ–°è¨ˆç®—æŠ•å½±çŸ©é™£
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(90.0f, aspect, 0.1f, 100.0f);
 }
@@ -183,7 +183,7 @@ static void RenderModelDX10(bool mirror, Vector4 *pPlane)
 
 		Matrix4x4 temp_matrix = GutMatrixLookAtRH(mirror_eye, mirror_lookat, mirror_up);
 
-		// ¦]¬°¬OÃè®g, ¦bÂà´«¨ìÃèÀY®y¼Ğ¨t«á­n°µ­Ó¥ª¥k¹ï½Õªº°Ê§@.
+		// å› ç‚ºæ˜¯é¡å°„, åœ¨è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»å¾Œè¦åšå€‹å·¦å³å°èª¿çš„å‹•ä½œ.
 		Matrix4x4 mirror_x;
 		mirror_x.Identity();
 		mirror_x.Scale(-1.0f, 1.0f, 1.0f);
@@ -214,9 +214,9 @@ void RenderFrameDX10(void)
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); 
 	// front/back buffer chain
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); 
-	// `²M°£ÃC¦â`
+	// `æ¸…é™¤é¡è‰²`
 	g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
-	// `²M°£`Depth/Stencil buffer
+	// `æ¸…é™¤`Depth/Stencil buffer
 	g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
@@ -224,56 +224,56 @@ void RenderFrameDX10(void)
 	g_pDevice->OMSetDepthStencilState(g_pZStencilState_Regular, 1);
 	RenderModelDX10(false, NULL);
 
-	// `µeÀğ¾À`
+	// `ç•«ç‰†å£`
 	{
 		UINT stride = sizeof(Vertex_V);
 		UINT offset = 0;
-		// `³]©wShader`
+		// `è¨­å®šShader`
 		g_pDevice->VSSetShader(g_pVertexShader);
 		g_pDevice->PSSetShader(g_pPixelShader);
-		// `³]©wvertex shaderÅª¨ú°Ñ¼Æªº°O¾ĞÅé¦ìÓ_`
+		// `è¨­å®švertex shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ä½ç½`
 		g_pDevice->VSSetConstantBuffers(0, 1, &g_pConstantBuffer);
-		// `³]©wvertex¸ê®Æ®æ¦¡`
+		// `è¨­å®švertexè³‡æ–™æ ¼å¼`
 		g_pDevice->IASetInputLayout(g_pVertexLayout);
-		// `³]©wvertex buffer`
+		// `è¨­å®švertex buffer`
 		g_pDevice->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
-		// `³]©w¤T¨¤§Î³»ÂI¯Á¤Ş­È¸ê®Æ±Æ¦C¬Otriangle strip`
+		// `è¨­å®šä¸‰è§’å½¢é ‚é»ç´¢å¼•å€¼è³‡æ–™æ’åˆ—æ˜¯triangle strip`
 		g_pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
-		// `§ó·sÂà´«¯x°}`
+		// `æ›´æ–°è½‰æ›çŸ©é™£`
 		Matrix4x4 wvp = view_matrix * g_proj_matrix; 
 		Matrix4x4 *pConstData;
 		g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 		*pConstData = wvp;
 		g_pConstantBuffer->Unmap();
-		// `§âÀğ¾À©Ò¶ñ¥Rªº¹³¯ÀStencil­È³]©w1`
+		// `æŠŠç‰†å£æ‰€å¡«å……çš„åƒç´ Stencilå€¼è¨­å®š1`
 		g_pDevice->OMSetDepthStencilState(g_pZStencilState_Mark, 1);
-		// `µe¥XÀğ¾À`
+		// `ç•«å‡ºç‰†å£`
 		g_pDevice->Draw(4, 0);
 	}
-	// `§âÀğ¾À©Ò¦û¾Úªº¹³¯ÀZ­È²M¬°1`
+	// `æŠŠç‰†å£æ‰€ä½”æ“šçš„åƒç´ Zå€¼æ¸…ç‚º1`
 	{
-		// `§âÀğ¾À©Ò¶ñ¥Rªº¹³¯ÀStencil­È³]©w1`
+		// `æŠŠç‰†å£æ‰€å¡«å……çš„åƒç´ Stencilå€¼è¨­å®š1`
 		g_pDevice->OMSetDepthStencilState(g_pZStencilState_ZClear, 1);
-		// `§âviewportªºZ­È½d³ò§ï¦¨0-1`
+		// `æŠŠviewportçš„Zå€¼ç¯„åœæ”¹æˆ0-1`
 		UINT nViewports = 1;
 		D3D10_VIEWPORT vp;
 		g_pDevice->RSGetViewports(&nViewports, &vp);
 		vp.MinDepth = vp.MaxDepth = 1.0f;
 		g_pDevice->RSSetViewports(1, &vp);
-		// `µe¥XÀğ¾À`
+		// `ç•«å‡ºç‰†å£`
 		g_pDevice->Draw(4, 0);
-		// `ÁÙ­ìviewport³]©w`
+		// `é‚„åŸviewportè¨­å®š`
 		vp.MinDepth = 0.0f;
 		vp.MaxDepth = 1.0f;
 		g_pDevice->RSSetViewports(1, &vp);
 	}
-	// `µe¥XÃè®gªº¯ùÜò`
+	// `ç•«å‡ºé¡å°„çš„èŒ¶å£¼`
 	{
 		g_pDevice->OMSetDepthStencilState(g_pZStencilState_Mirror, 1);
 		RenderModelDX10(true, &vPlane);
 	}
 
-	// `µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±.`
+	// `ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢.`
 	pSwapChain->Present(1, 0);
 }
 

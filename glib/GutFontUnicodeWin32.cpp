@@ -87,9 +87,9 @@ bool CGutFontUniCode::AccessTexture(WCHAR c, int &x, int &y)
 	}
 	else
 	{
-		// `»İ­n§ó·s¶K¹Ï`
+		// `éœ€è¦æ›´æ–°è²¼åœ–`
 		bUpdateTexture = true;
-		// `§ä¥X¶K¹Ï¤¤ÁÙ¨S¦³¨Ï¥ÎªºªÅ¶¡`
+		// `æ‰¾å‡ºè²¼åœ–ä¸­é‚„æ²’æœ‰ä½¿ç”¨çš„ç©ºé–“`
 		for ( int i=0; i<m_iNumCharactersSet; i++ )
 		{
 			if ( m_pMap[i].m_Code==0 )
@@ -98,7 +98,7 @@ bool CGutFontUniCode::AccessTexture(WCHAR c, int &x, int &y)
 				break;
 			}
 		}
-		// `¾ã±i¶K¹Ïº¡¤F, §â«Ü¤[¨S¥Î¨ìªº¦r²M°£±¼.`
+		// `æ•´å¼µè²¼åœ–æ»¿äº†, æŠŠå¾ˆä¹…æ²’ç”¨åˆ°çš„å­—æ¸…é™¤æ‰.`
 		if ( loc==-1 )
 		{
 			UINT oldest_frame = m_frameCount;
@@ -139,8 +139,8 @@ bool CGutFontUniCode::AccessTexture(WCHAR c, int &x, int &y)
 	}
 	else
 	{
-		// `§ä¤£¨ìªÅ¶¡¨Ó©ñ·sªº¦r`
-		// `¶Ç¦^ -1 ¥Nªí§ä¤£¨ì³o­Ó¦r`
+		// `æ‰¾ä¸åˆ°ç©ºé–“ä¾†æ”¾æ–°çš„å­—`
+		// `å‚³å› -1 ä»£è¡¨æ‰¾ä¸åˆ°é€™å€‹å­—`
 		x = y = -1;
 	}
 

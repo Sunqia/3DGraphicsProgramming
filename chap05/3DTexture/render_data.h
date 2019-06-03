@@ -3,23 +3,23 @@
 
 struct Vertex_VT
 {
-	float m_Position[3]; // ³»ÂI¦ì¸m
-	float m_Texcoord[3]; // ¶K¹Ï®y¼Ğ
+	float m_Position[3]; // é ‚é»ä½ç½®
+	float m_Texcoord[3]; // è²¼åœ–åº§æ¨™
 };
 
-// ±`¼Æ©w¸q
+// å¸¸æ•¸å®šç¾©
 const float g_fFovW = 45.0f;
-// ¯x§Î
+// çŸ©å½¢
 extern Vertex_VT g_Quad[4];
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 extern Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 extern Matrix4x4 g_world_matrix;
 //
 extern Matrix4x4 g_texture_matrix;

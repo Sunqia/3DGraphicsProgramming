@@ -1,11 +1,11 @@
-// ³]©w³»ÂIªº¸ê®Æ®æ¦¡
+// è¨­å®šé ‚é»çš„è³‡æ–™æ ¼å¼
 struct VS_INPUT
 {
 	float3 Position : POSITION;
 	float3 Texcoord	: TEXCOORD;
 };
 
-// ³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -15,7 +15,7 @@ struct VS_OUTPUT
 Texture3D InputTexture;
 SamplerState InputTextureSampler;
 
-// Âà´«¯x°}
+// è½‰æ›çŸ©é™£
 uniform row_major float4x4 viewproj_matrix;
 uniform row_major float4x4 texture_matrix;
 
@@ -24,9 +24,9 @@ VS_OUTPUT VS(VS_INPUT In)
 {
 	VS_OUTPUT Out;
 	
-	// ®y¼ĞÂà´«
+	// åº§æ¨™è½‰æ›
 	Out.Position = mul( float4(In.Position, 1.0f), viewproj_matrix);
-	// Åª¨ú³»ÂIªº¶K½è®y¼Ğ
+	// è®€å–é ‚é»çš„è²¼è³ªåº§æ¨™
 	Out.Texcoord = mul( float4(In.Texcoord, 1.0f), texture_matrix);
 	
 	return Out;

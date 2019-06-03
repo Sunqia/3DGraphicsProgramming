@@ -12,17 +12,17 @@ static CGutHeightmapDX9 g_Heightmap;
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	g_Font.SetFontSize(32, 32);
 	g_Font.SetFontAdvance(20, 30);
 	g_Font.SetConsoleSize(32, 16);
-	// ¸ü¤J¦r«¬
+	// è¼‰å…¥å­—å‹
 	g_Font.LoadTexture("../../textures/ascii_couriernew.tga");
-	// ¸ü¤Jheightmap
+	// è¼‰å…¥heightmap
 	if ( !g_Heightmap.LoadHeightmapTexture("../../textures/GrandCanyon.tga") )
 		return false;
 	g_Heightmap.SetRange(Vector4(-50.0f, -50.0f, -5.0f), Vector4(50.0f, 50.0f, 10.0f));
@@ -30,7 +30,7 @@ bool InitResourceDX9(void)
 	D3DCAPS9 caps;
 	device->GetDeviceCaps(&caps);
 
-	// ¬Y¨ÇÂÂªºµwÅé¤@¤f®ğ¤£¯àµe¤Ó¦h³»ÂI
+	// æŸäº›èˆŠçš„ç¡¬é«”ä¸€å£æ°£ä¸èƒ½ç•«å¤ªå¤šé ‚é»
 	int verts = caps.MaxPrimitiveCount < 65536 ? 100 : 255;
 
 	if ( !g_Heightmap.BuildMesh(verts, verts) )
@@ -49,17 +49,17 @@ bool ReleaseResourceDX9(void)
 
 void ResizeWindowDX9(int width, int height)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	// 	
 	g_Font.SetConsoleResolution(width, height);
 	g_Font.BuildMesh();
 
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &proj_matrix);
@@ -82,13 +82,13 @@ D3DCOLOR ConvertToD3DCOLOR(Vector4 &vColor)
 //
 static void SetupLighting(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->SetRenderState(D3DRS_LIGHTING, TRUE);
-	// ³]©wÀô¹Ò¥ú
+	// è¨­å®šç’°å¢ƒå…‰
 	device->SetRenderState(D3DRS_AMBIENT, ConvertToD3DCOLOR(g_vAmbientLight));
-	// «ü©wDiffuse§÷½èªº¸ê®Æ¨Ó·½, §â¥¦³]¬°¸g¥ÑSetMaterial¨ç¦¡¤¤¨Ó³]©w
+	// æŒ‡å®šDiffuseæè³ªçš„è³‡æ–™ä¾†æº, æŠŠå®ƒè¨­ç‚ºç¶“ç”±SetMaterialå‡½å¼ä¸­ä¾†è¨­å®š
 	device->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
 	device->SetRenderState(D3DRS_SPECULARMATERIALSOURCE, D3DMCS_MATERIAL);
 	device->SetRenderState(D3DRS_SPECULARENABLE, TRUE);
@@ -97,7 +97,7 @@ static void SetupLighting(void)
 	D3DCOLORVALUE vFullIntensity = {1.0f, 1.0f, 1.0f, 1.0f};
 	D3DCOLORVALUE vZeroIntensity = {0.0f, 0.0f, 0.0f, 0.0f};
 
-	// ³]©wª«¥ó§÷½èªº¤Ï¥ú¯à¤O
+	// è¨­å®šç‰©ä»¶æè³ªçš„åå…‰èƒ½åŠ›
 
 	D3DMATERIAL9 mtrl;
 	ZeroMemory( &mtrl, sizeof(mtrl) );
@@ -107,9 +107,9 @@ static void SetupLighting(void)
 	mtrl.Emissive = vZeroIntensity;
 	mtrl.Power = g_fMaterialShininess;
 
-	// ©I¥sSetMaterial¨Ó³]©w§÷½è.
+	// å‘¼å«SetMaterialä¾†è¨­å®šæè³ª.
 	device->SetMaterial(&mtrl);
-	// ³]©w¥ú·½
+	// è¨­å®šå…‰æº
 	device->LightEnable(0, TRUE);
 	//
 	D3DLIGHT9 light;
@@ -130,13 +130,13 @@ static void SetupLighting(void)
 	device->SetLight(0, &light);
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ®ø°£µe­±
+	// æ¶ˆé™¤ç•«é¢
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
-	// ¶}©l¤UÃ¸¹Ï«ü¥O
+	// é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤
 	device->BeginScene(); 
 	
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
@@ -151,6 +151,6 @@ void RenderFrameDX9(void)
 	g_Heightmap.Render();
 	//
 	device->EndScene(); 
-	// §â­I´ºbackbuffer§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferå‘ˆç¾å‡ºä¾†
     device->Present( NULL, NULL, NULL, NULL );
 }

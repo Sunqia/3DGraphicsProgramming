@@ -4,9 +4,9 @@
 
 struct Vertex_VCN
 {
-	Vector4 m_Position; // ³»ÂI¦ì¸m
-	Vector4 m_Color;	// ³»ÂIÃC¦â
-	Vector4 m_Normal;	// ³»ÂI­±¦V
+	Vector4 m_Position; // é ‚é»ä½ç½®
+	Vector4 m_Color;	// é ‚é»é¡è‰²
+	Vector4 m_Normal;	// é ‚é»é¢å‘
 };
 
 struct Vertex_DX9
@@ -85,13 +85,13 @@ struct GraphicsDevice_Simulation
 
 extern GraphicsDevice_Simulation g_Simulation;
 
-// ±`¼Æ©w¸q
+// å¸¸æ•¸å®šç¾©
 const float g_fFovW = 45.0f;
 const int	g_iMaxNumGrids = 100;
 const int	g_iMaxNumGridVertices = (g_iMaxNumGrids+1) * (g_iMaxNumGrids+1);
 const int	g_iMaxNumGridIndices = g_iMaxNumGrids * (g_iMaxNumGrids * 2 + 2);
 
-// ®æ¤l¼Ò«¬¸ê®Æ
+// æ ¼å­æ¨¡å‹è³‡æ–™
 extern int	g_iNumGridVertices;
 extern int	g_iNumGridIndices;
 extern int	g_iNumGridTriangles;
@@ -99,19 +99,19 @@ extern Vertex_VCN *g_pGridVertices;
 extern Vertex_DX9 *g_pGridVerticesDX9;
 extern unsigned short *g_pGridIndices;
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 
 
-// ²£¥Í®æ¤lªº¨ç¦¡
+// ç”¢ç”Ÿæ ¼å­çš„å‡½å¼
 bool GenerateGrids(int x_grids, int y_grids, 
 				   Vertex_VCN **ppVertices, int &num_vertices, 
 				   unsigned short **ppIndices, int &num_indices,
 				   int &num_triangles);
-// ÄÀ©ñ®æ¤l¼Ò«¬¸ê·½
+// é‡‹æ”¾æ ¼å­æ¨¡å‹è³‡æº
 bool ReleaseGridsResource(Vertex_VCN **ppVertices, unsigned short **ppIndices);
 //
 void ConvertToDX9(Vertex_VCN g_vertices_in[], Vertex_DX9 g_vertices_out[], int num_vertices);

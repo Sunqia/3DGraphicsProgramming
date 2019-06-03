@@ -1,11 +1,11 @@
-// ³]©w³»ÂIªº¸ê®Æ®æ¦¡
+// è¨­å®šé ‚é»çš„è³‡æ–™æ ¼å¼
 struct VS_INPUT
 {
 	float3 Position : POSITION;
 	float2 Texcoord	: TEXCOORD;
 };
 
-// ³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -23,7 +23,7 @@ SamplerState ZBufferSampler;
 
 cbuffer VSConstants : register(b0)
 {
-	// Âà´«¯x°}
+	// è½‰æ›çŸ©é™£
 	uniform row_major float4x4 wvp_matrix;
 }
 
@@ -31,7 +31,7 @@ cbuffer PSConstants : register(b1)
 {
 	// Depth of Field Control
 	uniform float4 vDepthOfField;
-	// §â«D½u©ÊªºZ­ÈÂà´«¦^¨ìÃèÀYªº½u©Ê¶ZÂ÷
+	// æŠŠéç·šæ€§çš„Zå€¼è½‰æ›å›åˆ°é¡é ­çš„ç·šæ€§è·é›¢
 	uniform float4 z_inv;
 }
 
@@ -39,9 +39,9 @@ cbuffer PSConstants : register(b1)
 VS_OUTPUT VS(VS_INPUT In)
 {
 	VS_OUTPUT Out;
-	// ®y¼ĞÂà´«
+	// åº§æ¨™è½‰æ›
 	Out.Position = mul( float4(In.Position, 1.0f), wvp_matrix);
-	// Åª¨ú³»ÂIªº¶K½è®y¼Ğ
+	// è®€å–é ‚é»çš„è²¼è³ªåº§æ¨™
 	Out.Texcoord = In.Texcoord;
 	//	
 	return Out;

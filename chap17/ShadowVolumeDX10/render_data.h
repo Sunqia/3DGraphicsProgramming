@@ -18,6 +18,6 @@ extern bool g_bDrawShadowVolume;
 extern bool g_bDirectionalLight;
 // camera fov
 extern float g_fFOV;
-// ¯x§Î
+// çŸ©å½¢
 extern Vertex_V3T2 g_Quad[4];
 extern Vertex_V3T2 g_FullScreenQuad[4];

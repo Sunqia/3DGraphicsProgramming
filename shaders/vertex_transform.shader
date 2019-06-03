@@ -1,16 +1,16 @@
-// `³]©w³»ÂIªº¸ê®Æ®æ¦¡`
+// `è¨­å®šé ‚é»çš„è³‡æ–™æ ¼å¼`
 struct VS_INPUT
 {
 	float4 Position : POSITION;
 };
 
-// `³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡`
+// `è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼`
 struct VS_OUTPUT
 {
 	float4 Position : POSITION;
 };
 
-// `Âà´«¯x°}`
+// `è½‰æ›çŸ©é™£`
 uniform row_major float4x4 viewproj_matrix : register(c0);
 uniform float4x4 viewproj_matrix_t : register(c0);
 
@@ -18,9 +18,9 @@ uniform float4x4 viewproj_matrix_t : register(c0);
 VS_OUTPUT VS(VS_INPUT In)
 {
 	VS_OUTPUT Out;
-	// `®y¼ĞÂà´«`
+	// `åº§æ¨™è½‰æ›`
 	Out.Position = mul( In.Position, viewproj_matrix);
-	// `¤£§â¯x°}µø¬° row major ®É, ­¼ªk­n¤Ï¹L¨Ó°µ.`
+	// `ä¸æŠŠçŸ©é™£è¦–ç‚º row major æ™‚, ä¹˜æ³•è¦åéä¾†åš.`
 	// Out.Position = mul( viewproj_matrix_t, In.Position );
 	
 	return Out;
@@ -29,6 +29,6 @@ VS_OUTPUT VS(VS_INPUT In)
 // Pixel Shader
 float4 PS(VS_OUTPUT In) : COLOR
 {
-	// `¶Ç¦^¥Õ¦â, ¥Ã»·µe¤@­Ó¥ÕÂI.`
+	// `å‚³å›ç™½è‰², æ°¸é ç•«ä¸€å€‹ç™½é».`
 	return float4(1,1,1,1);
 }

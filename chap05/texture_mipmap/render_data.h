@@ -2,15 +2,15 @@
 #include "Matrix4x4.h"
 #include "GutUserControl.h"
 
-// ©w¸q³»ÂI¸ê®Æ
+// å®šç¾©é ‚é»è³‡æ–™
 struct Vertex_VT
 {
-	float m_Position[3]; // ³»ÂI¦ì¸m
-	float m_Texcoord[2]; // ¶K¹Ï®y¼Ğ
+	float m_Position[3]; // é ‚é»ä½ç½®
+	float m_Texcoord[2]; // è²¼åœ–åº§æ¨™
 };
-// ±`¼Æ©w¸q
+// å¸¸æ•¸å®šç¾©
 const float g_fFovW = 45.0f;
-// ¯x§Î
+// çŸ©å½¢
 extern Vertex_VT g_Quad[4];
 // controller object
 extern CGutUserControl g_Control;

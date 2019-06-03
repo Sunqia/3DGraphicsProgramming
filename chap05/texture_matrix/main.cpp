@@ -64,21 +64,21 @@ void CalculateTextureMatrix(void)
 
 	switch(g_iMode)
 	{
-	case 1: // `«Ø¥ß¶K¹Ï¦ì²¾¯x°}`
+	case 1: // `å»ºç«‹è²¼åœ–ä½ç§»çŸ©é™£`
 		g_texture_matrix.Identity();
 		g_texture_matrix.Translate_Replace(fScrollingSpeed * g_fElapsed_Time, 0.0f, 0.0f);
 		break;
-	case 2: // `«Ø¥ß¶K¹Ï±ÛÂà¯x°}`
+	case 2: // `å»ºç«‹è²¼åœ–æ—‹è½‰çŸ©é™£`
 		texture_matrix.RotateZ_Replace(fRotateSpeed * g_fElapsed_Time);
-		// ¥ıÂà´«¨ì-0.5~0.5½d³ò, ¦A±ÛÂà, ¦AÂà´«¦^0~1½d³ò
+		// å…ˆè½‰æ›åˆ°-0.5~0.5ç¯„åœ, å†æ—‹è½‰, å†è½‰æ›å›0~1ç¯„åœ
 		g_texture_matrix = offset_matrix * texture_matrix * restore_matrix;
 		break;
-	case 3: // `«Ø¥ß¶K¹ÏÁY©ñ¯x°}`
+	case 3: // `å»ºç«‹è²¼åœ–ç¸®æ”¾çŸ©é™£`
 		{
 			const float max_scale = 3.0f;
 			float scale = fmod(g_fElapsed_Time, fScaleSpeed) * max_scale;
 			texture_matrix.Scale_Replace(scale, scale, scale);
-			// ¥ıÂà´«¨ì-0.5~0.5½d³ò, ¦AÁY©ñ, ¦AÂà´«¦^0~1½d³ò
+			// å…ˆè½‰æ›åˆ°-0.5~0.5ç¯„åœ, å†ç¸®æ”¾, å†è½‰æ›å›0~1ç¯„åœ
 			g_texture_matrix = offset_matrix * texture_matrix * restore_matrix;
 		}
 		break;
@@ -90,7 +90,7 @@ void CalculateTextureMatrix(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -135,10 +135,10 @@ void main(void)
 
 	GutResizeFunc( resize_func );
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
@@ -154,7 +154,7 @@ void main(void)
 
 	g_Control.SetCamera(Vector4(0.0f, 0.0f, 5.0f), Vector4(0.0f, 0.0f, 0.0f), Vector4(0.0f, 1.0f, 0.0f) );
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -162,18 +162,18 @@ void main(void)
 		exit(0);
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
-		// Åª¨úÁä½L·Æ¹«
+		// è®€å–éµç›¤æ»‘é¼ 
 		GetUserInput();
-		// ­pºâ¶K¹Ï®y¼ĞÂà´«¯x°}
+		// è¨ˆç®—è²¼åœ–åº§æ¨™è½‰æ›çŸ©é™£
 		CalculateTextureMatrix();
-		// µe¥X¯x§Î
+		// ç•«å‡ºçŸ©å½¢
 		render();
 	}
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

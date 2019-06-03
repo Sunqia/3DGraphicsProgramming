@@ -6,9 +6,9 @@
 extern bool g_bWireframe;
 // controller object
 extern CGutUserControl g_Control;
-// 盽计﹚竡
+// 甯告暩瀹氱京
 const float g_fFovW = 45.0f;
-// 方戈
+// 鍏夋簮璩囨枡
 #define NUM_LIGHTS 1
 
 struct Light

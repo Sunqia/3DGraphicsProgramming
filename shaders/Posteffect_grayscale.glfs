@@ -1,6 +1,6 @@
 //
 // Pixel Shader
-// ±m¦âÂà¶Â¥Õ
+// å½©è‰²è½‰é»‘ç™½
 sampler2D RGBSampler;
 
 void main(void)

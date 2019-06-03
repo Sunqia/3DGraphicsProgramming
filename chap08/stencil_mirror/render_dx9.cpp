@@ -9,10 +9,10 @@ static Matrix4x4 g_projection_matrix;
 
 void InitStateDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 	//
 	device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
@@ -20,9 +20,9 @@ void InitStateDX9(void)
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 	// 
 	InitStateDX9();
@@ -43,9 +43,9 @@ void ResizeWindowDX9(int width, int height)
 {
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D9¸Ë¸m
+	// å–å¾—Direct3D9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, aspect, 0.1f, 100.0f);
 
@@ -72,14 +72,14 @@ static void RenderModelDX9(bool mirror, Vector4 *pPlane)
 
 		Matrix4x4 temp_matrix = GutMatrixLookAtRH(mirror_eye, mirror_lookat, mirror_up);
 
-		// ¦]¬°¬OÃè®g, ¦bÂà´«¨ìÃèÀY®y¼Ð¨t«á­n°µ­Ó¥ª¥k¹ï½Õªº°Ê§@.
+		// å› ç‚ºæ˜¯é¡å°„, åœ¨è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»å¾Œè¦åšå€‹å·¦å³å°èª¿çš„å‹•ä½œ.
 		Matrix4x4 mirror_x;
 		mirror_x.Identity();
 		mirror_x.Scale(-1.0f, 1.0f, 1.0f);
 
 		view_matrix = temp_matrix * mirror_x;
 
-		// ¥k¥ª¹ï½Õ«á, 3¨¤§Îªº³»ÂI±Æ¦C¶¶§Ç·|³Q¤Ï¹L¨Ó.
+		// å³å·¦å°èª¿å¾Œ, 3è§’å½¢çš„é ‚é»žæŽ’åˆ—é †åºæœƒè¢«åéŽä¾†.
 		GutSetDX9BackFace(D3DCULL_CCW);
 	}
 	else
@@ -99,19 +99,19 @@ static void RenderModelDX9(bool mirror, Vector4 *pPlane)
 	GutSetDX9BackFace(D3DCULL_CW);
 }
 
-// ¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï
+// ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	Vector4 vPlane(0.0f, 0.0f, 1.0f, -g_mirror_z);
 
 	device->BeginScene(); 
-	// `®ø°£µe­±`
+	// `æ¶ˆé™¤ç•«é¢`
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_RGBA(0, 0, 150, 255), 1.0f, 0);
-	// `µe¥X¯ùÜò`
+	// `ç•«å‡ºèŒ¶å£¼`
 	RenderModelDX9(false, NULL);
 
-	// `µe¥XÃè­±, ¦P®É§âstencil­È³]¬°1.`
+	// `ç•«å‡ºé¡é¢, åŒæ™‚æŠŠstencilå€¼è¨­ç‚º1.`
 	{	
 		device->SetRenderState(D3DRS_STENCILENABLE, TRUE);
 		device->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_REPLACE);
@@ -124,18 +124,18 @@ void RenderFrameDX9(void)
 		sModelMaterial_DX9 material;
 		material.m_Material.Diffuse.r = material.m_Material.Diffuse.g = material.m_Material.Diffuse.b = material.m_Material.Diffuse.a = 0.0f;
 		material.Submit();
-		// `µe¥XÃè­±`
+		// `ç•«å‡ºé¡é¢`
 		device->SetFVF(D3DFVF_XYZ);
 		device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad_v, sizeof(Vertex_V));
 	}
-	// `§âÃè­±½d³òªºZBuffer²M¬°1.0`
+	// `æŠŠé¡é¢ç¯„åœçš„ZBufferæ¸…ç‚º1.0`
 	{
-		// `³]©wstencil test±ø¥ó, ¥u§ó·sÃè­±½d³òªº¹³¯À.`
+		// `è¨­å®šstencil testæ¢ä»¶, åªæ›´æ–°é¡é¢ç¯„åœçš„åƒç´ .`
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
 		device->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
-		device->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS); // `Ãö³¬z test`
-		device->SetRenderState(D3DRS_COLORWRITEENABLE, 0); // `Ãö³¬RGBAªº¿é¥X`
-		// `¸g¥Ñ­×§ïviewport Z½d³òªº¤èªk, §â3Dª«¥óªºZ­È¿é¥X©T©w¬°1.`
+		device->SetRenderState(D3DRS_ZFUNC, D3DCMP_ALWAYS); // `é—œé–‰z test`
+		device->SetRenderState(D3DRS_COLORWRITEENABLE, 0); // `é—œé–‰RGBAçš„è¼¸å‡º`
+		// `ç¶“ç”±ä¿®æ”¹viewport Zç¯„åœçš„æ–¹æ³•, æŠŠ3Dç‰©ä»¶çš„Zå€¼è¼¸å‡ºå›ºå®šç‚º1.`
 		int w, h; 
 		GutGetWindowSize(w, h);
 		D3DVIEWPORT9 viewport;
@@ -143,27 +143,27 @@ void RenderFrameDX9(void)
 		viewport.Width = w; viewport.Height = h;
 		viewport.MinZ = 1.0f; viewport.MaxZ = 1.0f;
 		device->SetViewport(&viewport);
-		// `µe¥XÃè­±`
+		// `ç•«å‡ºé¡é¢`
 		device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad_v, sizeof(Vertex_V));
-		// `§âZ­È½d³òÁÙ­ì¦¨0-1`
+		// `æŠŠZå€¼ç¯„åœé‚„åŽŸæˆ0-1`
 		viewport.MinZ = 0.0f; viewport.MaxZ = 1.0f;
 		device->SetViewport(&viewport);
-		// `ÁÙ­ìzbuffer testªº´ú¸Õ±ø¥ó`
+		// `é‚„åŽŸzbuffer testçš„æ¸¬è©¦æ¢ä»¶`
 		device->SetRenderState(D3DRS_ZFUNC, D3DCMP_LESSEQUAL);
-		// `­«·s¥´¶}RGBAªº¿é¥X`
+		// `é‡æ–°æ‰“é–‹RGBAçš„è¼¸å‡º`
 		device->SetRenderState(D3DRS_COLORWRITEENABLE, 
 			D3DCOLORWRITEENABLE_RED | 
 			D3DCOLORWRITEENABLE_GREEN |
 			D3DCOLORWRITEENABLE_BLUE |
 			D3DCOLORWRITEENABLE_ALPHA);
 	}
-	// `¦bÃè­±½d³ò¸Ìµe¥XÃè®gªº¯ùÜò`
+	// `åœ¨é¡é¢ç¯„åœè£¡ç•«å‡ºé¡å°„çš„èŒ¶å£¼`
 	{
 		RenderModelDX9(true, &vPlane);
 		device->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 	}
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

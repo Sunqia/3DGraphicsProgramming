@@ -6,8 +6,8 @@
 
 struct Vertex_VT
 {
-	Vector4 m_Position; // ³»ÂI¦ì¸m
-	Vector4 m_Texcoord; // ¶K¹Ï®y¼Ğ
+	Vector4 m_Position; // é ‚é»ä½ç½®
+	Vector4 m_Texcoord; // è²¼åœ–åº§æ¨™
 };
 
 // camera control object
@@ -23,6 +23,6 @@ extern bool g_bDrawShadowVolume;
 extern bool g_bDirectionalLight;
 // camera fov
 extern float g_fFOV;
-// ¯x§Î
+// çŸ©å½¢
 extern Vertex_VT g_Quad[4];
 extern Vertex_VT g_FullScreenQuad[4];

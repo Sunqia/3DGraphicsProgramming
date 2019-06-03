@@ -45,7 +45,7 @@ bool InitResourceDX10(void)
 	if ( NULL==g_pTexture )
 		return false;
 
-	// ¸ü¤JVertex Shader
+	// è¼‰å…¥Vertex Shader
 	{
 		g_pBlurVS = GutLoadVertexShaderDX10_HLSL("../../shaders/Posteffect_blur_dx10.hlsl", "VS", "vs_4_0", &pVSCode);
 		g_pBlurPS = GutLoadPixelShaderDX10_HLSL("../../shaders/Posteffect_blur_dx10.hlsl", "PS", "ps_4_0");
@@ -57,7 +57,7 @@ bool InitResourceDX10(void)
 			return false;
 	}
 
-    // ³]©wVertex¸ê®Æ®æ¦¡
+    // è¨­å®šVertexè³‡æ–™æ ¼å¼
 	{
 		D3D10_INPUT_ELEMENT_DESC layout[] =
 		{
@@ -237,7 +237,7 @@ static ID3D10ShaderResourceView *BlurImage(ID3D10ShaderResourceView *pTexture, s
 	g_pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	g_pDevice->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
 
-	// ¤ô¥­¼Ò½k
+	// æ°´å¹³æ¨¡ç³Š
 	{
 		device->OMSetRenderTargets(1, &g_pFrameRTView[0], NULL);
 
@@ -248,7 +248,7 @@ static ID3D10ShaderResourceView *BlurImage(ID3D10ShaderResourceView *pTexture, s
 		g_pDevice->PSSetShaderResources(0, 1, &pTexture);
 		g_pDevice->Draw(4, 0);
 	}
-	// ««ª½¼Ò½k
+	// å‚ç›´æ¨¡ç³Š
 	{
 		device->OMSetRenderTargets(1, &g_pFrameRTView[1], NULL);
 
@@ -279,14 +279,14 @@ void RenderFrameDX10(void)
 	g_pDevice->RSSetViewports(1, &vp);
 
 	g_pDevice->OMSetRenderTargets(1, &pRenderTargetView, NULL);
-	// ³]©wShader
+	// è¨­å®šShader
 	g_pDevice->VSSetShader(g_pBlurVS);
 	g_pDevice->PSSetShader(g_pRGBAPixelShader);
-	// ³]©wvertex shaderÅª¨ú°Ñ¼Æªº°O¾ĞÅé¦ìÓ_
+	// è¨­å®švertex shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ä½ç½
     g_pDevice->VSSetConstantBuffers(0, 1, &g_pVSConstantBuffer);
-	// ³]©wvertex¸ê®Æ®æ¦¡
+	// è¨­å®švertexè³‡æ–™æ ¼å¼
 	g_pDevice->IASetInputLayout(g_pVertexLayout);
-	// ³]©w¤T¨¤§Î³»ÂI¯Á¤Ş­È¸ê®Æ±Æ¦C¬Otriangle strip
+	// è¨­å®šä¸‰è§’å½¢é ‚é»ç´¢å¼•å€¼è³‡æ–™æ’åˆ—æ˜¯triangle strip
 	g_pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	g_pDevice->PSSetShaderResources(0, 1, &g_pTexture);
 	g_pDevice->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
@@ -303,14 +303,14 @@ void RenderFrameDX10(void)
 
 		float dummy[] = {0,0,0,0};
 		g_pDevice->OMSetBlendState(g_pAddBlend, dummy, 0xffffffff);
-		// ³]©wShader
+		// è¨­å®šShader
 		g_pDevice->VSSetShader(g_pBlurVS);
 		g_pDevice->PSSetShader(g_pRGBAPixelShader);
-		// ³]©wvertex shaderÅª¨ú°Ñ¼Æªº°O¾ĞÅé¦ìÓ_
+		// è¨­å®švertex shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ä½ç½
 		g_pDevice->VSSetConstantBuffers(0, 1, &g_pVSConstantBuffer);
-		// ³]©wvertex¸ê®Æ®æ¦¡
+		// è¨­å®švertexè³‡æ–™æ ¼å¼
 		g_pDevice->IASetInputLayout(g_pVertexLayout);
-		// ³]©w¤T¨¤§Î³»ÂI¯Á¤Ş­È¸ê®Æ±Æ¦C¬Otriangle strip
+		// è¨­å®šä¸‰è§’å½¢é ‚é»ç´¢å¼•å€¼è³‡æ–™æ’åˆ—æ˜¯triangle strip
 		g_pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 		g_pDevice->PSSetShaderResources(0, 1, &pRSView);
 		g_pDevice->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
@@ -319,7 +319,7 @@ void RenderFrameDX10(void)
 		g_pDevice->OMSetBlendState(g_pNoBlend, dummy, 0xffffffff);
 	}
 
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain();
 	pSwapChain->Present(1, 0);
 }

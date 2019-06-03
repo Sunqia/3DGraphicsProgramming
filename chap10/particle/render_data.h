@@ -7,7 +7,7 @@
 extern CGutUserControl g_Control;
 //
 extern CGutParticle g_Particle;
-// ±`¼Æ©w¸q
+// å¸¸æ•¸å®šç¾©
 const float g_fFovW = 45.0f;
 // mode
 extern int g_iMode;

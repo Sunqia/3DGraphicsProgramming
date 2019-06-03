@@ -32,7 +32,7 @@ bool InitResourceDX10(void)
 	g_pDevice = GutGetGraphicsDeviceDX10();
 	ID3D10Blob *pVSCode = NULL;
 
-	// ¸ü¤JShader
+	// è¼‰å…¥Shader
 	{
 		D3D10_SHADER_MACRO macros[] =
 		{
@@ -55,7 +55,7 @@ bool InitResourceDX10(void)
 		if ( g_pVertexShader==NULL || g_pPixelShader==NULL )
 			return false;
 	}
-	// ³]©w³»ÂI¸ê®Æ®æ¦¡
+	// è¨­å®šé ‚é»è³‡æ–™æ ¼å¼
 	{
 		//
 		D3D10_INPUT_ELEMENT_DESC layout[] =
@@ -69,13 +69,13 @@ bool InitResourceDX10(void)
 			pVSCode->GetBufferPointer(), pVSCode->GetBufferSize(), &g_pVertexLayout ) )
 			return false;
 	}
-	// Shader±`¼Æªº°O¾ĞÅéªÅ¶¡
+	// Shaderå¸¸æ•¸çš„è¨˜æ†¶é«”ç©ºé–“
 	g_pMaterialConstant = GutCreateShaderConstant_DX10(sizeof(sMaterialConstants));
 	g_pMatrixConstant = GutCreateShaderConstant_DX10(sizeof(sMatrixConstants));
-	// ¼Ò«¬°O¾ĞÅéªÅ¶¡
+	// æ¨¡å‹è¨˜æ†¶é«”ç©ºé–“
 	g_pVertexBuffer = GutCreateVertexBuffer_DX10(g_Particle.m_iNumMaxParticles * sizeof(sParticleVertex) * 4);
 	g_pIndexBuffer = GutCreateIndexBuffer_DX10(g_Particle.m_iNumMaxParticles * 6 * sizeof(short), g_Particle.m_pIndexArray);
-	// ADD²V¦â
+	// ADDæ··è‰²
 	{
 		D3D10_BLEND_DESC desc;
 
@@ -86,7 +86,7 @@ bool InitResourceDX10(void)
 
 		g_pDevice->CreateBlendState(&desc, &g_pBlendState);
 	}
-	// Ãö³¬ZWrite
+	// é—œé–‰ZWrite
 	{
 		D3D10_DEPTH_STENCIL_DESC desc;
 		GutSetDX10DefaultDepthStencilDesc(desc);
@@ -116,10 +116,10 @@ void ResizeWindowDX10(int width, int height)
 void RenderFrameDX10(void)
 {
 	Vector4 vClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-	// ¨ú±o©I¥sGutCreateGraphicsDeviceDX10®É©Ò²£¥ÍªºD3D10ª«¥ó
+	// å–å¾—å‘¼å«GutCreateGraphicsDeviceDX10æ™‚æ‰€ç”¢ç”Ÿçš„D3D10ç‰©ä»¶
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView(); //frame buffer
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); //depth/stencil buffer
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
 	g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 	//
@@ -162,7 +162,7 @@ void RenderFrameDX10(void)
 		if ( !g_bPointSprite )
 			g_pDevice->DrawIndexed(g_Particle.m_iNumParticles*6, 0, 0);
 	}
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); // front/back buffer
 	pSwapChain->Present(1, 0);
 }

@@ -15,32 +15,32 @@ GLuint g_Texture1_ID = 0;
 
 bool InitResourceOpenGL(void)
 {
-	// ÃèÀY®y¼Ğ¨tÂà´«¯x°}
+	// é¡é ­åº§æ¨™ç³»è½‰æ›çŸ©é™£
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixOrthoRH_OpenGL(g_fOrthoWidth, g_fOrthoHeight, 0.1f, 100.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
-	// ¸ü¤J¶K¹Ï
+	// è¼‰å…¥è²¼åœ–
 	g_Texture0_ID = GutLoadTexture_OpenGL("../../textures/brickwall_broken.tga");
-	// ®M¥ÎTrilinear Filter
+	// å¥—ç”¨Trilinear Filter
 	glBindTexture(GL_TEXTURE_2D, g_Texture0_ID);
 	glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-	// ¸ü¤J¶K¹Ï
+	// è¼‰å…¥è²¼åœ–
 	g_Texture1_ID = GutLoadTexture_OpenGL("../../textures/spotlight_effect.tga");
-	// ®M¥ÎTrilinear Filter
+	// å¥—ç”¨Trilinear Filter
 	glBindTexture(GL_TEXTURE_2D, g_Texture1_ID);
 	glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri( GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
 
 	glBindTexture(GL_TEXTURE_2D, g_Texture1_ID);
 
-	// §â¥¿¦V¸ò¤Ï¦Vªº­±³£µe¥X¨Ó
+	// æŠŠæ­£å‘è·Ÿåå‘çš„é¢éƒ½ç•«å‡ºä¾†
 	glDisable(GL_CULL_FACE);
-	// ±Ò°Ê2D¶K¹Ï¥\¯à
+	// å•Ÿå‹•2Dè²¼åœ–åŠŸèƒ½
 	glEnable(GL_TEXTURE_2D);
-	// ±Ò°ÊzbufferÁôÂÃ­±´ú¸Õ
+	// å•Ÿå‹•zbufferéš±è—é¢æ¸¬è©¦
 	glEnable(GL_DEPTH_TEST);
 
 	return true;
@@ -50,14 +50,14 @@ bool ReleaseResourceOpenGL(void)
 {
 	if ( g_Texture0_ID )
 	{
-		// ÄÀ©ñ¶K¹Ï¸ê·½
+		// é‡‹æ”¾è²¼åœ–è³‡æº
 		glDeleteTextures(1, &g_Texture0_ID);
 		g_Texture0_ID = 0;
 	}
 
 	if ( g_Texture1_ID )
 	{
-		// ÄÀ©ñ¶K¹Ï¸ê·½
+		// é‡‹æ”¾è²¼åœ–è³‡æº
 		glDeleteTextures(1, &g_Texture1_ID);
 		g_Texture1_ID = 0;
 	}
@@ -65,12 +65,12 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_fOrthoWidth = g_fOrthoSize;
 	g_fOrthoHeight = g_fOrthoSize;
@@ -80,28 +80,28 @@ void ResizeWindowOpenGL(int width, int height)
 		g_fOrthoWidth /= aspect;
 
 	Matrix4x4 projection_matrix = GutMatrixOrthoRH_OpenGL(g_fOrthoWidth, g_fOrthoHeight, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// `³]©w­n¥Î°}¦Cªº¤è¦¡¶Ç¤J³»ÂI¦ì¸m¸òÃC¦â`
+	// `è¨­å®šè¦ç”¨é™£åˆ—çš„æ–¹å¼å‚³å…¥é ‚é»ä½ç½®è·Ÿé¡è‰²`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glClearStencil(0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	// `¤£»İ­n` zbuffer test
+	// `ä¸éœ€è¦` zbuffer test
 	glDisable(GL_DEPTH_TEST);
 	
 	{
-		// `§âmodelview, projection¯x°}³]¦¨³æ¦ì¯x°}.`
+		// `æŠŠmodelview, projectionçŸ©é™£è¨­æˆå–®ä½çŸ©é™£.`
 		glMatrixMode(GL_MODELVIEW); 
 		glLoadIdentity();
 		glMatrixMode(GL_PROJECTION);
-		glPushMatrix(); // `§âprojection¯x°}¦s©ñ¦bstack¤¤`
+		glPushMatrix(); // `æŠŠprojectionçŸ©é™£å­˜æ”¾åœ¨stackä¸­`
 		glLoadIdentity();
 		
 		glEnable(GL_ALPHA_TEST);
@@ -109,14 +109,14 @@ void RenderFrameOpenGL(void)
 
 		if ( g_bStencil )
 		{
-			// `±Ò°Ê` Stencil Buffer Test
+			// `å•Ÿå‹•` Stencil Buffer Test
 			glEnable(GL_STENCIL_TEST);
-			// `Stencil Test §PÂ_±ø¥ó³]©w¦¨¥Ã»·¦¨¥ß`
-			// `Stencil °Ñ¦Ò­È³]©w¬° 1`
-			// `Stencil Mask ³]©w¦¨ 0xff = 255`
+			// `Stencil Test åˆ¤æ–·æ¢ä»¶è¨­å®šæˆæ°¸é æˆç«‹`
+			// `Stencil åƒè€ƒå€¼è¨­å®šç‚º 1`
+			// `Stencil Mask è¨­å®šæˆ 0xff = 255`
 			glStencilFunc(GL_ALWAYS, 1, 0xff);
-			// `Stencil Test ¦¨¥ß®É, §â Stencil °Ñ¦Ò­È¶ñ¤J Stencil Buffer ¤¤.`
-			// `«e¨â­Ó GL_KEEP ¬O«ü·í Stencil ¸ò ZBuffer Test ¤£¦¨¥ß®É, ¤£¥h§ïÅÜ Stencil Buffer`
+			// `Stencil Test æˆç«‹æ™‚, æŠŠ Stencil åƒè€ƒå€¼å¡«å…¥ Stencil Buffer ä¸­.`
+			// `å‰å…©å€‹ GL_KEEP æ˜¯æŒ‡ç•¶ Stencil è·Ÿ ZBuffer Test ä¸æˆç«‹æ™‚, ä¸å»æ”¹è®Š Stencil Buffer`
 			glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
 		}
 		else
@@ -124,14 +124,14 @@ void RenderFrameOpenGL(void)
 			glDisable(GL_STENCIL_TEST);
 		}
 
-		// `®M¥Î¶K¹Ï`
+		// `å¥—ç”¨è²¼åœ–`
 		glBindTexture(GL_TEXTURE_2D, g_Texture0_ID);
-		// `µe¥X¯x§Î, ¦P®É·|²M°£ZBuffer.`
+		// `ç•«å‡ºçŸ©å½¢, åŒæ™‚æœƒæ¸…é™¤ZBuffer.`
 		glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VT), &g_Quad[0].m_Position);
 		glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex_VT), &g_Quad[0].m_Texcoord);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 
-		// `§â¦s©ñ¦bstack¤¤ªºprojection¨ú¦^¨Ó`
+		// `æŠŠå­˜æ”¾åœ¨stackä¸­çš„projectionå–å›ä¾†`
 		glPopMatrix();
 		glDepthFunc(GL_LESS);
 		glDisable(GL_ALPHA_TEST);
@@ -140,31 +140,31 @@ void RenderFrameOpenGL(void)
 	{
 		if ( g_bStencil )
 		{
-			// `¥u§ó·sµe­±¤WStencil­È¬°1ªº¹³¯À`
+			// `åªæ›´æ–°ç•«é¢ä¸ŠStencilå€¼ç‚º1çš„åƒç´ `
 			glStencilFunc(GL_EQUAL, 1, 0xff);
-			// `¤£¥h§ó·s Stencil Buffer ¼Æ­È`
+			// `ä¸å»æ›´æ–° Stencil Buffer æ•¸å€¼`
 			glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 		}
 
-		// `¶}±Ò²V¦â¥\¯à`
+		// `é–‹å•Ÿæ··è‰²åŠŸèƒ½`
 		glEnable(GL_BLEND);
-		// `²V¦â¤½¦¡` = source_color * 1 + dest_color * 1
+		// `æ··è‰²å…¬å¼` = source_color * 1 + dest_color * 1
 		glBlendFunc(GL_ONE, GL_ONE);
-		// `®M¥Î¶K¹Ï`
+		// `å¥—ç”¨è²¼åœ–`
 		glBindTexture(GL_TEXTURE_2D, g_Texture1_ID);
-		// `®M¤JÂà´«¯x°}`
+		// `å¥—å…¥è½‰æ›çŸ©é™£`
 		Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
 		Matrix4x4 world_view_matrix = g_world_matrix * view_matrix;
 		glMatrixMode(GL_MODELVIEW);
 		glLoadMatrixf( (float *) &world_view_matrix);
-		// `µe¥X¯x§Î`
+		// `ç•«å‡ºçŸ©å½¢`
 		glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VT), &g_Quad[0].m_Position);
 		glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex_VT), &g_Quad[0].m_Texcoord);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-		// `Ãö³¬²V¦â¥\¯à`		
+		// `é—œé–‰æ··è‰²åŠŸèƒ½`		
 		glDisable(GL_BLEND);
 	}
 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

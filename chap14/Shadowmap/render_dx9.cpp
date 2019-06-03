@@ -31,11 +31,11 @@ static Matrix4x4 g_light_proj_matrix, g_light_view_matrix;
 
 bool InitStateDX9(void)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
-	// `³]©wµø¨¤Âà´«¯x°}`
+	// `è¨­å®šè¦–è§’è½‰æ›çŸ©é™£`
 	int w, h;
 	GutGetWindowSize(w, h);
 	float fAspect = (float)h/(float)w;
@@ -98,7 +98,7 @@ bool InitStateDX9(void)
 
 bool InitResourceDX9(void)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	InitStateDX9();
@@ -106,14 +106,14 @@ bool InitResourceDX9(void)
 	CGutModel::SetTexturePath("../../textures/");
 	g_Model_DX9.ConvertToDX9Model(&g_Model);
 
-	// `µe¥X¶ZÂ÷­ÈªºShader`
+	// `ç•«å‡ºè·é›¢å€¼çš„Shader`
 	g_pZPassVS = GutLoadVertexShaderDX9_HLSL("../../shaders/ZPass.hlsl", "VS", "vs_2_0");
 	g_pZPassPS = GutLoadPixelShaderDX9_HLSL ("../../shaders/ZPass.hlsl", "PS", "ps_2_0");
 
 	if ( NULL==g_pZPassVS || NULL==g_pZPassPS )
 		return false;
 
-	// `­pºâ³±¼v¥ÎªºShader`
+	// `è¨ˆç®—é™°å½±ç”¨çš„Shader`
 	g_pShadowmapVS = GutLoadVertexShaderDX9_HLSL("../../shaders/shadowmap.hlsl", "VS", "vs_2_0");
 	g_pShadowmapPS_R32F = GutLoadPixelShaderDX9_HLSL ("../../shaders/shadowmap.hlsl", "PS_R32F", "ps_2_0");
 	g_pShadowmapPS_D24S = GutLoadPixelShaderDX9_HLSL ("../../shaders/shadowmap.hlsl", "PS_D24S8", "ps_2_0");
@@ -188,12 +188,12 @@ static void RenderShadowmapDX9(void)
 	g_Model_DX9.Render();
 	CGutModel_DX9::SetShaderOverwrite(NULL, NULL);
 
-	// `ÁÙ­ì` RenderTarget & DepthBuffer `³]©w`
+	// `é‚„åŽŸ` RenderTarget & DepthBuffer `è¨­å®š`
 	device->SetRenderTarget(0, g_pMainSurface);
 	device->SetDepthStencilSurface(g_pMainDepthStencilSurface);
 }
 
-// `¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–`
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
@@ -202,14 +202,14 @@ void RenderFrameDX9(void)
 	// shadowmap pass
 	RenderShadowmapDX9();
 
-	// `®ø°£µe­±`
+	// `æ¶ˆé™¤ç•«é¢`
 	device->Clear(0, NULL, D3DCLEAR_TARGET|D3DCLEAR_ZBUFFER|D3DCLEAR_STENCIL, D3DCOLOR_RGBA(32, 32, 32, 255), 1.0f, 0);
 
-	// `§ó·s¯x°}`
+	// `æ›´æ–°çŸ©é™£`
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 wvp_matrix = world_matrix * view_matrix * g_proj_matrix;
-	// zbias `¯x°}¥Î¨Ó§âª«¥ó¦VÃèÀY¤è¦V°µ¤p´T²¾°Ê`
+	// zbias `çŸ©é™£ç”¨ä¾†æŠŠç‰©ä»¶å‘é¡é ­æ–¹å‘åšå°å¹…ç§»å‹•`
 	Matrix4x4 zbias; zbias.Translate_Replace(0.0f, 0.0f, g_fZBias);
 
 	Matrix4x4 light_wvp_matrix = 
@@ -225,13 +225,13 @@ void RenderFrameDX9(void)
 
 	if ( g_bUseD24S )
 	{
-		// `¨Ï¥ÎZBuffer°ÊºA¶K¹Ï`
+		// `ä½¿ç”¨ZBufferå‹•æ…‹è²¼åœ–`
 		CGutModel_DX9::SetShaderOverwrite(g_pShadowmapVS, g_pShadowmapPS_D24S);
 		CGutModel_DX9::SetTextureOverwrite(0, g_pShadowmapDepthStencil);
 	}
 	else
 	{
-		// `¨Ï¥Îfloat32°ÊºA¶K¹Ï`
+		// `ä½¿ç”¨float32å‹•æ…‹è²¼åœ–`
 		CGutModel_DX9::SetShaderOverwrite(g_pShadowmapVS, g_pShadowmapPS_R32F);
 		CGutModel_DX9::SetTextureOverwrite(0, g_pShadowmap);
 	}
@@ -241,8 +241,8 @@ void RenderFrameDX9(void)
 	CGutModel_DX9::SetTextureOverwrite(0, NULL);
 	CGutModel_DX9::SetShaderOverwrite(NULL, NULL);
 	
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

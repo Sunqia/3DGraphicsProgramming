@@ -1,9 +1,9 @@
-// §ïÅÜ«G«×
+// æ”¹è®Šäº®åº¦
 // Pixel Shader
 //
 uniform sampler2D ImageSampler;
 
-// PS ½Õ¾ã«G«×°Ñ¼Æ
+// PS èª¿æ•´äº®åº¦åƒæ•¸
 uniform vec4 IntensityOffset;
 uniform vec4 IntensityScale;
 
@@ -11,10 +11,10 @@ void main(void)
 {
 	vec4 rgba = texture2D(ImageSampler, gl_TexCoord[0].xy);
 	vec3 table = vec3(0.3f, 0.59f, 0.11f);
-	// ¥ıÂà¦¨¦Ç¶¥¨Ó¹î¬İ¥¦ªº«G«×
+	// å…ˆè½‰æˆç°éšä¾†å¯Ÿçœ‹å®ƒçš„äº®åº¦
 	vec4 old_intensity = dot(rgba.rgb, table);
-	// §â«G«×°µ­Ó§ïÅÜ
+	// æŠŠäº®åº¦åšå€‹æ”¹è®Š
 	vec4 new_intensity = (old_intensity + IntensityOffset) * IntensityScale;
-	// §â­ì©lªºÃC¦â­¼¤W·sªº«G«×
+	// æŠŠåŸå§‹çš„é¡è‰²ä¹˜ä¸Šæ–°çš„äº®åº¦
 	gl_FragColor = rgba * new_intensity;
 }

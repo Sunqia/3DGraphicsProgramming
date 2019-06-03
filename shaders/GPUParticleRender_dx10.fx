@@ -1,10 +1,10 @@
-// ³»ÂIªº¸ê®Æ¿é¤J®æ¦¡
+// é ‚é»çš„è³‡æ–™è¼¸å…¥æ ¼å¼
 struct VS_INPUT
 {
 	float2 Texcoord : TEXCOORD0;
 };
 
-// Vertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// Vertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : POSITION;

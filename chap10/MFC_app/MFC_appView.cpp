@@ -207,6 +207,6 @@ void CMFC_appView::OnDestroy()
 
 	KillTimer(1);
 	g_release_resource();
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

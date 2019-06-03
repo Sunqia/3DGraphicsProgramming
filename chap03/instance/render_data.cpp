@@ -1,6 +1,6 @@
 #include "Vector4.h"
 
-// ª÷¦r¶ğ§Îªº8±øÃä½u
+// é‡‘å­—å¡”å½¢çš„8æ¢é‚Šç·š
 Vector4 g_vertices[16] = 
 {
 	Vector4(-1.0f, 1.0f,-1.0f),
@@ -28,11 +28,11 @@ Vector4 g_vertices[16] =
 	Vector4( 1.0f, 1.0f,-1.0f),
 };
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 4.0f, 4.0f); 
 //Vector4 g_eye(0.0f, 0.0f, 10.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, -1.0f, 1.0f); 
 //Vector4 g_up(0.0f, 1.0f, 0.0f); 

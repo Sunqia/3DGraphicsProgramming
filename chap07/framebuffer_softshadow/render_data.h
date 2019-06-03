@@ -5,8 +5,8 @@
 
 struct Vertex_VT
 {
-	Vector4 m_Position; // ³»ÂI¦ì¸m
-	Vector4 m_Texcoord; // ¶K¹Ï®y¼Ğ
+	Vector4 m_Position; // é ‚é»ä½ç½®
+	Vector4 m_Texcoord; // è²¼åœ–åº§æ¨™
 };
 
 struct Light
@@ -27,7 +27,7 @@ extern CGutModel g_Model;
 extern float g_fFOV;
 // blur on/off
 extern bool g_bBlur;
-// ¯x§Î
+// çŸ©å½¢
 extern Vertex_VT g_Quad[4];
 extern Vertex_VT g_FullScreenQuad[4];
 

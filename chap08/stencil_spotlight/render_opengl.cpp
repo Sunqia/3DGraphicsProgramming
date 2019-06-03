@@ -20,9 +20,9 @@ static sModelMaterial_OpenGL g_material_spotlightpass;
 
 bool InitResourceOpenGL(void)
 {
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, 1.0f, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 	glMatrixMode(GL_MODELVIEW);	
@@ -49,27 +49,27 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClearStencil(0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	// `Âà´«¯x°}`
+	// `è½‰æ›çŸ©é™£`
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 world_view_matrix = world_matrix * view_matrix;
@@ -77,7 +77,7 @@ void RenderFrameOpenGL(void)
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 
-	// `µe¯ùÜò`
+	// `ç•«èŒ¶å£¼`
 	{
 		glMatrixMode(GL_MODELVIEW);
 		glLoadMatrixf( (float *) &world_view_matrix);
@@ -96,40 +96,40 @@ void RenderFrameOpenGL(void)
 		glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
 		glStencilFunc(GL_ALWAYS, 1, 0xff);
 
-		// µe¥X­±¹ïÃèÀYªº­±¡A¦P®É»¼¼W Stencil Buffer¡C
+		// ç•«å‡ºé¢å°é¡é ­çš„é¢ï¼ŒåŒæ™‚éå¢ Stencil Bufferã€‚
 		glCullFace(GL_BACK);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_INCR);
-		// `©I¥s Render ®É¶Ç¤J 0 ¥Nªí¤£»İ­n®M¥Î¥ô¦ó§÷½è³]©w`
+		// `å‘¼å« Render æ™‚å‚³å…¥ 0 ä»£è¡¨ä¸éœ€è¦å¥—ç”¨ä»»ä½•æè³ªè¨­å®š`
 		g_SpotLightModel_OpenGL.Render(0);
 
-		// `µe¥X­I¹ïÃèÀYªº­±¡A¦P®É»¼´î Stencil Buffer¡C`
+		// `ç•«å‡ºèƒŒå°é¡é ­çš„é¢ï¼ŒåŒæ™‚éæ¸› Stencil Bufferã€‚`
 		glCullFace(GL_FRONT);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_DECR);
-		// `©I¥s Render ®É¶Ç¤J 0 ¥Nªí¤£»İ­n®M¥Î¥ô¦ó§÷½è³]©w`
+		// `å‘¼å« Render æ™‚å‚³å…¥ 0 ä»£è¡¨ä¸éœ€è¦å¥—ç”¨ä»»ä½•æè³ªè¨­å®š`
 		g_SpotLightModel_OpenGL.Render(0);
 
-		// `ÁÙ­ì³]©w`
+		// `é‚„åŸè¨­å®š`
 		glCullFace(GL_BACK);
 		glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
 	}
-	// `µe¥X¥ú¬W·Ó®g¨ìªº°Ï°ì`
+	// `ç•«å‡ºå…‰æŸ±ç…§å°„åˆ°çš„å€åŸŸ`
 	{
 		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
 		glStencilFunc(GL_EQUAL, 1, 0xff);
 
-		// ¥Î g_material_spotlightpass ¨Ó¨ú¥N¼Ò«¬¤¤ªº§÷½è³]©w
+		// ç”¨ g_material_spotlightpass ä¾†å–ä»£æ¨¡å‹ä¸­çš„æè³ªè¨­å®š
 		CGutModel_OpenGL::SetMaterialOverwrite(&g_material_spotlightpass);
 		g_SpotLightModel_OpenGL.Render();
-		// `ÁÙ­ì¡AÅı¼Ò«¬¨Ï¥Î¥¦­ì¥»ªº§÷½è³]©w¡C`
+		// `é‚„åŸï¼Œè®“æ¨¡å‹ä½¿ç”¨å®ƒåŸæœ¬çš„æè³ªè¨­å®šã€‚`
 		CGutModel_OpenGL::SetMaterialOverwrite(NULL);
 	}
 	glDisable(GL_STENCIL_TEST);
-	// `¥Î¥¿±`ªº¤èªkµe¥X¥ú¬W`
+	// `ç”¨æ­£å¸¸çš„æ–¹æ³•ç•«å‡ºå…‰æŸ±`
 	g_SpotLightModel_OpenGL.Render();
 
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glDepthMask(GL_TRUE);
 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

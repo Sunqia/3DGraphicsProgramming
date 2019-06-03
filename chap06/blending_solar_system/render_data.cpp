@@ -5,7 +5,7 @@
 
 // controller object
 CGutUserControl g_Control;
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 Matrix4x4 g_rot_matrix;
 //
 Matrix4x4 g_sun_matrix, g_earth_matrix, g_moon_matrix;
@@ -13,7 +13,7 @@ Matrix4x4 g_sun_matrix, g_earth_matrix, g_moon_matrix;
 float g_fRotate_X = 0;
 float g_fRotate_Y = 0;
 
-// ²yªº¼Ò«¬
+// çƒçš„æ¨¡å‹
 Vertex_VC *g_pSunVertices = NULL;
 Vertex_VC *g_pEarthVertices = NULL;
 Vertex_VC *g_pMoonVertices = NULL;
@@ -32,12 +32,12 @@ int  g_iBlendMode = 0;
 int  g_iOrder[3] = {0, 1, 2};
 
 //
-bool CreateSphere(float radius, // ¥b®| 
-				  Vertex_VC **ppVertices, // ¶Ç¦^²y­±ªº³»ÂI
-				  unsigned short **ppIndices, // ¶Ç¦^²y­±ªº¤T¨¤§Î¯Á¤Ş
-				  float *color, // ²yªºÃC¦â
-				  int stacks, // ½n«×ªº¤Á­±¼Æ¥Ø
-				  int slices // ®|«×ªº¤Á­±¼Æ¥Ø
+bool CreateSphere(float radius, // åŠå¾‘ 
+				  Vertex_VC **ppVertices, // å‚³å›çƒé¢çš„é ‚é»
+				  unsigned short **ppIndices, // å‚³å›çƒé¢çš„ä¸‰è§’å½¢ç´¢å¼•
+				  float *color, // çƒçš„é¡è‰²
+				  int stacks, // ç·¯åº¦çš„åˆ‡é¢æ•¸ç›®
+				  int slices // å¾‘åº¦çš„åˆ‡é¢æ•¸ç›®
 				  )
 {
 	*ppVertices = NULL;

@@ -129,7 +129,7 @@ bool ReInitResourceOpenGL(void)
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_FrameBuffer[1]);
 	glFramebufferTexture2DEXT(GL_FRAMEBUFFER_EXT, GL_DEPTH_ATTACHMENT_EXT, GL_TEXTURE_2D, g_depthtexture, 0);
 
-	// ÀË¬dframebuffer object¦³¨S¦³°t¸m¦¨
+	// æª¢æŸ¥framebuffer objectæœ‰æ²’æœ‰é…ç½®æˆ
 	GLenum status = glCheckFramebufferStatusEXT(GL_FRAMEBUFFER_EXT);
 	if ( status!=GL_FRAMEBUFFER_COMPLETE_EXT )
 	{
@@ -241,10 +241,10 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	ReInitResourceOpenGL();
 }
 
@@ -329,7 +329,7 @@ static GLuint BlurImage(GLuint texture, sImageInfo *pInfo)
 	glLoadIdentity();
 
 
-	// ¤ô¥­¤è¦V¼Ò½k
+	// æ°´å¹³æ–¹å‘æ¨¡ç³Š
 	{
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_DownSampledFrameBuffer[0]);
 		glViewport(0, 0, w, h);
@@ -337,7 +337,7 @@ static GLuint BlurImage(GLuint texture, sImageInfo *pInfo)
 		glUniform4fv(reg, num_samples, (float *)vTexOffsetX);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
-	// ««ª½¤è¦V¼Ò½k
+	// å‚ç›´æ–¹å‘æ¨¡ç³Š
 	{
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_DownSampledFrameBuffer[1]);
 		glBindTexture(GL_TEXTURE_2D, g_DownSampledFrameTexture[0]);
@@ -359,7 +359,7 @@ void RenderFrameOpenGL(void)
 	int w, h;
 	GutGetWindowSize(w, h);
 
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();

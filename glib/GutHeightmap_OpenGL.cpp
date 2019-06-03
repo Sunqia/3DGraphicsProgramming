@@ -23,7 +23,7 @@ void CGutHeightmapOpenGL::Render(void)
 
 	glPushClientAttrib(GL_CLIENT_VERTEX_ARRAY_BIT);
 
-	// ³]©w³»ÂI¸ê®Æ®æ¦¡
+	// è¨­å®šé ‚é»è³‡æ–™æ ¼å¼
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(sTerrainVertex), m_pVertexArray);
 	glEnableClientState(GL_NORMAL_ARRAY);

@@ -3,13 +3,13 @@
 #include "GutUserControl.h"
 #include "GutModel.h"
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 extern Matrix4x4 g_view_matrix;
 extern Matrix4x4 g_world_matrix;
 extern Matrix4x4 g_sun_matrix, g_earth_matrix, g_moon_matrix;

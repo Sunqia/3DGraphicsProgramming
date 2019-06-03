@@ -120,7 +120,7 @@ bool InitResourceDX10(void)
 		g_pRTView[i] = NULL;
 	}
 
-	// ¸ü¤JShader
+	// è¼‰å…¥Shader
 	{
 		g_pPostFX = GutLoadFXShaderDX10("../../shaders/Posteffect_dx10.fx");
 		if ( NULL==g_pPostFX )
@@ -131,7 +131,7 @@ bool InitResourceDX10(void)
 			return false;
 	}
 
-    // ³]©wVertex¸ê®Æ®æ¦¡
+    // è¨­å®šVertexè³‡æ–™æ ¼å¼
 	{
 		ID3D10EffectTechnique *pShader = g_pExposureFX->GetTechniqueByName("AutoExposure");
 
@@ -518,7 +518,7 @@ void RenderFrameDX10(void)
 		x+=w;
 	}
 
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain();
 	pSwapChain->Present(1, 0);
 }

@@ -13,39 +13,39 @@ static CGutModel_DX9 g_Model_DX9;
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	int w, h;
 	GutGetWindowSize(w, h);
 	float aspect = (float) h / (float) w;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// µe¥X¥¿¦V¸ò¤Ï¦Vªº¤T¨¤§Î
+	// ç•«å‡ºæ­£å‘è·Ÿåå‘çš„ä¸‰è§’å½¢
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
-	// ¸ü¤J¶K¹Ï
+	// è¼‰å…¥è²¼åœ–
 	const char *texture_array[] = 
 	{
 		"../../textures/uffizi_right.tga",
 		"../../textures/uffizi_left.tga",
 		"../../textures/uffizi_top.tga",
 		"../../textures/uffizi_bottom.tga",
-		"../../textures/uffizi_back.tga", // `¥k¤â®y¼Ð¨t¤W Z+ ¬°ÃèÀY«á¤è.`
-		"../../textures/uffizi_front.tga" // `¥k¤â®y¼Ð¨t¤W Z- ¬°ÃèÀY«e¤è.`
+		"../../textures/uffizi_back.tga", // `å³æ‰‹åº§æ¨™ç³»ä¸Š Z+ ç‚ºé¡é ­å¾Œæ–¹.`
+		"../../textures/uffizi_front.tga" // `å³æ‰‹åº§æ¨™ç³»ä¸Š Z- ç‚ºé¡é ­å‰æ–¹.`
 	};
 
 	g_pTexture = GutLoadCubemapTexture_DX9(texture_array);
 	if ( g_pTexture==NULL )
 	{
-		// ¦³¨ÇÂÂµwÅé¤£¤ä´© mipmapped cubemap , §ï¸ü¤J dds ªºª©¥».
+		// æœ‰äº›èˆŠç¡¬é«”ä¸æ”¯æ´ mipmapped cubemap , æ”¹è¼‰å…¥ dds çš„ç‰ˆæœ¬.
 		g_pTexture = GutLoadCubemapTexture_DX9("../../textures/uffizi_cubemap.dds");
 		if ( g_pTexture==NULL )
 			return false;
 	}
 
-	// ³]©w³»ÂI¸ê®Æ®æ¦¡
+	// è¨­å®šé ‚é»žè³‡æ–™æ ¼å¼
 	D3DVERTEXELEMENT9 decl[] = 
 	{
 		// float*3 for position (x,y,z)
@@ -70,56 +70,56 @@ bool ReleaseResourceDX9(void)
 
 void ResizeWindowDX9(int width, int height)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	int w, h;
 	GutGetWindowSize(w, h);
 	float aspect = (float) h / (float) w;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// µe¥X¥¿¦V¸ò¤Ï¦Vªº¤T¨¤§Î
+	// ç•«å‡ºæ­£å‘è·Ÿåå‘çš„ä¸‰è§’å½¢
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 }
 
-// `¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–`
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `®ø°£µe­±`
+	// `æ¶ˆé™¤ç•«é¢`
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, 0x00000000, 1.0f, 0);
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
-	// `³]©wÂà´«¯x°}`
+	// `è¨­å®šè½‰æ›çŸ©é™£`
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_matrix);
-	// `³]©w¸ê®Æ®æ¦¡`
+	// `è¨­å®šè³‡æ–™æ ¼å¼`
 	device->SetVertexDeclaration(g_pVertexDecl); 
-	// `®M¥Î¶K¹Ï`
+	// `å¥—ç”¨è²¼åœ–`
 	device->SetTexture(0, g_pTexture);
 	// trilinear filter
 	device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	device->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	device->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
-	// `µe²y`
+	// `ç•«çƒ`
 	device->DrawIndexedPrimitiveUP(
-		D3DPT_TRIANGLELIST,	// `«ü©w©Ò­nµeªº°ò¥»¹Ï§ÎºØÃþ` 
-		0, // `·|¨Ï¥Îªº³Ì¤p³»ÂI½s¸¹, ¨Æ¹ê¤W¨S¤Ó¤j¥Î³B.`
-		g_iNumSphereVertices, // `³»ÂI°}¦C¸Ì¦³´X­Ó³»ÂI`
-		g_iNumSphereTriangles, // `­nµe¥X´X­Ó°ò¥»¹Ï§Î`
-		g_pSphereIndices, // `¯Á¤Þ°}¦C`
-		D3DFMT_INDEX16, // `¯Á¤Þ°}¦Cªº«¬ºA`
-		g_pSphereVertices, // `³»ÂI°}¦C`
-		sizeof(Vertex_VN) // `³»ÂI°}¦C¸Ì¨C­Ó³»ÂIªº°O¾ÐÅé¶¡¶Z`
+		D3DPT_TRIANGLELIST,	// `æŒ‡å®šæ‰€è¦ç•«çš„åŸºæœ¬åœ–å½¢ç¨®é¡ž` 
+		0, // `æœƒä½¿ç”¨çš„æœ€å°é ‚é»žç·¨è™Ÿ, äº‹å¯¦ä¸Šæ²’å¤ªå¤§ç”¨è™•.`
+		g_iNumSphereVertices, // `é ‚é»žé™£åˆ—è£¡æœ‰å¹¾å€‹é ‚é»ž`
+		g_iNumSphereTriangles, // `è¦ç•«å‡ºå¹¾å€‹åŸºæœ¬åœ–å½¢`
+		g_pSphereIndices, // `ç´¢å¼•é™£åˆ—`
+		D3DFMT_INDEX16, // `ç´¢å¼•é™£åˆ—çš„åž‹æ…‹`
+		g_pSphereVertices, // `é ‚é»žé™£åˆ—`
+		sizeof(Vertex_VN) // `é ‚é»žé™£åˆ—è£¡æ¯å€‹é ‚é»žçš„è¨˜æ†¶é«”é–“è·`
 		);
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

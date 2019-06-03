@@ -1,4 +1,4 @@
-// §ó·sShadowmap¥ÎªºShader
+// æ›´æ–°Shadowmapç”¨çš„Shader
 
 struct VS_INPUT
 {
@@ -11,7 +11,7 @@ struct VS_OUTPUT
 	float4 ScreenPos : TEXCOORD0;
 };
 
-// Âà´«¯x°}
+// è½‰æ›çŸ©é™£
 uniform row_major float4x4 wvp_matrix : register(c0);
 
 // Vertex Shader
@@ -30,7 +30,7 @@ VS_OUTPUT VS(VS_INPUT In)
 
 float4 PS(VS_OUTPUT In) : COLOR
 {
-	// ³o­Ó­È¸òZBuffer¬Û¦P
+	// é€™å€‹å€¼è·ŸZBufferç›¸åŒ
 	float4 color = In.ScreenPos.z/In.ScreenPos.w;
 	return color;
 }

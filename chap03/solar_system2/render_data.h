@@ -6,11 +6,11 @@ struct Vertex_VC
 	float m_Position[3];
 	// R,G,B,A in OpenGL
 	// B,G,R,A in Direct3D 9
-	// Direct3D 10¥i¬O¬O¨âºØ¨ä¤¤¤§1, ¬İ³]©w¦Ó©w.
+	// Direct3D 10å¯æ˜¯æ˜¯å…©ç¨®å…¶ä¸­ä¹‹1, çœ‹è¨­å®šè€Œå®š.
 	unsigned char m_RGBA[4];
 };
 
-// ²yªº¸ê®Æ
+// çƒçš„è³‡æ–™
 extern Vertex_VC *g_pSunVertices;
 extern Vertex_VC *g_pEarthVertices;
 extern Vertex_VC *g_pMoonVertices;
@@ -31,22 +31,22 @@ const float days_a_month = 28.0f;
 const float days_a_year_mercury = 88.0f;
 const float days_a_year_venus = 224.7f;
 const float sun_spin_x = 180.0f;
-const float earth_to_sun_distance = 8.0f; // ¦a²yÂ÷¤Ó¶§ªº°²³]­È
-const float mercury_to_sun_distance = 3.0f; // ¤ô¬PÂ÷¤Ó¶§ªº°²³]­È
-const float venus_to_sun_distance = 5.0f; // ¤ô¬PÂ÷¤Ó¶§ªº°²³]­È
-const float moon_to_earth_distance = 2.0f; // ¤ë²yÂ÷¦a²yªº°²³]­È
-const float simulation_speed = 60.0f; // 1¬í¬Û·í©ó60¤Ñ
+const float earth_to_sun_distance = 8.0f; // åœ°çƒé›¢å¤ªé™½çš„å‡è¨­å€¼
+const float mercury_to_sun_distance = 3.0f; // æ°´æ˜Ÿé›¢å¤ªé™½çš„å‡è¨­å€¼
+const float venus_to_sun_distance = 5.0f; // æ°´æ˜Ÿé›¢å¤ªé™½çš„å‡è¨­å€¼
+const float moon_to_earth_distance = 2.0f; // æœˆçƒé›¢åœ°çƒçš„å‡è¨­å€¼
+const float simulation_speed = 60.0f; // 1ç§’ç›¸ç•¶æ–¼60å¤©
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 extern Matrix4x4 g_view_matrix;
 // 
 extern Matrix4x4 g_sun_matrix, g_earth_matrix, g_moon_matrix;
 
-// ²£¥Í²y¼Ò«¬ªºµ{¦¡
+// ç”¢ç”Ÿçƒæ¨¡å‹çš„ç¨‹å¼
 bool CreateSphere(float radius, Vertex_VC **ppVertices, unsigned short **ppIndices, float *color=NULL, int stacks = 20, int pieces = 20);

@@ -13,19 +13,19 @@ static Matrix4x4 g_projection_matrix;
 
 void InitStateDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 
 	InitStateDX9();
@@ -60,9 +60,9 @@ void ResizeWindowDX9(int width, int height)
 {
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, aspect, 0.1f, 100.0f);
 
@@ -71,7 +71,7 @@ void ResizeWindowDX9(int width, int height)
 	InitStateDX9();
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
@@ -80,13 +80,13 @@ void RenderFrameDX9(void)
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 
 	device->BeginScene(); 
-	// ®ø°£µe­±
+	// æ¶ˆé™¤ç•«é¢
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_RGBA(0, 0, 0, 255), 1.0f, 0);
-	// Âà´«¯x°}
+	// è½‰æ›çŸ©é™£
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
 
-	// µe¥XªÅ¶¡¤¤ªº¯ùÜò
+	// ç•«å‡ºç©ºé–“ä¸­çš„èŒ¶å£¼
 	{
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_matrix);
 		g_Model_DX9.Render();
@@ -97,27 +97,27 @@ void RenderFrameDX9(void)
 	device->SetRenderState(D3DRS_STENCILMASK, 0xff);
 	device->SetRenderState(D3DRS_STENCILREF, 1);
 
-	// ¦bStencil Buffer¤¤¼Ð¥Ü¥X¥ú¬W·Ó®gªº°Ï°ì
+	// åœ¨Stencil Bufferä¸­æ¨™ç¤ºå‡ºå…‰æŸ±ç…§å°„çš„å€åŸŸ
 	{
 		Matrix4x4 ident_matrix = Matrix4x4::IdentityMatrix();
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &ident_matrix);
 
-		// `±Ò°Ê Two sided stencil test ¥\¯à`
+		// `å•Ÿå‹• Two sided stencil test åŠŸèƒ½`
 		device->SetRenderState(D3DRS_TWOSIDEDSTENCILMODE, TRUE);
-		// `¶¶®É°w¤è¦Vªº Stencil Test ³]©w`
+		// `é †æ™‚é‡æ–¹å‘çš„ Stencil Test è¨­å®š`
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_ALWAYS);
 		device->SetRenderState(D3DRS_STENCILZFAIL, D3DSTENCILOP_INCR);
-		// `°f®É°w¤è¦Vªº Stencil Test ³]©w`
+		// `é€†æ™‚é‡æ–¹å‘çš„ Stencil Test è¨­å®š`
 		device->SetRenderState(D3DRS_CCW_STENCILFUNC, D3DCMP_ALWAYS);
 		device->SetRenderState(D3DRS_CCW_STENCILZFAIL, D3DSTENCILOP_DECR);
-		// `Ãö³¬ÃC¦â¸ò ZBuffer ªº§ó·s`
+		// `é—œé–‰é¡è‰²è·Ÿ ZBuffer çš„æ›´æ–°`
 		device->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
 
 		CGutModel_DX9::SetMaterialOverwrite(&g_material_stencilpass);
 		g_SpotLightModel_DX9.Render();
 		CGutModel_DX9::SetMaterialOverwrite(NULL);
 
-		// `ÁÙ­ì³]©w`
+		// `é‚„åŽŸè¨­å®š`
 		device->SetRenderState(D3DRS_TWOSIDEDSTENCILMODE, FALSE);
 		device->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
 		device->SetRenderState(D3DRS_CCW_STENCILFUNC, D3DSTENCILOP_KEEP);
@@ -127,7 +127,7 @@ void RenderFrameDX9(void)
 			D3DCOLORWRITEENABLE_BLUE |
 			D3DCOLORWRITEENABLE_ALPHA);
 	}
-	// µe¥X¥ú¬W·Ó®g¨ìªº°Ï°ì
+	// ç•«å‡ºå…‰æŸ±ç…§å°„åˆ°çš„å€åŸŸ
 	{
 		device->SetRenderState(D3DRS_ZENABLE, FALSE);
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
@@ -139,15 +139,15 @@ void RenderFrameDX9(void)
 		device->SetRenderState(D3DRS_ZENABLE, TRUE);
 	}
 	device->SetRenderState(D3DRS_STENCILENABLE, FALSE);
-	// µe¥X¥ú¬W
+	// ç•«å‡ºå…‰æŸ±
 	{
 		CGutModel_DX9::SetCullMode(D3DCULL_CW);
 		g_SpotLightModel_DX9.Render();
 	}
 	device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 
-	// «Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F
+	// å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†
 	device->EndScene(); 
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
     device->Present( NULL, NULL, NULL, NULL );
 }

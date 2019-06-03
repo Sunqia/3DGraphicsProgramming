@@ -4,7 +4,7 @@
 
 // controller object
 CGutUserControl g_Control;
-// ¯x§Îªº4­Ó³»ÂI
+// çŸ©å½¢çš„4å€‹é ‚é»
 // Position, Texcoord
 Vertex_VT g_Quad[4] =
 {
@@ -30,5 +30,5 @@ Light g_Light;
 Vector4 g_vAmbientLight(0.3f, 0.3f, 0.3f, 1.0f);
 
 
-// Åª¨ú¼Ò«¬ªºª«¥ó
+// è®€å–æ¨¡å‹çš„ç‰©ä»¶
 CGutModel g_Model;

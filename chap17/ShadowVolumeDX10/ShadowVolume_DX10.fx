@@ -1,4 +1,4 @@
-// §ó·sShadowmapªºShader
+// æ›´æ–°Shadowmapçš„Shader
 
 cbuffer cb0
 {
@@ -54,7 +54,7 @@ void GS( triangleadj VS_OUTPUT input[6], inout TriangleStream<GS_OUTPUT> stream 
 	int i;
 	float4 vertex[6];
 	
-	// `°²³]¦b¥ú·½¦ì¸m©ñ¤@­ÓÃèÀY¨Ó°µÃ¸¹Ï, ºâ¥X³»ÂI¦b³o­ÓÃèÀY¤Wªº¿Ã¹õ®y¼Ğ¬Û¹ï¦ì¸m.`
+	// `å‡è¨­åœ¨å…‰æºä½ç½®æ”¾ä¸€å€‹é¡é ­ä¾†åšç¹ªåœ–, ç®—å‡ºé ‚é»åœ¨é€™å€‹é¡é ­ä¸Šçš„è¢å¹•åº§æ¨™ç›¸å°ä½ç½®.`
 	for ( i=0; i<6; i++ )
 	{
 		vertex[i] = input[i].LightPos / input[i].LightPos.w;
@@ -63,26 +63,26 @@ void GS( triangleadj VS_OUTPUT input[6], inout TriangleStream<GS_OUTPUT> stream 
 	float3 vFaceNormal = ComputeNormal(vertex[0], vertex[2], vertex[4]);
 	float4 color = float4(1,1,1,1);
 		
-	// `¥u³B²z­±¹ï¥ú·½ªº¤T¨¤§Î.`
+	// `åªè™•ç†é¢å°å…‰æºçš„ä¸‰è§’å½¢.`
 	if ( vFaceNormal.z > 0 )
 	{
-		// `­pºâ¬Û¾F¤T¨¤§Îªº normal ­±¦V.`
+		// `è¨ˆç®—ç›¸é„°ä¸‰è§’å½¢çš„ normal é¢å‘.`
 		float3 vFace0Normal = ComputeNormal(vertex[0], vertex[1], vertex[2]);
 		float3 vFace1Normal = ComputeNormal(vertex[2], vertex[3], vertex[4]);
 		float3 vFace2Normal = ComputeNormal(vertex[0], vertex[4], vertex[5]);
 
-		// `­pºâ¥ú½u¦ì¸m¨ì¹F¤T¨¤§Î3­Ó³»ÂIªº¤è¦V.`
-		// `¥­¦æ¥ú¥i¥Hª½±µ±a¤J¥ú½u¤è¦V, ¤£»İ­n­pºâ.`
+		// `è¨ˆç®—å…‰ç·šä½ç½®åˆ°é”ä¸‰è§’å½¢3å€‹é ‚é»çš„æ–¹å‘.`
+		// `å¹³è¡Œå…‰å¯ä»¥ç›´æ¥å¸¶å…¥å…‰ç·šæ–¹å‘, ä¸éœ€è¦è¨ˆç®—.`
 		float3 vDir0 = normalize(input[0].WorldPos - light_pos);
 		float3 vDir2 = normalize(input[2].WorldPos - light_pos);
 		float3 vDir4 = normalize(input[4].WorldPos - light_pos);
 
-		// `­pºâ¤T¨¤§Î3­Ó³»ÂIªuµÛ¥ú½u¤è¦V©µ¦ù¥X¥hªº³»ÂI.`
+		// `è¨ˆç®—ä¸‰è§’å½¢3å€‹é ‚é»æ²¿è‘—å…‰ç·šæ–¹å‘å»¶ä¼¸å‡ºå»çš„é ‚é».`
 		float3 ExtendedWorldPos0 = input[0].WorldPos + vDir0 * light_range;
 		float3 ExtendedWorldPos2 = input[2].WorldPos + vDir2 * light_range;
 		float3 ExtendedWorldPos4 = input[4].WorldPos + vDir4 * light_range;
 
-		// `­pºâ©µ¥Ó¥X¥hªº³»ÂI¦b¿Ã¹õ®y¼Ğ¨t¤Wªº¦ì¸m.`
+		// `è¨ˆç®—å»¶ç”³å‡ºå»çš„é ‚é»åœ¨è¢å¹•åº§æ¨™ç³»ä¸Šçš„ä½ç½®.`
 		float4 ExtendedScreenPos0 = mul(float4(ExtendedWorldPos0, 1), vp_matrix);
 		float4 ExtendedScreenPos2 = mul(float4(ExtendedWorldPos2, 1), vp_matrix);
 		float4 ExtendedScreenPos4 = mul(float4(ExtendedWorldPos4, 1), vp_matrix);
@@ -91,7 +91,7 @@ void GS( triangleadj VS_OUTPUT input[6], inout TriangleStream<GS_OUTPUT> stream 
 
 		output.Color = float4(1,0,0,1);
 
-		// `¦pªG¬Y­Ó¬Û¾Fªº­±¬O­I¹ï¥ú·½, ¥Nªí§ä¨ì¤F¤@±øÃä½u, ©µ¦ù¥X¨â¤ù¤T¨¤§Î.`
+		// `å¦‚æœæŸå€‹ç›¸é„°çš„é¢æ˜¯èƒŒå°å…‰æº, ä»£è¡¨æ‰¾åˆ°äº†ä¸€æ¢é‚Šç·š, å»¶ä¼¸å‡ºå…©ç‰‡ä¸‰è§’å½¢.`
 		
 		if ( vFace0Normal.z <= 0 )
 		{
@@ -137,7 +137,7 @@ void GS( triangleadj VS_OUTPUT input[6], inout TriangleStream<GS_OUTPUT> stream 
 
 		bool bZFail = true;
 
-		// `¨Ï¥Î ZFail ¤èªk¨Ó¼Ğ¥Ü³±¼v¤~»İ­n«e«áªº»\¤l.`
+		// `ä½¿ç”¨ ZFail æ–¹æ³•ä¾†æ¨™ç¤ºé™°å½±æ‰éœ€è¦å‰å¾Œçš„è“‹å­.`
 		if ( bZFail )
 		{
 			output.Color = float4(1,1,1,1);

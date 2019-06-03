@@ -5,8 +5,8 @@
 
 struct Vertex_VT
 {
-	Vector4 m_Position; // ³»ÂI¦ì¸m
-	Vector4 m_Texcoord; // ¶K¹Ï®y¼Ğ
+	Vector4 m_Position; // é ‚é»ä½ç½®
+	Vector4 m_Texcoord; // è²¼åœ–åº§æ¨™
 };
 
 // model object
@@ -17,7 +17,7 @@ extern CGutUserControl g_Control;
 extern float g_fFOV;
 // mirror
 extern float g_mirror_z;
-// ¤ô­±
+// æ°´é¢
 extern Vertex_VT g_Quad[4];
 // clip on/off
 extern bool g_bClip;

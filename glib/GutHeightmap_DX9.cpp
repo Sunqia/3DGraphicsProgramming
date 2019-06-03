@@ -21,11 +21,11 @@ void CGutHeightmapDX9::Render(void)
 	mtl.m_bCullFace = false;
 	mtl.Submit();
 
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 pDevice = GutGetGraphicsDeviceDX9();
-	// ³]©w³»ÂI¸ê®Æ®æ¦¡
+	// è¨­å®šé ‚é»žè³‡æ–™æ ¼å¼
 	pDevice->SetFVF(D3DFVF_XYZ|D3DFVF_NORMAL);
-	// µe¥X©Ò¦³ªº¤å¦r
+	// ç•«å‡ºæ‰€æœ‰çš„æ–‡å­—
 	pDevice->DrawIndexedPrimitiveUP(
 		D3DPT_TRIANGLESTRIP, 0, 
 		m_iNumVertices,	m_iNumFaces, 

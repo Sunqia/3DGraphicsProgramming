@@ -14,19 +14,19 @@ static Matrix4x4 g_projection_matrix;
 
 void InitStateDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, 1.0f, 0.1f, 100.0f);
 
 	InitStateDX9();
@@ -60,9 +60,9 @@ void ResizeWindowDX9(int width, int height)
 {
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, aspect, 0.1f, 100.0f);
 
@@ -71,7 +71,7 @@ void ResizeWindowDX9(int width, int height)
 	InitStateDX9();
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
@@ -80,12 +80,12 @@ void RenderFrameDX9(void)
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 
 	device->BeginScene(); 
-	// `®ø°£µe­±`
+	// `æ¶ˆé™¤ç•«é¢`
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_RGBA(0, 0, 0, 255), 1.0f, 0);
-	// `Âà´«¯x°}`
+	// `è½‰æ›çŸ©é™£`
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
-	// `µe¥X¯ùÜò`
+	// `ç•«å‡ºèŒ¶å£¼`
 	{
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_matrix);
 		g_Model_DX9.Render();
@@ -101,19 +101,19 @@ void RenderFrameDX9(void)
 		device->SetRenderState(D3DRS_COLORWRITEENABLE, 0);
 		device->SetRenderState(D3DRS_ZWRITEENABLE, FALSE);
 
-		// `µe¥X­±¹ïÃèÀYªº­±¡A¦P®É»¼¼W Stencil Buffer¡C`
+		// `ç•«å‡ºé¢å°é¡é ­çš„é¢ï¼ŒåŒæ™‚éžå¢ž Stencil Bufferã€‚`
 		device->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_INCR);
 		device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
-		// `©I¥s Render ®É¶Ç¤J 0 ¥Nªí¤£»Ý­n®M¥Î¥ô¦ó§÷½è³]©w`
+		// `å‘¼å« Render æ™‚å‚³å…¥ 0 ä»£è¡¨ä¸éœ€è¦å¥—ç”¨ä»»ä½•æè³ªè¨­å®š`
 		g_SpotLightModel_DX9.Render(0);
 
-		// `µe¥X­I¹ïÃèÀYªº­±¡A¦P®É»¼´î Stencil Buffer¡C`
+		// `ç•«å‡ºèƒŒå°é¡é ­çš„é¢ï¼ŒåŒæ™‚éžæ¸› Stencil Bufferã€‚`
 		device->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_DECR);
 		device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
-		// `©I¥s Render ®É¶Ç¤J 0 ¥Nªí¤£»Ý­n®M¥Î¥ô¦ó§÷½è³]©w`
+		// `å‘¼å« Render æ™‚å‚³å…¥ 0 ä»£è¡¨ä¸éœ€è¦å¥—ç”¨ä»»ä½•æè³ªè¨­å®š`
 		g_SpotLightModel_DX9.Render(0);
 
-		// `ÁÙ­ì³]©w`
+		// `é‚„åŽŸè¨­å®š`
 		device->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
 		device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 		device->SetRenderState(D3DRS_COLORWRITEENABLE, 
@@ -122,25 +122,25 @@ void RenderFrameDX9(void)
 			D3DCOLORWRITEENABLE_BLUE |
 			D3DCOLORWRITEENABLE_ALPHA);
 	}
-	// `µe¥X¥ú¬W·Ó®g¨ìªº°Ï°ì`
+	// `ç•«å‡ºå…‰æŸ±ç…§å°„åˆ°çš„å€åŸŸ`
 	{
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
 		device->SetRenderState(D3DRS_STENCILREF, 1);
 
-		// `¥Î g_material_spotlightpass ¨Ó¨ú¥N¼Ò«¬¤¤ªº§÷½è³]©w`
+		// `ç”¨ g_material_spotlightpass ä¾†å–ä»£æ¨¡åž‹ä¸­çš„æè³ªè¨­å®š`
 		CGutModel_DX9::SetMaterialOverwrite(&g_material_spotlightpass);
 		g_SpotLightModel_DX9.Render();
-		// `ÁÙ­ì¡AÅý¼Ò«¬¨Ï¥Î¥¦­ì¥»ªº§÷½è³]©w¡C`
+		// `é‚„åŽŸï¼Œè®“æ¨¡åž‹ä½¿ç”¨å®ƒåŽŸæœ¬çš„æè³ªè¨­å®šã€‚`
 		CGutModel_DX9::SetMaterialOverwrite(NULL);
 	}
-	// `¥Î¥¿±`ªº¤èªkµe¥X¥ú¬W`
+	// `ç”¨æ­£å¸¸çš„æ–¹æ³•ç•«å‡ºå…‰æŸ±`
 	{
 		device->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 		g_SpotLightModel_DX9.Render();
 		device->SetRenderState(D3DRS_ZWRITEENABLE, TRUE);
 	}
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

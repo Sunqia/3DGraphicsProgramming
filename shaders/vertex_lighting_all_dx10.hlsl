@@ -1,11 +1,11 @@
-// `³]©w³»ÂIªº¸ê®Æ®æ¦¡`
+// `è¨­å®šé ‚é»çš„è³‡æ–™æ ¼å¼`
 struct VS_INPUT
 {
 	float4 Position : POSITION;
 	float4 Normal	: Normal;
 };
 
-// `³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡`
+// `è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼`
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -30,7 +30,7 @@ struct Light_Info
 	bool   m_bEnabled;
 };
 
-// `Âà´«¯x°}`
+// `è½‰æ›çŸ©é™£`
 cbuffer Matrices : register(c0)
 {
 	uniform row_major float4x4 world_view_proj_matrix;
@@ -38,7 +38,7 @@ cbuffer Matrices : register(c0)
 	uniform float4 camera_position;
 };
 
-// `¥ú·½`
+// `å…‰æº`
 cbuffer Lights : register(c1)
 {
 	uniform float4 g_vAmbientLight;
@@ -51,17 +51,17 @@ VS_OUTPUT VS(VS_INPUT In)
 {
 	VS_OUTPUT Out;
 	
-	//  `view_matrix³Ì¤U­±¨º¤@¦æ = ÃèÀY¦ì¸m`
+	//  `view_matrixæœ€ä¸‹é¢é‚£ä¸€è¡Œ = é¡é ­ä½ç½®`
 	float3 vCameraPosition = camera_position;
 	
-	// Âà´«¨ì¿Ã¹õ®y¼Ğ
+	// è½‰æ›åˆ°è¢å¹•åº§æ¨™
 	Out.Position = mul( In.Position, world_view_proj_matrix);
 	
-	// `­pºâNormal, Position¦b¥@¬É®y¼Ğ¨t¤Wªº¤è¦V¸ò¦ì¸m`
+	// `è¨ˆç®—Normal, Positionåœ¨ä¸–ç•Œåº§æ¨™ç³»ä¸Šçš„æ–¹å‘è·Ÿä½ç½®`
 	float3 vWorldNormal = mul( In.Normal, (float3x3) world_matrix);
 	float3 vWorldPosition = mul( In.Position, world_matrix);
 	
-	// `ªì­È`
+	// `åˆå€¼`
 	float4 vLighting = g_vAmbientLight;
 	
 	for ( int i=0; i<3; i++ )
@@ -75,14 +75,14 @@ VS_OUTPUT VS(VS_INPUT In)
 			float  fSpotLightEffect = 1.0f;
 						
 			if ( g_Lights[i].m_iLightType==1 )
-			// `¤è¦V¥ú`
+			// `æ–¹å‘å…‰`
 			{
 				vLightDir = g_Lights[i].m_vDirection;
 			}
 			else
-			// `ÂI¥ú·½¸ò»E¥ú¿O`
+			// `é»å…‰æºè·Ÿèšå…‰ç‡ˆ`
 			{
-				// `­pºâ¥úªº¤è¦V¸ò¶ZÂ÷`
+				// `è¨ˆç®—å…‰çš„æ–¹å‘è·Ÿè·é›¢`
 				float3 vDiff = g_Lights[i].m_vPosition.xyz - vWorldPosition;
 				float fLightDistance = length(vDiff);
 				vLightDir = vDiff / fLightDistance;
@@ -90,19 +90,19 @@ VS_OUTPUT VS(VS_INPUT In)
 				fLightAttenuation = dot(float3(1.0f, fLightDistance, fLightDistance * fLightDistance), g_Lights[i].m_vAttenuation);
 				
 				if( g_Lights[i].m_iLightType==3 )
-				// `»E¥ú¿O`
+				// `èšå…‰ç‡ˆ`
 				{
-					// `­pºâ»E¥ú¿Oªº®ÄªG`
+					// `è¨ˆç®—èšå…‰ç‡ˆçš„æ•ˆæœ`
 					float fSpotLightCosine = dot(-vLightDir, g_Lights[i].m_vDirection);
 					fSpotLightCosine = fSpotLightCosine > g_Lights[i].m_fSpotlightCutoffCosine ? fSpotLightCosine : 0.0f;
 					fSpotLightEffect = pow(fSpotLightCosine, g_Lights[i].m_fSpotlightExponent);
 				}
 			}
 
-			// `¥ú·½ªºDiffuse³¡¥÷`
+			// `å…‰æºçš„Diffuseéƒ¨ä»½`
 			vDiffuse = g_Lights[i].m_vDiffuseColor * saturate(dot(vLightDir, vWorldNormal));
 			
-			// `¤è·½ªºSpcular³¡¥÷`
+			// `æ–¹æºçš„Spcularéƒ¨ä»½`
 			float3 vCameraDir = normalize(vCameraPosition - vWorldPosition);
 			float3 vHalfDir = normalize(vLightDir + vCameraDir);
 			float  fSpecularCosine = saturate(dot(vHalfDir, vWorldNormal));
@@ -121,6 +121,6 @@ VS_OUTPUT VS(VS_INPUT In)
 // Pixel Shader
 float4 PS(VS_OUTPUT In) : SV_Target
 {
-	// `¨Ï¥Î³»ÂI¶¡¤º´¡¥X¨ÓªºÃC¦â`
+	// `ä½¿ç”¨é ‚é»é–“å…§æ’å‡ºä¾†çš„é¡è‰²`
 	return In.Color;
 }

@@ -141,10 +141,10 @@ void DrawImage(GLuint texture, float x=-1, float y=-1, float w=2, float h=2, boo
 
 void RenderFrameOpenGL(void)
 {
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-	// µe¥X­I´º
+	// ç•«å‡ºèƒŒæ™¯
 	glDepthMask(GL_FALSE);
 	DrawImage(g_Texture);
 	glDepthMask(GL_TRUE);

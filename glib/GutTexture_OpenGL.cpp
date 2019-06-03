@@ -134,9 +134,9 @@ GLuint GutLoadCompressedCubemapTexture_OpenGL(const char **filename_array)
     // levels, which are also compressed.
 	GLuint TextureID = 0;
 
-	// ²£¥Í¤@­Ó¶K¹Ïª«¥ó
+	// ç”¢ç”Ÿä¸€å€‹è²¼åœ–ç‰©ä»¶
 	glGenTextures( 1, &TextureID );
-	// ¨Ï¥Îg_TextureID¶K¹Ïª«¥ó
+	// ä½¿ç”¨g_TextureIDè²¼åœ–ç‰©ä»¶
 	glBindTexture(GL_TEXTURE_CUBE_MAP, TextureID );
 
 	GLuint table[] = {
@@ -223,9 +223,9 @@ GLuint GutLoadCompressedCubemapTexture_OpenGL(const char **filename_array)
 GLuint GutLoadNoCompressedTexture_OpenGL(const char *filename, sImageInfo *pInfo, bool mipmap_enabled)
 {
 	GLuint textureID;
-	// ²£¥Í¤@­Ó¶K¹Ïª«¥ó
+	// ç”¢ç”Ÿä¸€å€‹è²¼åœ–ç‰©ä»¶
 	glGenTextures( 1, &textureID );
-	// ¨Ï¥Îg_TextureID¶K¹Ïª«¥ó
+	// ä½¿ç”¨g_TextureIDè²¼åœ–ç‰©ä»¶
 	glBindTexture( GL_TEXTURE_2D, textureID );
 
 	char file_ext[16];
@@ -326,9 +326,9 @@ GLuint GutLoadNoCompressedCubemapTexture_OpenGL(const char **filename_array, boo
 {
 	GLuint textureID;
 
-	// `²£¥Í¤@­Ó¶K¹Ïª«¥ó`
+	// `ç”¢ç”Ÿä¸€å€‹è²¼åœ–ç‰©ä»¶`
 	glGenTextures( 1, &textureID );
-	// `¨Ï¥Îg_TextureID¶K¹Ïª«¥ó`
+	// `ä½¿ç”¨g_TextureIDè²¼åœ–ç‰©ä»¶`
 	glBindTexture(GL_TEXTURE_CUBE_MAP, textureID );
 
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
@@ -603,9 +603,9 @@ GLuint GutLoadVolumeTexture_OpenGL(const char *filename)
 
 	GLuint textureID;
 
-	// ²£¥Í¤@­Ó¶K¹Ïª«¥ó
+	// ç”¢ç”Ÿä¸€å€‹è²¼åœ–ç‰©ä»¶
 	glGenTextures( 1, &textureID );
-	// ¨Ï¥Îg_TextureID¶K¹Ïª«¥ó
+	// ä½¿ç”¨g_TextureIDè²¼åœ–ç‰©ä»¶
 	glBindTexture(GL_TEXTURE_3D, textureID );
 
 	glTexParameteri(GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
@@ -615,7 +615,7 @@ GLuint GutLoadVolumeTexture_OpenGL(const char *filename)
     int nWidth      = pDDSImageData->width;
 	int nDepth		= pDDSImageData->depth;
 
-	// «þ³Æ¶K¹Ï
+	// æ‹·å‚™è²¼åœ–
 	glTexImage3D(GL_TEXTURE_3D, 0, 1, 
 		nWidth, nHeight, nDepth, 0,
 		GL_LUMINANCE, GL_UNSIGNED_BYTE, pDDSImageData->pixels );

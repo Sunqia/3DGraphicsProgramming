@@ -16,9 +16,9 @@ static CGutModel_OpenGL g_Model_OpenGL;
 
 bool InitResourceOpenGL(void)
 {
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, 1.0f, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 	glMatrixMode(GL_MODELVIEW);	
@@ -41,15 +41,15 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 }
@@ -70,7 +70,7 @@ static void RenderModelOpenGL(bool mirror, Vector4 *pPlane)
 
 		Matrix4x4 temp_matrix = GutMatrixLookAtRH(mirror_eye, mirror_lookat, mirror_up);
 
-		// ¦]¬°¬OÃè®g, ¦bÂà´«¨ìÃèÀY®y¼Ğ¨t«á­n°µ­Ó¥ª¥k¹ï½Õªº°Ê§@.
+		// å› ç‚ºæ˜¯é¡å°„, åœ¨è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»å¾Œè¦åšå€‹å·¦å³å°èª¿çš„å‹•ä½œ.
 		Matrix4x4 mirror_x;
 		mirror_x.Identity();
 		mirror_x.Scale(-1.0f, 1.0f, 1.0f);
@@ -78,7 +78,7 @@ static void RenderModelOpenGL(bool mirror, Vector4 *pPlane)
 		view_matrix = temp_matrix * mirror_x;
 		g_mirror_view_matrix = view_matrix;
 
-		// ¥k¥ª¹ï½Õ«á, 3¨¤§Îªº³»ÂI±Æ¦C¶¶§Ç·|³Q¤Ï¹L¨Ó.
+		// å³å·¦å°èª¿å¾Œ, 3è§’å½¢çš„é ‚é»æ’åˆ—é †åºæœƒè¢«åéä¾†.
 		glFrontFace(GL_CW);
 	}
 	else
@@ -96,17 +96,17 @@ static void RenderModelOpenGL(bool mirror, Vector4 *pPlane)
 	glFrontFace(GL_CCW);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
 	Vector4 vPlane(0.0f, 0.0f, 1.0f, -g_mirror_z);
 
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClearColor(0.0f, 0.0f, 0.5f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	// `µe¥X¯ùÜò`
+	// `ç•«å‡ºèŒ¶å£¼`
 	RenderModelOpenGL(false, NULL);
-	// `³]©wÂà´«¯x°}`
+	// `è¨­å®šè½‰æ›çŸ©é™£`
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();;
 	Matrix4x4 world_view_matrix = view_matrix;
 
@@ -118,11 +118,11 @@ void RenderFrameOpenGL(void)
 
 	sModelMaterial_OpenGL material;
 	material.Submit(NULL);
-	// `³]©w³»ÂI¸ê®Æ®æ¦¡`
+	// `è¨­å®šé ‚é»è³‡æ–™æ ¼å¼`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_V), &g_Quad_v[0].m_Position);
 
-	// `µe¥XÃè¤l, ¦P®É§âÃè¤l³¡¤Àªºstencil buffer³]¬°1.`
+	// `ç•«å‡ºé¡å­, åŒæ™‚æŠŠé¡å­éƒ¨åˆ†çš„stencil bufferè¨­ç‚º1.`
 	{
 		glEnable(GL_STENCIL_TEST);
 		glStencilFunc(GL_ALWAYS, 1, 0xff);
@@ -130,28 +130,28 @@ void RenderFrameOpenGL(void)
 		glColor4f(0.0f, 0.0f, 0.0f, 1.0f);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
-	// `§âÃè¤l³¡¤Àªºzbuffer²M¬°1.0`
+	// `æŠŠé¡å­éƒ¨åˆ†çš„zbufferæ¸…ç‚º1.0`
 	{
 		glStencilFunc(GL_EQUAL, 1, 0xff);
 		glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
-		// `§âz­Èªº¿é¥X½d³ò³]©w¬°1~1, ¤]´N¬Oz¥Ã»·¿é¥X1.`
+		// `æŠŠzå€¼çš„è¼¸å‡ºç¯„åœè¨­å®šç‚º1~1, ä¹Ÿå°±æ˜¯zæ°¸é è¼¸å‡º1.`
 		glDepthRange(1.0f, 1.0f);
 		glDepthFunc(GL_ALWAYS);
-		// `¥u§ó·szbuffer,¤£»İ­n§ó·sÃC¦â.`
+		// `åªæ›´æ–°zbuffer,ä¸éœ€è¦æ›´æ–°é¡è‰².`
 		glColorMask(false, false, false, false);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-		// `«ì´_§ó·sÃC¦âªº¥\¯à`
+		// `æ¢å¾©æ›´æ–°é¡è‰²çš„åŠŸèƒ½`
 		glColorMask(true, true, true, true);
 		glDepthFunc(GL_LESS);
-		// `§âz­Èªº½d³òÁÙ­ì¬°0~1`
+		// `æŠŠzå€¼çš„ç¯„åœé‚„åŸç‚º0~1`
 		glDepthRange(0.0f, 1.0f);
 	}
-	// `µe¥XÃè¤l¸Ìªº¯ùÜò`
+	// `ç•«å‡ºé¡å­è£¡çš„èŒ¶å£¼`
 	{
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		RenderModelOpenGL(true, &vPlane);
 		glDisable(GL_STENCIL_TEST);
 	}
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

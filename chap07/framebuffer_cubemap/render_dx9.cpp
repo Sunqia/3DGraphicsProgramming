@@ -11,15 +11,15 @@ static CGutModel_DX9 g_Models_DX9[4];
 
 bool InitResourceDX9(void)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `³]©wµø¨¤Âà´«¯x°}`
+	// `è¨­å®šè¦–è§’è½‰æ›çŸ©é™£`
 
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// `Ãö³¬¥´¥ú`
+	// `é—œé–‰æ‰“å…‰`
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// `§ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V`
+	// `æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘`
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 	device->SetRenderState(D3DRS_NORMALIZENORMALS, TRUE);
 	device->CreateCubeTexture(512, 1, D3DUSAGE_RENDERTARGET, D3DFMT_A8R8G8B8, D3DPOOL_DEFAULT, &g_pTexture, NULL);
@@ -50,42 +50,42 @@ void ResizeWindowDX9(int width, int height)
 {
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// §ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V
+	// æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 }
 
 void RenderSolarSystemDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ¦a²y
+	// åœ°çƒ
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &g_earth_matrix);
 	g_Models_DX9[1].Render();
-	// ¤ë«G
+	// æœˆäº®
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &g_moon_matrix);
 	g_Models_DX9[2].Render();
-	// ¤õ¬P
+	// ç«æ˜Ÿ
 	device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &g_mars_matrix);
 	g_Models_DX9[3].Render();
 }
-// ¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï
+// ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
 
-	// `§ó·scubemap 6­Ó­±`
+	// `æ›´æ–°cubemap 6å€‹é¢`
 	{
-		// `°O¿ý¥D`framebuffer
+		// `è¨˜éŒ„ä¸»`framebuffer
 		LPDIRECT3DSURFACE9 pFrameBufferBackup, pDepthBufferBackup;
 		device->GetRenderTarget(0, &pFrameBufferBackup); pFrameBufferBackup->Release();
 		device->GetDepthStencilSurface(&pDepthBufferBackup); pDepthBufferBackup->Release();
@@ -98,58 +98,58 @@ void RenderFrameDX9(void)
 		
 		for ( int i=0; i<6; i++ )
 		{
-			// `¨ú¥Xcubemapªº¨ä¤¤¤@­Ó­±`
+			// `å–å‡ºcubemapçš„å…¶ä¸­ä¸€å€‹é¢`
 			LPDIRECT3DSURFACE9 pSurface;
 			D3DCUBEMAP_FACES face = (D3DCUBEMAP_FACES) (D3DCUBEMAP_FACE_POSITIVE_X + i);
 			g_pTexture->GetCubeMapSurface(face, 0, &pSurface); 
-			// `§âµe­±µe¨ìcubemap¨ä¤¤¤@­Ó­±`
+			// `æŠŠç•«é¢ç•«åˆ°cubemapå…¶ä¸­ä¸€å€‹é¢`
 			device->SetRenderTarget(0, pSurface);
 			device->SetDepthStencilSurface(g_pDepthStencil);
-			// `²M°£µe­±`
+			// `æ¸…é™¤ç•«é¢`
 			device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_RGBA(0, 0, 0, 255), 1.0f, 0);
-			// `§ó·sÃèÀY­±¦V`
+			// `æ›´æ–°é¡é ­é¢å‘`
 			Matrix4x4 cubemap_view_matrix = GutMatrixLookAtRH(g_vCubemap_Eye, g_vCubemap_Lookat[i], g_vCubemap_Up[i]);
 			device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &cubemap_view_matrix);
-			// `µe¦æ¬P`
+			// `ç•«è¡Œæ˜Ÿ`
 			RenderSolarSystemDX9();
-			// `§iª¾d3d¸Ë¸m³o­Ósurface¨Ï¥Î§¹²¦, ´î¤Ösurfaceªºreference count.`
+			// `å‘ŠçŸ¥d3dè£ç½®é€™å€‹surfaceä½¿ç”¨å®Œç•¢, æ¸›å°‘surfaceçš„reference count.`
 			pSurface->Release();
 		}
 
-		// `ÁÙ­ì¦¨¨Ï¥Î¥Dframebuffer`
+		// `é‚„åŽŸæˆä½¿ç”¨ä¸»framebuffer`
 		device->SetRenderTarget(0, pFrameBufferBackup);
 		device->SetDepthStencilSurface(pDepthBufferBackup);
 	}
 
-	// `§â¤W¤@­Ó¨BÆJªºµ²ªG·í¦¨¶K¹Ï¨Ó¨Ï¥Î`
+	// `æŠŠä¸Šä¸€å€‹æ­¥é©Ÿçš„çµæžœç•¶æˆè²¼åœ–ä¾†ä½¿ç”¨`
 	{
-		// `®ø°£µe­±`
+		// `æ¶ˆé™¤ç•«é¢`
 		device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_RGBA(0, 0, 0, 255), 1.0f, 0);
-		// `Âà´«¯x°}`
+		// `è½‰æ›çŸ©é™£`
 		Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 		device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
 		device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &g_sun_matrix);
-		// `®M¥Î¯x°}§â¤Ï®gÂà´«¨ì¥@¬É®y¼Ð¨t`
+		// `å¥—ç”¨çŸ©é™£æŠŠåå°„è½‰æ›åˆ°ä¸–ç•Œåº§æ¨™ç³»`
 		Matrix4x4 inv_view = g_Control.GetCameraMatrix();
 		inv_view.NoTranslate();
 		//inv_view.FastInvert();
 		device->SetTransform(D3DTS_TEXTURE1, (D3DMATRIX *)&inv_view);
-		// `§âModelªº²Ä3¼h¶K¹Ï±j­¢§ï¦¨cubemap`
+		// `æŠŠModelçš„ç¬¬3å±¤è²¼åœ–å¼·è¿«æ”¹æˆcubemap`
 		CGutModel_DX9::SetTextureOverwrite(2, g_pTexture);
 		CGutModel_DX9::SetUVMapOverwrite(2, MAP_CUBEMAP);
-		// `¤Ó¶§`
+		// `å¤ªé™½`
 		g_Models_DX9[0].Render();
-		// `§âModelªº²Ä3¼h¶K¹ÏÁÙ­ì¦¨¼Ò«¬­ì©l³]©w`
+		// `æŠŠModelçš„ç¬¬3å±¤è²¼åœ–é‚„åŽŸæˆæ¨¡åž‹åŽŸå§‹è¨­å®š`
 		CGutModel_DX9::SetTextureOverwrite(2, NULL);
 		CGutModel_DX9::SetUVMapOverwrite(2, 0xff);
-		// `¦æ¬P`
+		// `è¡Œæ˜Ÿ`
 		RenderSolarSystemDX9();
 	}
 
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
 	
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

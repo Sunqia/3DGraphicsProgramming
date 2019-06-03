@@ -1,10 +1,10 @@
 #include "Vector4.h"
 
-// ª÷¦r¶ğ§Îªº8±øÃä½u
+// é‡‘å­—å¡”å½¢çš„8æ¢é‚Šç·š
 extern Vector4 g_vertices[16];
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 

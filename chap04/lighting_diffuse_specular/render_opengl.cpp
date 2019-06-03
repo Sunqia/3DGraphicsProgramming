@@ -9,13 +9,13 @@ static Matrix4x4 g_view_matrix;
 
 bool InitResourceOpenGL(void)
 {
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// ³]©w§ë¼v¯x°}
+	// è¨­å®šæŠ•å½±çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, 1.0f, 0.1f, 100.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
-	// §â¥¿¦V¸ò¤Ï¦Vªº­±³£µe¥X¨Ó
+	// æŠŠæ­£å‘è·Ÿåå‘çš„é¢éƒ½ç•«å‡ºä¾†
 	glDisable(GL_CULL_FACE);
 	glShadeModel(GL_SMOOTH);
 	return true;
@@ -23,127 +23,127 @@ bool InitResourceOpenGL(void)
 
 bool ReleaseResourceOpenGL(void)
 {
-	// ¨S¨Æ°µ
+	// æ²’äº‹åš
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 }
 
 void SetupLightingOpenGL(void)
 {
-	// `¶}±Ò¥´¥ú¥\¯à`
+	// `é–‹å•Ÿæ‰“å…‰åŠŸèƒ½`
 	glEnable(GL_LIGHTING);
-	// `¶}±Ò/Ãö³¬auto normalize¥\¯à`
+	// `é–‹å•Ÿ/é—œé–‰auto normalizeåŠŸèƒ½`
 	if ( g_bAutoNormalize )
 		glEnable(GL_NORMALIZE);
 	else
 		glDisable(GL_NORMALIZE);
-	// `¶}±Ò/Ãö³¬localviewer¥\¯à`
+	// `é–‹å•Ÿ/é—œé–‰localvieweråŠŸèƒ½`
 	glLightModeli(GL_LIGHT_MODEL_LOCAL_VIEWER, g_bLocalViewer ? 1 : 0 );
-	// `³]©wÀô¹Ò¥ú`
+	// `è¨­å®šç’°å¢ƒå…‰`
 	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, (float *)&g_vGlobal_AmbientLight);
-	// `³]©wª«¥ó§÷½èªº¤Ï¥ú¯à¤O`
+	// `è¨­å®šç‰©ä»¶æè³ªçš„åå…‰èƒ½åŠ›`
 	glMaterialfv(GL_FRONT, GL_AMBIENT, (float *) &g_vMaterialAmbient);
 	glMaterialfv(GL_FRONT, GL_DIFFUSE, (float *) &g_vMaterialDiffuse);
 	glMaterialfv(GL_FRONT, GL_SPECULAR, (float *) &g_vMaterialSpecular);
 	glMaterialfv(GL_FRONT, GL_EMISSION, (float *) &g_vMaterialEmissive);
 	glMaterialf (GL_FRONT, GL_SHININESS, g_fMaterialShininess);
-	// `³]©w¥ú·½`
+	// `è¨­å®šå…‰æº`
 	for ( int i=0; i<g_iNumLights; i++ )
 	{
-		// `¨C­Ó¥ú·½¤À§O¥ÎGL_LIGHT0,GL_LIGHT1,GL_LIGHT2¨Óªí¥Ü`
-		// `¥¦­Ì¦b©w¸q®É¬O¨Ì¶¶§Ç±Æ¦C,¥i¥H¥ÎGL_LIGHT0+n¨Ó¨ú±o¥ú·½ID`
+		// `æ¯å€‹å…‰æºåˆ†åˆ¥ç”¨GL_LIGHT0,GL_LIGHT1,GL_LIGHT2ä¾†è¡¨ç¤º`
+		// `å®ƒå€‘åœ¨å®šç¾©æ™‚æ˜¯ä¾é †åºæ’åˆ—,å¯ä»¥ç”¨GL_LIGHT0+nä¾†å–å¾—å…‰æºID`
 		int LightID = GL_LIGHT0 + i;
 
 		if ( g_Lights[i].m_bEnabled )
 		{
-			// ¥´¶}³o·ø¥ú
+			// æ‰“é–‹é€™ç›å…‰
 			glEnable(LightID);
 			
 			switch(g_Lights[i].m_eType)
 			{
 			case LIGHT_DIRECTIONAL:
-				// `¥ú·½¤è¦V`
-				// `§â¤@­Ó(x,y,z,w)ªº¦V¶q¶Ç¤JGL_POSITION, ¦pªGw­È¬O0·|³Qµø¬°¬O¤è¦V¥ú.`
+				// `å…‰æºæ–¹å‘`
+				// `æŠŠä¸€å€‹(x,y,z,w)çš„å‘é‡å‚³å…¥GL_POSITION, å¦‚æœwå€¼æ˜¯0æœƒè¢«è¦–ç‚ºæ˜¯æ–¹å‘å…‰.`
 				glLightfv(LightID, GL_POSITION, (float *)&(-g_Lights[i].m_vDirection) );
 				break;
 			case LIGHT_POINT:
-				// `¥ú·½¦ì¸m`
+				// `å…‰æºä½ç½®`
 				glLightfv(LightID, GL_POSITION, (float *)&g_Lights[i].m_vPosition);
-				// `ÀH¶ZÂ÷ªº°I´î­È` 
+				// `éš¨è·é›¢çš„è¡°æ¸›å€¼` 
 				// 1/(CONSTANT + LINEAR*d + QUADRATIC*d^2) 
-				// `¤½¦¡¤¤ªºCONSTANT,LINEAR,QUADRATIC­È`
+				// `å…¬å¼ä¸­çš„CONSTANT,LINEAR,QUADRATICå€¼`
 				glLightf(LightID, GL_CONSTANT_ATTENUATION,	g_Lights[i].m_vAttenuation[0]);
 				glLightf(LightID, GL_LINEAR_ATTENUATION,	g_Lights[i].m_vAttenuation[1]);
 				glLightf(LightID, GL_QUADRATIC_ATTENUATION, g_Lights[i].m_vAttenuation[2]);
 				break;
 			case LIGHT_SPOT:
-				// ¥ú·½¦ì¸m
+				// å…‰æºä½ç½®
 				glLightfv(LightID, GL_POSITION, (float *)&g_Lights[i].m_vPosition);
-				// `ÀH¶ZÂ÷ªº°I´î­È`
+				// `éš¨è·é›¢çš„è¡°æ¸›å€¼`
 				// 1/(CONSTANT + LINEAR*d + QUADRATIC*d^2) 
-				// `¤½¦¡¤¤ªºCONSTANT, LINEAR, QUADRATIC­È`
+				// `å…¬å¼ä¸­çš„CONSTANT, LINEAR, QUADRATICå€¼`
 				glLightf(LightID, GL_CONSTANT_ATTENUATION,	g_Lights[i].m_vAttenuation[0]);
 				glLightf(LightID, GL_LINEAR_ATTENUATION,	g_Lights[i].m_vAttenuation[1]);
 				glLightf(LightID, GL_QUADRATIC_ATTENUATION, g_Lights[i].m_vAttenuation[2]);
-				// `¥ú¬Wªº¤è¦V`
+				// `å…‰æŸ±çš„æ–¹å‘`
 				glLightfv(LightID, GL_SPOT_DIRECTION, (float *)&g_Lights[i].m_vDirection);
-				// `¥ú¬W¶êÀ@ªº¤@¥b¨¤«×`
+				// `å…‰æŸ±åœ“éŒçš„ä¸€åŠè§’åº¦`
 				glLightf(LightID, GL_SPOT_CUTOFF, g_Lights[i].m_fSpotlightCutoff * 0.5f);
-				// `¥ú¬W¶êÀ@ªº¨¤«×°I´î`
+				// `å…‰æŸ±åœ“éŒçš„è§’åº¦è¡°æ¸›`
 				glLightf(LightID, GL_SPOT_EXPONENT, g_Lights[i].m_fSpotlightExponent);
 				break;
 			}
-			// `¥ú·½ªºAmbient­È`
+			// `å…‰æºçš„Ambientå€¼`
 			glLightfv(LightID, GL_AMBIENT, (float *)&g_Lights[i].m_vAmbientColor); 
-			// `¥ú·½ªºDiffuse­È`
+			// `å…‰æºçš„Diffuseå€¼`
 			glLightfv(LightID, GL_DIFFUSE, (float *)&g_Lights[i].m_vDiffuseColor);
-			// `¥ú·½ªºspecular­È`
+			// `å…‰æºçš„specularå€¼`
 			glLightfv(LightID, GL_SPECULAR, (float *)&g_Lights[i].m_vSpecularColor);
 		}
 		else
 		{
-			// `Ãö³¬³o·ø¥ú`
+			// `é—œé–‰é€™ç›å…‰`
 			glDisable(LightID);
 		}
 	}
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 	glMatrixMode(GL_MODELVIEW);
-	// ³]©w­n¥Î°}¦Cªº¤è¦¡¶Ç¤J³»ÂI¦ì¸m¸òÃC¦â
+	// è¨­å®šè¦ç”¨é™£åˆ—çš„æ–¹å¼å‚³å…¥é ‚é»ä½ç½®è·Ÿé¡è‰²
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_NORMAL_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_V3N3), g_pGridVertices[0].m_Position);
 	glNormalPointer(GL_FLOAT, sizeof(Vertex_V3N3), g_pGridVertices[0].m_Normal);
 	
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// ®M¥ÎÃèÀYÂà´«¯x°}
+	// å¥—ç”¨é¡é ­è½‰æ›çŸ©é™£
 	glLoadMatrixf( (float *) &view_matrix);
-	// ³]©w¥ú·½, ©Ò¦³¥ú·½·|Âà´«¨ìÃèÀY®y¼Ğ¨t,©Ò¥H­n¥ı®M¥ÎÃèÀYÂà´«¯x°}
+	// è¨­å®šå…‰æº, æ‰€æœ‰å…‰æºæœƒè½‰æ›åˆ°é¡é ­åº§æ¨™ç³»,æ‰€ä»¥è¦å…ˆå¥—ç”¨é¡é ­è½‰æ›çŸ©é™£
 	SetupLightingOpenGL();
 	
 	Matrix4x4 world_view_matrix = g_world_matrix * view_matrix;
 	glLoadMatrixf( (float *) &world_view_matrix);
-	// µe¥X®æ¤l
+	// ç•«å‡ºæ ¼å­
 	glDrawElements (GL_TRIANGLE_STRIP, g_iNumGridIndices, GL_UNSIGNED_SHORT, g_pGridIndices);
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
 	GutSwapBuffersOpenGL();
 }

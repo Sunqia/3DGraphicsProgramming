@@ -10,7 +10,7 @@ struct CompressedVertex
 
 // controller object
 extern CGutUserControl g_Control;
-// ²y§Î
+// çƒå½¢
 extern CompressedVertex *g_pCompressedVertices;
 extern unsigned short *g_pSphereIndices;
 //
@@ -19,5 +19,5 @@ extern int g_iNumSphereTriangles;
 extern int g_iNumSphereIndices;
 // 
 extern Matrix4x4 g_sun_matrix, g_earth_matrix, g_moon_matrix;
-// ²£¥Í²y¼Ò«¬ªºµ{¦¡
+// ç”¢ç”Ÿçƒæ¨¡å‹çš„ç¨‹å¼
 bool CreateSphere(CompressedVertex **ppVertices, unsigned short **ppIndices, int stacks = 20, int pieces = 20);

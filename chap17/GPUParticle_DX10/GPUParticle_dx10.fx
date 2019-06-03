@@ -1,4 +1,4 @@
-// ³»ÂIªº¸ê®Æ¿é¤J®æ¦¡
+// é ‚é»çš„è³‡æ–™è¼¸å…¥æ ¼å¼
 struct sParticle
 {
 	float4 Position : POSITION;
@@ -32,14 +32,14 @@ float  fTan;
 
 void EmitParticle(out float4 position, out float4 velocity, float2 texcoord)
 {
-	// ±q Lookup Texture ¤¤¨ú¥X¶Ã¼Æ
+	// å¾ Lookup Texture ä¸­å–å‡ºäº‚æ•¸
 	float4 rand0 = NoiseTex.SampleLevel(NoiseSampler, Rand[0].xy + texcoord, 0);
 	rand0 = frac(rand0 + Rand[1]);
 
 	float4 rand1 = NoiseTex.SampleLevel(NoiseSampler, Rand[0].zw + texcoord, 0);
 	rand1 = frac(rand1 + Rand[2]);
 	
-	// ¥Î¶Ã¼Æ¨Ó¨M©w¤è¦V¡A³t«×¡A¤j¤p¡C
+	// ç”¨äº‚æ•¸ä¾†æ±ºå®šæ–¹å‘ï¼Œé€Ÿåº¦ï¼Œå¤§å°ã€‚
 	float2 dir = (rand0.xy - 0.5f) * 2.0f;
 	float2 xz  = normalize(dir.xy) * fTan * rand0.z;
 	float  fLife  = LifeRange.x + LifeRange.y * rand0.w;
@@ -65,9 +65,9 @@ void GS_Simulate(point sParticle input[1], uint index : SV_PrimitiveID, inout Po
 
 	if ( velocity.w <= 0.0f )
 	{
-		// ¹Ø©R²×¤F, ­n²£¥Í¤@­Ó·sªº Particle.	
+		// å£½å‘½çµ‚äº†, è¦ç”¢ç”Ÿä¸€å€‹æ–°çš„ Particle.	
 		
-		// ®Ú¾Ú³»ÂIªº½s¸¹¨Ó¨M©w­n¨Ï¥Îªº Lookup Texture ®y¼Ğ¡C
+		// æ ¹æ“šé ‚é»çš„ç·¨è™Ÿä¾†æ±ºå®šè¦ä½¿ç”¨çš„ Lookup Texture åº§æ¨™ã€‚
 		int iy = index/256;
 		int ix = index & 0xff;
 		
@@ -76,14 +76,14 @@ void GS_Simulate(point sParticle input[1], uint index : SV_PrimitiveID, inout Po
 	}
 	else
 	{
-		// ¥Í©R´ÁÁÙ¨Sµ²§ô
+		// ç”Ÿå‘½æœŸé‚„æ²’çµæŸ
 
-		// ²¾°Ê Particle 
+		// ç§»å‹• Particle 
 		Out.Position.xyz = position.xyz + velocity.xyz * fTimeAdvance;
 		Out.Position.w = position.w;
-		// ®M¤J­«¤O	
+		// å¥—å…¥é‡åŠ›	
 		Out.Velocity.xyz = velocity.xyz + Force;
-		// ·À¤Ö¹Ø©R
+		// æ»…å°‘å£½å‘½
 		Out.Velocity.w = velocity.w - fTimeAdvance;
 	}
 

@@ -1,7 +1,7 @@
 
 cbuffer MatrixConstants : register(b0)
 {
-	// Âà´«¯x°}
+	// è½‰æ›çŸ©é™£
 	row_major float4x4 wvp_matrix;
 	row_major float4x4 view_matrix;
 	row_major float4x4 world_matrix;
@@ -48,7 +48,7 @@ struct Light
 	//bool   m_bEnabled;	// m_LightProperty.y
 };
 
-// ¥ú·½
+// å…‰æº
 cbuffer Lights : register(b2)
 {
 	uniform float4 g_vAmbientLight;

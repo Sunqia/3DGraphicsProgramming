@@ -28,14 +28,14 @@ static int g_iNumGrids = 15;
 
 void GetUserInput(void)
 {
-	// Åª¨ú·Æ¹«
+	// è®€å–æ»‘é¼ 
 	int width, height;
 	int x,y,buttons[3];
 
 	GutGetWindowSize(width, height);
 	GutGetMouseState(x, y, buttons);
 
-	// ¦pªG«ö¤U·Æ¹«¥ªÁä¡A´N²¾°Êª«¥ó
+	// å¦‚æœæŒ‰ä¸‹æ»‘é¼ å·¦éµï¼Œå°±ç§»å‹•ç‰©ä»¶
 	if ( buttons[0] ) 
 	{
 		float fx = (float) x / (float) width;
@@ -48,7 +48,7 @@ void GetUserInput(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -80,7 +80,7 @@ void main(void)
 	GutResizeFunc( resize_func );
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
@@ -95,7 +95,7 @@ void main(void)
 
 	GutInputInit();
 
-	// ³]©wÀô¹Ò¥úªº¦ì¸m¸òÃC¦â
+	// è¨­å®šç’°å¢ƒå…‰çš„ä½ç½®è·Ÿé¡è‰²
 	Vector4 vFirstLight(-g_fOrthoWidth * 0.4f, -g_fOrthoHeight * 0.4f, 0.5f, 1.0f);
 	Vector4 vLastLight ( g_fOrthoWidth * 0.4f,  g_fOrthoHeight * 0.4f, 0.5f, 1.0f);
 	Vector4 vSpan = vLastLight - vFirstLight;
@@ -108,11 +108,11 @@ void main(void)
 		for ( int x=0; x<4; x++, i++ )
 		{
 			g_LightPosition[i].m_Position = vPos;
-			// ¥Î¶Ã¼Æ¨Ó²£¥Í¥úªº±j«×
-			int r = rand() & 0x003ff + 1024; // 1024-2048¶¡ªº¶Ã¼Æ
+			// ç”¨äº‚æ•¸ä¾†ç”¢ç”Ÿå…‰çš„å¼·åº¦
+			int r = rand() & 0x003ff + 1024; // 1024-2048é–“çš„äº‚æ•¸
 			int g = rand() & 0x003ff + 1024;
 			int b = rand() & 0x003ff + 1024;
-			// Åır,g,b ¸¨¦b0.5-1¤§¶¡
+			// è®“r,g,b è½åœ¨0.5-1ä¹‹é–“
 			g_LightPosition[i].m_Color.Set(r/2048.0f, g/2048.0f, b/2048.0f, 1.0f);
 			vPos[0] += vInc[0];
 		}
@@ -120,7 +120,7 @@ void main(void)
 		vPos[1] += vInc[1];
 	}
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -128,17 +128,17 @@ void main(void)
 		exit(0);
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
 		//
 		LightManager();
-		// µe¥X¯x§Î
+		// ç•«å‡ºçŸ©å½¢
 		render();
 	}
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

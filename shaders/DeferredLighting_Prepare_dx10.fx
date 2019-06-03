@@ -1,5 +1,5 @@
 /*
-	Deferred Lighting ªº·Ç³Æ¤u§@, §â¥´¥ú©Ò»İ­nªº¸ê®Æ¿é¥X¨ì°ÊºA¶K¹Ï¤¤.
+	Deferred Lighting çš„æº–å‚™å·¥ä½œ, æŠŠæ‰“å…‰æ‰€éœ€è¦çš„è³‡æ–™è¼¸å‡ºåˆ°å‹•æ…‹è²¼åœ–ä¸­.
 */
 
 struct VS_INPUT
@@ -43,9 +43,9 @@ VS_OUTPUT VS(VS_INPUT In)
 	
 	Out.Position = mul(float4(In.Position, 1.0f), wvp_matrix);
 	Out.Texcoord = In.Texcoord;
-	// `¥@¬É®y¼Ğ¨t¤Wªº³»ÂI¦ì¸m`
+	// `ä¸–ç•Œåº§æ¨™ç³»ä¸Šçš„é ‚é»ä½ç½®`
 	Out.WorldPos = mul(float4(In.Position, 1.0f), world_matrix).xyz;
-	// `¥@¬É®y¼Ğ¨t¤Wªº normal ¸ò tangent space`
+	// `ä¸–ç•Œåº§æ¨™ç³»ä¸Šçš„ normal è·Ÿ tangent space`
 	Out.WorldNormal = mul(In.Normal, (float3x3) world_matrix);
 	Out.Tangent = mul(In.Tangent, (float3x3) world_matrix);
 	Out.Binormal = mul(In.Binormal, (float3x3) world_matrix);	
@@ -55,13 +55,13 @@ VS_OUTPUT VS(VS_INPUT In)
 
 struct PS_OUTPUT
 {
-	// `Position ©ñ¦b rendertarget0`
+	// `Position æ”¾åœ¨ rendertarget0`
 	float4 WorldPos : SV_Target; 
 	
-	// `Normal ©ñ¦b rendertarget1`
+	// `Normal æ”¾åœ¨ rendertarget1`
 	float4 WorldNormal : SV_Target1;
 	
-	// `¤Ï¥ú¯à¤O©ñ¦b rendertarget2`
+	// `åå…‰èƒ½åŠ›æ”¾åœ¨ rendertarget2`
 	float4 Diffuse : SV_Target2;
 };
 
@@ -69,7 +69,7 @@ PS_OUTPUT PS(VS_OUTPUT In)
 {
 	PS_OUTPUT Out;
 
-	// `¨ú¥X normalmap`
+	// `å–å‡º normalmap`
 	float3 normalmap = normalmapTexture.Sample(LinearSampler, In.Texcoord);
 	normalmap = normalmap * 2.0f - 1.0f;
 	
@@ -78,10 +78,10 @@ PS_OUTPUT PS(VS_OUTPUT In)
 	TangentSpace[1] = normalize(In.Binormal);
 	TangentSpace[2] = normalize(In.WorldNormal);
 	
-	// '§â normalmap ¦V¶qÂà´«¨ì¥@¬É®y¼Ğ¨t¤W'
+	// 'æŠŠ normalmap å‘é‡è½‰æ›åˆ°ä¸–ç•Œåº§æ¨™ç³»ä¸Š'
 	float3 worldNormal = normalize(mul(normalmap, TangentSpace));
 	
-	// `§â¦ì¸m, ­±¦V, ¤Ï¥ú­È¤À§O¿é¥X¨ì¤£¦Pªº rendertarget ¤W.`
+	// `æŠŠä½ç½®, é¢å‘, åå…‰å€¼åˆ†åˆ¥è¼¸å‡ºåˆ°ä¸åŒçš„ rendertarget ä¸Š.`
 	Out.WorldPos = float4(In.WorldPos, 1.0f);
 	Out.WorldNormal = float4(worldNormal, 1.0f);
 	Out.Diffuse = diffuseTexture.Sample(LinearSampler, In.Texcoord);

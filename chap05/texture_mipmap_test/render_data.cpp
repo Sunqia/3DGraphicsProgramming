@@ -2,7 +2,7 @@
 #include "render_data.h"
 #include "gut.h"
 
-// ¯x§Îªº4­Ó³»ÂI
+// çŸ©å½¢çš„4å€‹é ‚é»ž
 // Position, Texcoord
 Vertex_VT g_Quad[4] =
 {

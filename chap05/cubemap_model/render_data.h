@@ -2,17 +2,17 @@
 #include "Matrix4x4.h"
 #include "GutModel.h"
 
-// 盽计﹚竡
+// 甯告暩瀹氱京
 const float g_fFovW = 45.0f;
-// 描繷竚
+// 閺￠牠浣嶇疆
 extern Vector4 g_eye; 
-// 描繷癸非翴
+// 閺￠牠灏嶆簴鐨勯粸
 extern Vector4 g_lookat; 
-// 描繷タよよ
+// 閺￠牠姝ｄ笂鏂圭殑鏂瑰悜
 extern Vector4 g_up; 
-// 描繷锣传痻皚
+// 閺￠牠杞夋彌鐭╅櫍
 extern Matrix4x4 g_view_matrix;
-// ン臂锣痻皚
+// 鐗╀欢鏃嬭綁鐭╅櫍
 extern Matrix4x4 g_world_matrix;
 //
 extern CGutModel g_Model;

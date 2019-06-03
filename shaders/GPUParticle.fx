@@ -1,11 +1,11 @@
-// ³»ÂIªº¸ê®Æ¿é¤J®æ¦¡
+// é ‚é»çš„è³‡æ–™è¼¸å…¥æ ¼å¼
 struct VS_INPUT
 {
 	float3 Position : POSITION;
 	float2 Texcoord : TEXCOORD0;
 };
 
-// Vertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// Vertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : SV_POSITION;
@@ -75,21 +75,21 @@ struct PS_OUTPUT
 	float4 Velocity : COLOR1;
 };
 
-// `µo®g¥X·sªº particle`
+// `ç™¼å°„å‡ºæ–°çš„ particle`
 void EmitParticle(out float4 position, out float4 velocity, float2 texcoord)
 {
-	// `±q¶K¹Ï¤¤¨ú¥X¶Ã¼Æ, CPU ©Ò¶Ç¤Jªº Rand[0] ·|´£¨Ñ¶Ã¼Æªº seed ®ÄªG.`
+	// `å¾è²¼åœ–ä¸­å–å‡ºäº‚æ•¸, CPU æ‰€å‚³å…¥çš„ Rand[0] æœƒæä¾›äº‚æ•¸çš„ seed æ•ˆæœ.`
 	float4 rand0 = tex2D(NoiseSampler, texcoord + Rand[0].xy);
 	rand0 = frac(rand0 + Rand[1]);
 	
 	float4 rand1 = tex2D(NoiseSampler, texcoord + Rand[0].zw);
 	rand1 = frac(rand1 + Rand[2]);
 	
-	// `¤U­±·|¨Ï¥Î¶Ã¼Æ¨Ó³]©w particle Äİ©Ê`
+	// `ä¸‹é¢æœƒä½¿ç”¨äº‚æ•¸ä¾†è¨­å®š particle å±¬æ€§`
 	float  fSize = SizeRange.x + rand1.z * SizeRange.y;
-	// `¦ì¸m¸ò¤j¤p`
+	// `ä½ç½®è·Ÿå¤§å°`
 	position = float4(0.0f, 0.0f, 0.0f, fSize);
-	// `¤è¦V¸ò³t«×`
+	// `æ–¹å‘è·Ÿé€Ÿåº¦`
 	float4 dir = (rand0 - 0.5f) * 2.0f;
 	float2 xz = normalize(dir.xz) * fTan * rand1.x;
 	float  fLife = LifeRange.x +  LifeRange.y * rand0.w;
@@ -106,21 +106,21 @@ PS_OUTPUT PS_Simulate(VS_OUTPUT In)
 {
 	PS_OUTPUT Out;
 	
-	// `±q¶K¹Ï¤¤¨ú¥X³t«×­È¸ò¹Ø©R­È`
+	// `å¾è²¼åœ–ä¸­å–å‡ºé€Ÿåº¦å€¼è·Ÿå£½å‘½å€¼`
 	float4 velocity = tex2D(VelocitySampler, In.Texcoord);
 	velocity.w = velocity.w - fTimeAdvance;
 	
 	if ( velocity.w <= 0.0f )
 	{
-		// `¹Ø©R²×¤î, ¦A²£¥Í·sªº particle .`	
+		// `å£½å‘½çµ‚æ­¢, å†ç”¢ç”Ÿæ–°çš„ particle .`	
 		EmitParticle(Out.Position, Out.Velocity, In.Texcoord);
 	}
 	else
 	{
-		// `±q¶K¹Ï¤¤¨ú¥X¦ì¸m`
+		// `å¾è²¼åœ–ä¸­å–å‡ºä½ç½®`
 		float4 position = tex2D(PositionSampler, In.Texcoord);
 
-		// `¹ï particle °µ¹B°Ê­pºâ`
+		// `å° particle åšé‹å‹•è¨ˆç®—`
 		Out.Position.xyz = position.xyz + velocity.xyz * fTimeAdvance;
 		Out.Position.w = position.w;
 		

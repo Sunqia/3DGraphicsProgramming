@@ -1,13 +1,13 @@
-// §ïÅÜ«G«×
+// æ”¹è®Šäº®åº¦
 
-// ³»ÂIªº¸ê®Æ¿é¤J®æ¦¡
+// é ‚é»çš„è³‡æ–™è¼¸å…¥æ ¼å¼
 struct VS_INPUT
 {
 	float3 Position : POSITION;
 	float2 Texcoord : TEXCOORD;
 };
 
-// Vertex Shader¿é¥Xªº¸ê®Æ®æ¦¡
+// Vertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼
 struct VS_OUTPUT
 {
 	float4 Position : POSITION;
@@ -16,13 +16,13 @@ struct VS_OUTPUT
 
 sampler2D RGBASampler : register(s0);
 
-// VS Âà´«¯x°}
+// VS è½‰æ›çŸ©é™£
 cbuffer Matrix : register(b0)
 {
 	uniform row_major float4x4 wvp_matrix;
 }
 
-// PS ½Õ¾ã«G«×°Ñ¼Æ
+// PS èª¿æ•´äº®åº¦åƒæ•¸
 cbuffer Brightness : register(b1)
 {
 	uniform float4 IntensityOffset;
@@ -49,11 +49,11 @@ float4 PS(VS_OUTPUT In) : COLOR
 {
 	float4 rgba = tex2D(RGBASampler, In.Texcoord);
 	float3 table = float3(0.3f, 0.59f, 0.11f);
-	// ¥ıÂà¦¨¦Ç¶¥¨Ó¹î¬İ¥¦ªº«G«×
+	// å…ˆè½‰æˆç°éšä¾†å¯Ÿçœ‹å®ƒçš„äº®åº¦
 	float4 old_intensity = dot(rgba.rgb, table);
-	// §â«G«×°µ­Ó§ïÅÜ
+	// æŠŠäº®åº¦åšå€‹æ”¹è®Š
 	float4 new_intensity = (old_intensity + IntensityOffset) * IntensityScale;
-	// §â­ì©lªºÃC¦â­¼¤W·sªº«G«×
+	// æŠŠåŸå§‹çš„é¡è‰²ä¹˜ä¸Šæ–°çš„äº®åº¦
 	float4 color = rgba * new_intensity;
 	
 	return color;

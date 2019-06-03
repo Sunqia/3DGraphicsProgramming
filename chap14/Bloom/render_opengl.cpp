@@ -49,21 +49,21 @@ bool InitResourceOpenGL(void)
 	if ( g_texture==0 )
 		return false;
 
-	// ¸ü¤JVertex Shader
+	// è¼‰å…¥Vertex Shader
 	g_BlurVS = GutLoadVertexShaderOpenGL_GLSL("../../shaders/posteffect_blur.glvs");
-	// ¸ü¤JPixel Shader
+	// è¼‰å…¥Pixel Shader
 	g_BlurPS = GutLoadFragmentShaderOpenGL_GLSL("../../shaders/posteffect_blur.glfs");
 	if ( 0==g_BlurVS || 0==g_BlurPS )
 		return false;
-	// «Ø¥ßShader Programª«¥ó
+	// å»ºç«‹Shader Programç‰©ä»¶
 	g_BlurProgram = glCreateProgram();
 	if ( 0==g_BlurProgram )
 		return false;
-	// §âVertex Shader®M¤Jg_BlurProgram¸Ì
+	// æŠŠVertex Shaderå¥—å…¥g_BlurProgramè£¡
 	glAttachShader(g_BlurProgram, g_BlurVS);
-	// §âPixel Shader®M¤Jg_BlurProgram¸Ì
+	// æŠŠPixel Shaderå¥—å…¥g_BlurProgramè£¡
 	glAttachShader(g_BlurProgram, g_BlurPS);
-	// §âg_BlurProgram¤¤ªºVertex Shader¸òPixel Shader³sµ²°_¨Ó
+	// æŠŠg_BlurProgramä¸­çš„Vertex Shaderè·ŸPixel Shaderé€£çµèµ·ä¾†
 	glLinkProgram(g_BlurProgram);
 
 	g_BrightnessPS = GutLoadFragmentShaderOpenGL_GLSL("../../shaders/posteffect_brightness.glfs");
@@ -117,10 +117,10 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
 }
 
@@ -128,19 +128,19 @@ static GLuint Brightness(GLuint texture, sImageInfo *pInfo)
 {
 	int w = pInfo->m_iWidth/4;
 	int h = pInfo->m_iHeight/4;
-	// `¹ï°ÊºA¶K¹Ï¨Óµe­±`
+	// `å°å‹•æ…‹è²¼åœ–ä¾†ç•«é¢`
 	glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_framebuffer[1]);
 	glViewport(0, 0, w, h);
-	// `¨Ï¥Î¹ï«G«×°µÅÜ¤ÆªºShader`
+	// `ä½¿ç”¨å°äº®åº¦åšè®ŠåŒ–çš„Shader`
 	glUseProgram(g_BrightnessProgram);
-	// `®M¥Î¶K¹Ï`
+	// `å¥—ç”¨è²¼åœ–`
 	glBindTexture(GL_TEXTURE_2D, texture);
-	// `³]©w«G«×ÅÜ¤Æ°Ñ¼Æ`
+	// `è¨­å®šäº®åº¦è®ŠåŒ–åƒæ•¸`
 	GLint reg_offset = glGetUniformLocation(g_BrightnessProgram, "IntensityOffset");
 	GLint reg_scale = glGetUniformLocation(g_BrightnessProgram, "IntensityScale");
 	glUniform4fv(reg_offset, 1, (float *)&g_vBrightnessOffset);
 	glUniform4fv(reg_scale, 1, (float *)&g_vBrightnessScale);
-	// `³]©w¸ê®Æ¸ê®Æ®æ¦¡`
+	// `è¨­å®šè³‡æ–™è³‡æ–™æ ¼å¼`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VT), g_FullScreenQuad[0].m_Position);
@@ -181,7 +181,7 @@ static GLuint BlurImage(GLuint texture, sImageInfo *pInfo)
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VT), g_FullScreenQuad[0].m_Position);
 	glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex_VT), g_FullScreenQuadInv[0].m_Texcoord);
 
-	// `¤ô¥­¤è¦V¼Ò½k`
+	// `æ°´å¹³æ–¹å‘æ¨¡ç³Š`
 	{
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_framebuffer[0]);
 		glViewport(0, 0, w, h);
@@ -190,7 +190,7 @@ static GLuint BlurImage(GLuint texture, sImageInfo *pInfo)
 			glUniform4fv(reg, num_samples, (float *)vTexOffsetX);
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	}
-	// `««ª½¤è¦V¼Ò½k`
+	// `å‚ç›´æ–¹å‘æ¨¡ç³Š`
 	{
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, g_framebuffer[1]);
 		glBindTexture(GL_TEXTURE_2D, g_frametexture[0]);
@@ -202,22 +202,22 @@ static GLuint BlurImage(GLuint texture, sImageInfo *pInfo)
 	return g_frametexture[1];
 }
 
-// `¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨OpenGLä¾†ç¹ªåœ–`
 void RenderFrameOpenGL(void)
 {
 	int w, h;
 	GutGetWindowSize(w, h);
 	glViewport(0, 0, w, h);
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// `¤£¨Ï¥Î` Shader
+	// `ä¸ä½¿ç”¨` Shader
 	glUseProgram(0);
-	// `³]©w§÷½è, ®M¥Î¶K¹Ï.`
+	// `è¨­å®šæè³ª, å¥—ç”¨è²¼åœ–.`
 	glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 	glBindTexture(GL_TEXTURE_2D, g_texture);
-	// `³]©w³»ÂI¸ê®Æ®æ¦¡`
+	// `è¨­å®šé ‚é»è³‡æ–™æ ¼å¼`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VT), g_FullScreenQuad[0].m_Position);
@@ -227,29 +227,29 @@ void RenderFrameOpenGL(void)
 
 	if ( g_bPosteffect )
 	{
-		// `¨ú¥X¹Ï¤ù¤¤°¾«Gªº³¡¥÷`
+		// `å–å‡ºåœ–ç‰‡ä¸­åäº®çš„éƒ¨ä»½`
 		GLuint texture = Brightness(g_texture, &g_ImageInfo);
-		// `¹ï¹Ï¤ù°µ¼Ò½k¤Æ`
+		// `å°åœ–ç‰‡åšæ¨¡ç³ŠåŒ–`
 		texture = BlurImage(texture, &g_ImageInfo);
-		// `¨Ï¥Î¥Dµe­±`
+		// `ä½¿ç”¨ä¸»ç•«é¢`
 		glBindFramebufferEXT(GL_FRAMEBUFFER_EXT, 0);
 		glViewport(0, 0, w, h);
-		// `¤£¨Ï¥Î` Shader
+		// `ä¸ä½¿ç”¨` Shader
 		glUseProgram(0);
-		// `³]©w§÷½è, ®M¥Î°ÊºA¶K¹Ï.`
+		// `è¨­å®šæè³ª, å¥—ç”¨å‹•æ…‹è²¼åœ–.`
 		glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 		glBindTexture(GL_TEXTURE_2D, texture);
-		// `±Ò°Ê²V¦â¥\¯à`
+		// `å•Ÿå‹•æ··è‰²åŠŸèƒ½`
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_ONE, GL_ONE);
-		// `³]©w³»ÂI¸ê®Æ®æ¦¡`
+		// `è¨­å®šé ‚é»è³‡æ–™æ ¼å¼`
 		glEnableClientState(GL_VERTEX_ARRAY);
 		glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 		glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VT), g_FullScreenQuad[0].m_Position);
 		glTexCoordPointer(2, GL_FLOAT, sizeof(Vertex_VT), g_FullScreenQuad[0].m_Texcoord);
-		// `µe¥X¬İªO`
+		// `ç•«å‡ºçœ‹æ¿`
 		glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-		// `Ãö³¬²V¦â`
+		// `é—œé–‰æ··è‰²`
 		glDisable(GL_BLEND);
 	}
 	

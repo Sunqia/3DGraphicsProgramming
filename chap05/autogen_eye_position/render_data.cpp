@@ -4,7 +4,7 @@
 
 // controller object
 CGutUserControl g_Control;
-// ¯x§Îªº4­Ó³»ÂI
+// çŸ©å½¢çš„4å€‹é ‚é»ž
 // Position
 Vertex g_Quad[4] =
 {

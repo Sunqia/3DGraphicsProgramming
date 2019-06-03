@@ -5,7 +5,7 @@
 
 struct Vertex_V
 {
-	Vector4 m_Position; // ≥ª¬I¶Ï∏m
+	Vector4 m_Position; // È†ÇÈªû‰ΩçÁΩÆ
 };
 
 // controller object
@@ -14,5 +14,5 @@ extern CGutUserControl g_Control;
 extern CGutModel g_Model;
 // camera field of view
 extern float g_fFOV;
-// ØxßŒ
+// Áü©ÂΩ¢
 extern Vertex_V g_Quad[4];

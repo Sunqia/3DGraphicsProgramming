@@ -1,7 +1,7 @@
 #include "Vector4.h"
 #include "render_data.h"
 
-// ª÷¦r¶ğ§Îªº5­Ó³»ÂI¦ì¸m¤ÎÃC¦âªº¸ê®Æ
+// é‡‘å­—å¡”å½¢çš„5å€‹é ‚é»ä½ç½®åŠé¡è‰²çš„è³‡æ–™
 Vertex_VC g_pyramid_vertices[5] = 
 {
 	{
@@ -26,20 +26,20 @@ Vertex_VC g_pyramid_vertices[5] =
 	}
 };
 
-// ²Õ¦¨ª÷¦r¶ğ°¼­±ªº4­Ó¤T¨¤§Îªº³»ÂI¯Á¤Ş­È
+// çµ„æˆé‡‘å­—å¡”å´é¢çš„4å€‹ä¸‰è§’å½¢çš„é ‚é»ç´¢å¼•å€¼
 unsigned short g_pyramid_trianglefan_indices[6] =
 {
 	0, 
-	1, 2, // triangle 1¡@
+	1, 2, // triangle 1ã€€
 	3,	  // triangle 2
 	4,	  // triangle 3
 	1	  // triangle 4
 };
 
-// ²Õ¦¨ª÷¦r¶ğªº6­Ó¤T¨¤§Îªº³»ÂI¯Á¤Ş­È
+// çµ„æˆé‡‘å­—å¡”çš„6å€‹ä¸‰è§’å½¢çš„é ‚é»ç´¢å¼•å€¼
 unsigned short g_pyramid_trianglelist_indices[12] =
 {
-	0, 1, 2, // triangle 1¡@
+	0, 1, 2, // triangle 1ã€€
 	0, 2, 3, // triangle 2
 	0, 3, 4, // triangle 3
 	0, 4, 1, // triangle 4
@@ -72,11 +72,11 @@ unsigned short g_road_trianglestrip_indices[4] =
 };
 
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.5f, 10.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.5f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
 
 Matrix4x4 g_object_matrix;

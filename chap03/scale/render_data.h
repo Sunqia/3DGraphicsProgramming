@@ -1,16 +1,16 @@
 #include "Vector4.h"
 
-// ª÷¦r¶ğ§Îªº8±øÃä½u
+// é‡‘å­—å¡”å½¢çš„8æ¢é‚Šç·š
 extern Vector4 g_vertices[5];
 extern unsigned short g_indices[16];
-// ª÷¦r¶ğªº¦ì²¾
+// é‡‘å­—å¡”çš„ä½ç§»
 extern Vector4 g_position[4];
-// ª÷¦r¶ğªº¤j¤p
+// é‡‘å­—å¡”çš„å¤§å°
 extern Vector4 g_scale[4];
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 

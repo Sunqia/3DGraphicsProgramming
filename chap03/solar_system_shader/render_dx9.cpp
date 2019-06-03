@@ -8,21 +8,21 @@ static Matrix4x4 g_proj_matrix;
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ¸ü¤JVertex Shader
+	// è¼‰å…¥Vertex Shader
 	g_pVertexShaderDX9 = GutLoadVertexShaderDX9_HLSL("../../shaders/vertex_color.shader", "VS", "vs_1_1");
 	if ( g_pVertexShaderDX9==NULL )
 		return false;
-	// ¸ü¤JPixel Shader
+	// è¼‰å…¥Pixel Shader
 	g_pPixelShaderDX9 = GutLoadPixelShaderDX9_HLSL("../../shaders/vertex_color.shader", "PS", "ps_2_0");
 	if ( g_pPixelShaderDX9==NULL )
 		return false;
-	// ­pºâ§ë¼vÂà´«¯x°}
+	// è¨ˆç®—æŠ•å½±è½‰æ›çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(90.0f, 1.0f, 0.1f, 100.0f);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// §ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V
+	// æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 
 	return true;
@@ -38,53 +38,53 @@ bool ReleaseResourceDX9(void)
 
 void ResizeWindowDX9(int width, int height)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 	
 	GutResetGraphicsDeviceDX9();
 
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(90.0f, aspect, 0.1f, 100.0f);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// §ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V
+	// æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 }
 
-// `¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–`
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `®ø°£µe­±`
+	// `æ¶ˆé™¤ç•«é¢`
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
-	// `­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ð¨tªº¯x°}`
+	// `è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 	Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
 	Matrix4x4 view_proj_matrix = view_matrix * g_proj_matrix;
 	Matrix4x4 world_view_proj_matrix;
-	// `³]©w¸ê®Æ®æ¦¡`
-	// `D3DFVF_XYZ = ¨Ï¥Î3­Ó¯BÂI¼Æ¨Ó°O¿ý¦ì¸m`
-	// `D3DFVF_DIFFUSE = ¨Ï¥Î32bits¾ã¼Æ«¬ºA¨Ó°O¿ýBGRAÃC¦â`
+	// `è¨­å®šè³‡æ–™æ ¼å¼`
+	// `D3DFVF_XYZ = ä½¿ç”¨3å€‹æµ®é»žæ•¸ä¾†è¨˜éŒ„ä½ç½®`
+	// `D3DFVF_DIFFUSE = ä½¿ç”¨32bitsæ•´æ•¸åž‹æ…‹ä¾†è¨˜éŒ„BGRAé¡è‰²`
 	device->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE); 
-	// `³]©wShader`
+	// `è¨­å®šShader`
 	device->SetVertexShader(g_pVertexShaderDX9);
 	device->SetPixelShader(g_pPixelShaderDX9);
-	// `¤Ó¶§`
+	// `å¤ªé™½`
 	world_view_proj_matrix = g_sun_matrix * view_proj_matrix;
 	device->SetVertexShaderConstantF(0, (const float *)&world_view_proj_matrix, 4);
 	device->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, g_iNumSphereVertices, g_iNumSphereTriangles, g_pSphereIndices, D3DFMT_INDEX16, g_pSunVertices, sizeof(Vertex_VC) );
-	// `¦a²y`
+	// `åœ°çƒ`
 	world_view_proj_matrix = g_earth_matrix * view_proj_matrix;
 	device->SetVertexShaderConstantF(0, (const float *)&world_view_proj_matrix, 4);
 	device->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, g_iNumSphereVertices, g_iNumSphereTriangles, g_pSphereIndices, D3DFMT_INDEX16, g_pEarthVertices, sizeof(Vertex_VC) );
-	// `¤ë«G`
+	// `æœˆäº®`
 	world_view_proj_matrix = g_moon_matrix * view_proj_matrix;
 	device->SetVertexShaderConstantF(0, (const float *)&world_view_proj_matrix, 4);
 	device->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, g_iNumSphereVertices, g_iNumSphereTriangles, g_pSphereIndices, D3DFMT_INDEX16, g_pMoonVertices, sizeof(Vertex_VC) );
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

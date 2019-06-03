@@ -5,14 +5,14 @@
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(90.0f, 1.0f, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// §ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V
+	// æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 
 	return true;
@@ -25,48 +25,48 @@ bool ReleaseResourceDX9(void)
 
 void ResizeWindowDX9(int width, int height)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	D3DPRESENT_PARAMETERS d3dpresent;
     
 	ZeroMemory( &d3dpresent, sizeof(d3dpresent) );
-    d3dpresent.Windowed = TRUE; // ¨Ï¥Îµøµ¡¼Ò¦¡
+    d3dpresent.Windowed = TRUE; // ä½¿ç”¨è¦–çª—æ¨¡å¼
     d3dpresent.SwapEffect = D3DSWAPEFFECT_DISCARD;
-    d3dpresent.BackBufferFormat = D3DFMT_UNKNOWN; // ¨Ï¥Îµøµ¡¼Ò¦¡¥i¥H¤£¥h³]©w
-	d3dpresent.BackBufferCount = 1; // ´£¨Ñ¤@¶ôbackbuffer
-	d3dpresent.EnableAutoDepthStencil = TRUE; // ¦Û°Ê¶}±ÒDepthStencil Buffer
-	d3dpresent.AutoDepthStencilFormat = D3DFMT_D24S8; // DepthStencil Buffer¼Ò¦¡
+    d3dpresent.BackBufferFormat = D3DFMT_UNKNOWN; // ä½¿ç”¨è¦–çª—æ¨¡å¼å¯ä»¥ä¸åŽ»è¨­å®š
+	d3dpresent.BackBufferCount = 1; // æä¾›ä¸€å¡Šbackbuffer
+	d3dpresent.EnableAutoDepthStencil = TRUE; // è‡ªå‹•é–‹å•ŸDepthStencil Buffer
+	d3dpresent.AutoDepthStencilFormat = D3DFMT_D24S8; // DepthStencil Bufferæ¨¡å¼
 	
 	device->Reset(&d3dpresent);
 
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(90.0f, aspect, 0.1f, 100.0f);
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
-	// §ïÅÜ¤T¨¤§Î¥¿­±ªº­±¦V
+	// æ”¹è®Šä¸‰è§’å½¢æ­£é¢çš„é¢å‘
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ®ø°£µe­±
+	// æ¶ˆé™¤ç•«é¢
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 50, 50, 50), 1.0f, 0);
 	
-	// ¶}©l¤UÃ¸¹Ï«ü¥O
+	// é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤
 	device->BeginScene(); 
 
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ð¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
 
-	// ³]©w¸ê®Æ®æ¦¡
-	// D3DFVF_XYZ = ¨Ï¥Î3­Ó¯BÂI¼Æ¨Ó°O¿ý¦ì¸m
-	// D3DFVF_DIFFUSE = ¨Ï¥Î32bits¾ã¼Æ«¬ºA¨Ó°O¿ýBGRAÃC¦â
+	// è¨­å®šè³‡æ–™æ ¼å¼
+	// D3DFVF_XYZ = ä½¿ç”¨3å€‹æµ®é»žæ•¸ä¾†è¨˜éŒ„ä½ç½®
+	// D3DFVF_DIFFUSE = ä½¿ç”¨32bitsæ•´æ•¸åž‹æ…‹ä¾†è¨˜éŒ„BGRAé¡è‰²
 	device->SetFVF(D3DFVF_XYZ|D3DFVF_DIFFUSE); 
 
 	device->SetRenderState(D3DRS_ZWRITEENABLE, g_bZWrite ? TRUE : FALSE);
@@ -91,14 +91,14 @@ void RenderFrameDX9(void)
 		switch( g_iOrder[i] )
 		{
 		case 0:
-			// ¤Ó¶§
+			// å¤ªé™½
 			world_view_matrix = g_sun_matrix * g_rot_matrix;
 			device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_view_matrix);
 			device->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, g_iNumSphereVertices, g_iNumSphereTriangles, 
 			g_pSphereIndices, D3DFMT_INDEX16, g_pSunVertices, sizeof(Vertex_VC) );
 			break;
 		case 1:
-			// ¦a²y
+			// åœ°çƒ
 			world_view_matrix = g_earth_matrix * g_rot_matrix;
 			device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_view_matrix);
 			device->DrawIndexedPrimitiveUP(D3DPT_TRIANGLELIST, 0, g_iNumSphereVertices, g_iNumSphereTriangles, 
@@ -107,9 +107,9 @@ void RenderFrameDX9(void)
 		}
 	}
 
-	// «Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F
+	// å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†
 	device->EndScene(); 
 	
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
     device->Present( NULL, NULL, NULL, NULL );
 }

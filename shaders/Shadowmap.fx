@@ -1,4 +1,4 @@
-// ­pºâ³±¼v®ÄªG
+// è¨ˆç®—é™°å½±æ•ˆæœ
 
 struct VS_INPUT
 {
@@ -15,7 +15,7 @@ struct VS_OUTPUT
 
 #define num_samples 49
 
-// Âà´«¯x°}
+// è½‰æ›çŸ©é™£
 uniform row_major float4x4 wvp_matrix;
 uniform row_major float4x4 light_wvp_matrix;
 uniform row_major float4x4 light_wv_matrix;
@@ -58,14 +58,14 @@ VS_OUTPUT VS(VS_INPUT In)
 
 //
 // Pixel Shader
-// ¨Ï¥ÎZBuffer°ÊºA¶K¹Ï¨Ó­pºâ³±¼v
+// ä½¿ç”¨ZBufferå‹•æ…‹è²¼åœ–ä¾†è¨ˆç®—é™°å½±
 float4 PS_D24S8(VS_OUTPUT In) : COLOR
 {
 	float4 projected_pos = In.LightPos / In.LightPos.w;
 	float  fToCenter = distance(projected_pos, float2(0.5f,0.5f));
 	float  fSpotLightEffect = 1.0f - saturate(fToCenter/0.4f);
 	float3 normal = normalize(In.Normal);
-	// ¨Ï¥ÎDepthBuffer¬°¿é¤J¶K¹Ï®É, ·|¦Û°Ê°µPS_R32F¨ç¦¡¸Ì¬Û¦Pªº¶ZÂ÷¤ñ¸û.
+	// ä½¿ç”¨DepthBufferç‚ºè¼¸å…¥è²¼åœ–æ™‚, æœƒè‡ªå‹•åšPS_R32Få‡½å¼è£¡ç›¸åŒçš„è·é›¢æ¯”è¼ƒ.
 	float4 Lit = tex2Dproj(ShadowmapSampler, In.LightPos);
 	float4 color = fSpotLightEffect * normal.z * Lit;
 	
@@ -74,7 +74,7 @@ float4 PS_D24S8(VS_OUTPUT In) : COLOR
 
 //
 // Pixel Shader
-// ¨Ï¥ÎZBuffer°ÊºA¶K¹Ï¨Ó­pºâ³±¼v
+// ä½¿ç”¨ZBufferå‹•æ…‹è²¼åœ–ä¾†è¨ˆç®—é™°å½±
 float4 PS_D24S8_PCF(VS_OUTPUT In) : COLOR
 {
 	float4 projected_pos = In.LightPos / In.LightPos.w;
@@ -85,7 +85,7 @@ float4 PS_D24S8_PCF(VS_OUTPUT In) : COLOR
 	
 	for ( int i=0; i<num_samples; i++ )
 	{
-		// ¨Ï¥ÎDepthBuffer¬°¿é¤J¶K¹Ï®É, ·|¦Û°Ê°µPS_R32F¨ç¦¡¸Ì¬Û¦Pªº¶ZÂ÷¤ñ¸û.
+		// ä½¿ç”¨DepthBufferç‚ºè¼¸å…¥è²¼åœ–æ™‚, æœƒè‡ªå‹•åšPS_R32Få‡½å¼è£¡ç›¸åŒçš„è·é›¢æ¯”è¼ƒ.
 		float4 texcoord = projected_pos;
 		texcoord.xy += vTexOffset[i].xy;
 		fLit += tex2Dproj(ShadowmapSampler, texcoord);
@@ -100,7 +100,7 @@ float4 PS_D24S8_PCF(VS_OUTPUT In) : COLOR
 
 //
 // Pixel Shader
-// ¨Ï¥ÎFloat32°ÊºA¶K¹Ï¨Ó­pºâ³±¼v
+// ä½¿ç”¨Float32å‹•æ…‹è²¼åœ–ä¾†è¨ˆç®—é™°å½±
 float4 PS_R32F(VS_OUTPUT In) : COLOR
 {
 	float4 projected_pos = In.LightPos / In.LightPos.w;
@@ -116,7 +116,7 @@ float4 PS_R32F(VS_OUTPUT In) : COLOR
 
 //
 // Pixel Shader
-// ¨Ï¥ÎFloat32°ÊºA¶K¹Ï¨Ó­pºâ³±¼v
+// ä½¿ç”¨Float32å‹•æ…‹è²¼åœ–ä¾†è¨ˆç®—é™°å½±
 float4 PS_R32F_PCF(VS_OUTPUT In) : COLOR
 {
 	float4 projected_pos = In.LightPos / In.LightPos.w;
@@ -225,7 +225,7 @@ float LightCoverage_16samples(sampler2D shadowmap, float4 projected_pos)
 
 //
 // Pixel Shader
-// ¨Ï¥ÎFloat32°ÊºA¶K¹Ï¨Ó­pºâ³±¼v
+// ä½¿ç”¨Float32å‹•æ…‹è²¼åœ–ä¾†è¨ˆç®—é™°å½±
 float4 PS_R32F_PCF_Lerp(VS_OUTPUT In) : COLOR
 {
 	float4 projected_pos = In.LightPos / In.LightPos.w;

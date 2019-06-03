@@ -10,17 +10,17 @@ extern CGutModel g_Models[4];
 // controller object
 extern CGutUserControl g_Control;
 extern float g_mirror_z;
-// §ó·scubemap®ÉªºÃèÀY¦ì¸m
+// æ›´æ–°cubemapæ™‚çš„é¡é ­ä½ç½®
 extern Vector4 g_vCubemap_Eye;
 extern Vector4 g_vCubemap_Lookat[6];
 extern Vector4 g_vCubemap_Up[6];
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 extern Matrix4x4 g_view_matrix;
 extern Matrix4x4 g_scale_matrix;
 extern Matrix4x4 g_world_matrix;

@@ -1,5 +1,5 @@
 /*
-	`Deferred Lighting ¥´¥ú­pºâ`
+	`Deferred Lighting æ‰“å…‰è¨ˆç®—`
 */
 
 struct VS_INPUT
@@ -57,7 +57,7 @@ VS_OUTPUT VS(VS_INPUT In)
 	VS_OUTPUT Out;
 	
 	Out.Position = mul(float4(In.Position.xyz, 1.0f), wvp_matrix);
-	// `§â¿Ã¹õ®y¼Ğ¨t¹ïÀ³¦¨¶K¹Ï®y¼Ğ, ¥¦¥u¬OÂ²³æªº¥­²¾¥[¤WÁY©ñ.`
+	// `æŠŠè¢å¹•åº§æ¨™ç³»å°æ‡‰æˆè²¼åœ–åº§æ¨™, å®ƒåªæ˜¯ç°¡å–®çš„å¹³ç§»åŠ ä¸Šç¸®æ”¾.`
 	Out.Texcoord = mul(Out.Position, texspace_matrix);
 	
 	return Out;
@@ -67,17 +67,17 @@ float4 vCameraPos;
 float4 vLightPos;
 float4 vLightColor;
 
-// `­pºâÂI¥ú·½ªº Pixel Shader`
+// `è¨ˆç®—é»å…‰æºçš„ Pixel Shader`
 float4 PS_PointLight(VS_OUTPUT In) : COLOR
 {
 	float2 vTexcoord = In.Texcoord.xy / In.Texcoord.w; // perspective correct
 	
-	// `±q¶K¹Ï¤¤¨ú¥X³o­Ó¹³¯Àªº¦ì¸m, ­±¦V, ¸ò¤Ï¥ú¯à¤O.`
+	// `å¾è²¼åœ–ä¸­å–å‡ºé€™å€‹åƒç´ çš„ä½ç½®, é¢å‘, è·Ÿåå…‰èƒ½åŠ›.`
 	float3 vWorldPos = tex2D(worldposSampler, vTexcoord).xyz;
 	float3 vWorldNormal = tex2D(worldnormalSampler, vTexcoord).xyz;
 	float4 vAlbedo = tex2D(diffuseSampler, vTexcoord);
 	
-	// `­pºâ¥´¥ú`
+	// `è¨ˆç®—æ‰“å…‰`
 	float3 vLightDir = normalize(vLightPos - vWorldPos);
 	float3 vCameraDir = normalize(vCameraPos - vWorldPos);
 	float3 vHalfVector = normalize(vCameraDir + vLightDir);
@@ -92,7 +92,7 @@ float4 PS_PointLight(VS_OUTPUT In) : COLOR
 	return vLighting;
 }
 
-// `­pºâ Ambient Light ªº Pixel Shader`
+// `è¨ˆç®— Ambient Light çš„ Pixel Shader`
 float4 PS_AmbientLight(VS_OUTPUT In) : COLOR
 {
 	float2 texcoord = In.Texcoord.xy / In.Texcoord.w;

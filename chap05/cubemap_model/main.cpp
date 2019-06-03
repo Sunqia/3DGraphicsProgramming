@@ -18,25 +18,25 @@ static char g_keyboard_state[256];
 
 void GetUserInput_FPSCamera(void)
 {
-	// Åª¨ú·Æ¹«
+	// è®€å–æ»‘é¼ 
 	GutMouseInfo mouse;
 	GutReadMouse(&mouse);
-	// Åª¨úÁä½L
+	// è®€å–éµç›¤
 	char keyboard_state[256];
 	GutReadKeyboard(keyboard_state);
 
-	// ¨ú±oµe§¹«e¤@­Óµe­±¨ì²{¦b©Ò¸g¾úªº®É¶¡
+	// å–å¾—ç•«å®Œå‰ä¸€å€‹ç•«é¢åˆ°ç¾åœ¨æ‰€ç¶“æ­·çš„æ™‚é–“
 	float time_diff = g_Timer.Stop();
 	g_Timer.Restart();
 
 	float moving_speed = 2.0f * time_diff;
 	float rotation_speed = 1.0 * time_diff;
 
-	// ­n²Ö¿n¤U¹ïX¸òY¶bªº±ÛÂà¨¤«×
+	// è¦ç´¯ç©ä¸‹å°Xè·ŸYè»¸çš„æ—‹è½‰è§’åº¦
 	static float ry = 0.0f;
 	static float rx = 0.0f;
 
-	// ¦pªG«ö¤U·Æ¹«¥ªÁä¡A´N±ÛÂàÃèÀY
+	// å¦‚æœæŒ‰ä¸‹æ»‘é¼ å·¦éµï¼Œå°±æ—‹è½‰é¡é ­
 	if ( mouse.button[0] ) 
 	{
 		ry += mouse.x * rotation_speed;
@@ -47,35 +47,35 @@ void GetUserInput_FPSCamera(void)
 	rotate_matrix.RotateY_Replace(ry);
 	rotate_matrix.RotateX(rx);
 
-	// ¦b¥k¤â®y¼Ğ¨t¸Ì, Ãè­±ªº­±¦V¬OÂà´«¯x°}ªº-Z¶b
+	// åœ¨å³æ‰‹åº§æ¨™ç³»è£¡, é¡é¢çš„é¢å‘æ˜¯è½‰æ›çŸ©é™£çš„-Zè»¸
 	Vector4 camera_facing = -rotate_matrix[2];
-	// ¨ú±oÃè­±¥kÃäªº¤è¦V
+	// å–å¾—é¡é¢å³é‚Šçš„æ–¹å‘
 	Vector4 camera_right = rotate_matrix[0];
 
-	// «ö¤UW©Î¤è¦VÁä¦V¤W
+	// æŒ‰ä¸‹Wæˆ–æ–¹å‘éµå‘ä¸Š
 	if ( keyboard_state[GUTKEY_W] || keyboard_state[GUTKEY_UP] )
 	{
 		g_eye += camera_facing * moving_speed;
 	}
-	// «ö¤US©Î¤è¦VÁä¦V¤U
+	// æŒ‰ä¸‹Sæˆ–æ–¹å‘éµå‘ä¸‹
 	if ( keyboard_state[GUTKEY_S] || keyboard_state[GUTKEY_DOWN] )
 	{
 		g_eye -= camera_facing * moving_speed;
 	}
-	// «ö¤UA©Î¤è¦VÁä¦V¥ª
+	// æŒ‰ä¸‹Aæˆ–æ–¹å‘éµå‘å·¦
 	if ( keyboard_state[GUTKEY_A] || keyboard_state[GUTKEY_LEFT] )
 	{
 		g_eye -= camera_right * moving_speed;
 	}
-	// «ö¤UD©Î¤è¦VÁä¦V¥k
+	// æŒ‰ä¸‹Dæˆ–æ–¹å‘éµå‘å³
 	if ( keyboard_state[GUTKEY_D] || keyboard_state[GUTKEY_RIGHT] )
 	{
 		g_eye += camera_right * moving_speed;
 	}
 
-	// ­pºâ¥XÃèÀY¹ï·ÇªºÂI, ²£¥ÍÃèÀYÂà´«¯x°}®É·|¥Î¨ì.
+	// è¨ˆç®—å‡ºé¡é ­å°æº–çš„é», ç”¢ç”Ÿé¡é ­è½‰æ›çŸ©é™£æ™‚æœƒç”¨åˆ°.
 	g_lookat = g_eye + camera_facing;
-	// ¦]¬°¬O¹ï2­Ó¶bÂà°Ê, »İ­n§ó·sÃèÀY´Â¤Wªº¶b
+	// å› ç‚ºæ˜¯å°2å€‹è»¸è½‰å‹•, éœ€è¦æ›´æ–°é¡é ­æœä¸Šçš„è»¸
 	g_up = Vector3CrossProduct(camera_right, camera_facing);
 	g_up.Normalize();
 
@@ -83,18 +83,18 @@ void GetUserInput_FPSCamera(void)
 
 void GetUserInput_RotateObject(void)
 {
-	// Åª¨ú·Æ¹«
+	// è®€å–æ»‘é¼ 
 	GutMouseInfo mouse;
 	if ( GutReadMouse(&mouse) )
 	{
-		// ¨ú±oµe§¹«e¤@­Óµe­±¨ì²{¦b©Ò¸g¾úªº®É¶¡
+		// å–å¾—ç•«å®Œå‰ä¸€å€‹ç•«é¢åˆ°ç¾åœ¨æ‰€ç¶“æ­·çš„æ™‚é–“
 		g_fFrame_Time = g_Timer.Stop();
 		g_Timer.Restart();
 
 		float moving_speed = 2.0f * g_fFrame_Time;
 		float rotation_speed = 1.0 * g_fFrame_Time;
 
-		// ¦pªG«ö¤U·Æ¹«¥ªÁä¡A´N±ÛÂàÃèÀY
+		// å¦‚æœæŒ‰ä¸‹æ»‘é¼ å·¦éµï¼Œå°±æ—‹è½‰é¡é ­
 		if ( mouse.button[0] ) 
 		{
 			Matrix4x4 rotate_matrix;
@@ -125,7 +125,7 @@ void GetUserInput(void)
 
 void main(void)
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 	void (*render)(void) = RenderFrameDX9;
 	bool (*init_resource)(void) = InitResourceDX9;
@@ -158,15 +158,15 @@ void main(void)
 	//char *model = model = "..\\..\\models\\teapot2.gma";
 	CGutModel::SetTexturePath("../../textures/");
 
-	// ¸ü¤J¼Ò«¬
+	// è¼‰å…¥æ¨¡å‹
 	g_Model.Load_ASCII(model);
 
 	GutResizeFunc( resize_func );
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
@@ -178,7 +178,7 @@ void main(void)
 
 	GutInputInit();
 
-	// ¸ü¤Jshader
+	// è¼‰å…¥shader
 	if ( !init_resource() )
 	{
 		release_resource();
@@ -186,16 +186,16 @@ void main(void)
 		exit(0);
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		GetUserInput();
-		// µe¥X¯x§Î
+		// ç•«å‡ºçŸ©å½¢
 		render();
 	}
-	// ¨ø¸üshader
+	// å¸è¼‰shader
 	release_resource();
 	//
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }

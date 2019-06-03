@@ -64,7 +64,7 @@ bool InitResourceDX10(void)
 		g_pDevice->CreateInputLayout(decl, 2, PassDesc.pIAInputSignature, PassDesc.IAInputSignatureSize, &g_pQuadLayout);
 	}
 
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 
 	return true;
@@ -98,17 +98,17 @@ void RenderFrameDX10(void)
 	Vector4 vClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	float fDummy[] = {0, 0, 0, 0};
 
-	// ¨ú±o©I¥sGutCreateGraphicsDeviceDX10®É©Ò²£¥ÍªºD3D10ª«¥ó
+	// å–å¾—å‘¼å«GutCreateGraphicsDeviceDX10æ™‚æ‰€ç”¢ç”Ÿçš„D3D10ç‰©ä»¶
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView(); //frame buffer
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); //depth/stencil buffer
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); // front/back buffer
 	
-	// ²M°£ÃC¦â
-	// ²M°£Depth/Stencil buffer
+	// æ¸…é™¤é¡è‰²
+	// æ¸…é™¤Depth/Stencil buffer
 	g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
 	g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 	
-	// ¨ú±oÂà´«¯x°}
+	// å–å¾—è½‰æ›çŸ©é™£
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 ident_matrix = Matrix4x4::IdentityMatrix();
@@ -117,7 +117,7 @@ void RenderFrameDX10(void)
 	Matrix4x4 vp_matrix = view_matrix * g_proj_matrix;
 
 
-	// `µe¥X¯ù¨ã²Õ`
+	// `ç•«å‡ºèŒ¶å…·çµ„`
 	{
 		CGutModel_DX10::SetProjectionMatrix(g_proj_matrix);
 		CGutModel_DX10::SetViewMatrix(view_matrix);
@@ -126,7 +126,7 @@ void RenderFrameDX10(void)
 
 		g_Box_DX10.Render();
 	}
-	// `µe¥XÀğ¾À`
+	// `ç•«å‡ºç‰†å£`
 	{
 		Matrix4x4 wall_matrix; 
 		wall_matrix.Translate_Replace(0.0f, 0.0f, -2.0f);
@@ -209,7 +209,7 @@ void RenderFrameDX10(void)
 		g_pDevice->OMSetDepthStencilState(NULL, 0);
 	}
 
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	pSwapChain->Present(1, 0);
 }
 

@@ -13,26 +13,26 @@ GLuint g_TextureID = 0;
 
 bool InitResourceOpenGL(void)
 {
-	// ³]©w§ë¼v¯x°}
+	// è¨­å®šæŠ•å½±çŸ©é™£
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, 1.0f, 0.1f, 100.0f);
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
-	// ¸ü¤J¶K¹Ï
+	// è¼‰å…¥è²¼åœ–
 	const char *texture_array[] = 
 	{
 		"../../textures/uffizi_right.tga",
 		"../../textures/uffizi_left.tga",
 		"../../textures/uffizi_top.tga",
 		"../../textures/uffizi_bottom.tga",
-		"../../textures/uffizi_back.tga", // `¥k¤â®y¼Ğ¨t¤W Z+ ¬°ÃèÀY«á¤è.`
-		"../../textures/uffizi_front.tga" // `¥k¤â®y¼Ğ¨t¤W Z- ¬°ÃèÀY«e¤è.`
+		"../../textures/uffizi_back.tga", // `å³æ‰‹åº§æ¨™ç³»ä¸Š Z+ ç‚ºé¡é ­å¾Œæ–¹.`
+		"../../textures/uffizi_front.tga" // `å³æ‰‹åº§æ¨™ç³»ä¸Š Z- ç‚ºé¡é ­å‰æ–¹.`
 	};
 
 	g_TextureID = GutLoadCubemapTexture_OpenGL(texture_array);
 
-	// ¨Ï¥ÎCUBEMAP¶K¹Ï¥\¯à
+	// ä½¿ç”¨CUBEMAPè²¼åœ–åŠŸèƒ½
 	glEnable(GL_TEXTURE_CUBE_MAP);
-	// ®M¥ÎCUBEMAP¶K¹Ï
+	// å¥—ç”¨CUBEMAPè²¼åœ–
 	glBindTexture( GL_TEXTURE_CUBE_MAP, g_TextureID );
 
 	return true;
@@ -48,52 +48,52 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFovW, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &projection_matrix);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	// `§â¥¿¦V¸ò¤Ï¦Vªº­±³£µe¥X¨Ó`
+	// `æŠŠæ­£å‘è·Ÿåå‘çš„é¢éƒ½ç•«å‡ºä¾†`
 	glDisable(GL_CULL_FACE);
-	// `¨Ï¥ÎCUBEMAP¶K¹Ï¥\¯à`
+	// `ä½¿ç”¨CUBEMAPè²¼åœ–åŠŸèƒ½`
 	glEnable(GL_TEXTURE_CUBE_MAP);
-	// `®M¥ÎCUBEMAP¶K¹Ï`
+	// `å¥—ç”¨CUBEMAPè²¼åœ–`
 	glBindTexture( GL_TEXTURE_CUBE_MAP, g_TextureID );
 	// Trilinear filter
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
 	glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR );
-	// `³]©wÂà´«¯x°}`
+	// `è¨­å®šè½‰æ›çŸ©é™£`
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 world_view_matrix = world_matrix * view_matrix;
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf( (float *) &world_view_matrix);
-	// `³]©wVertex Array`
+	// `è¨­å®šVertex Array`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VN), g_pSphereVertices);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glTexCoordPointer(3, GL_FLOAT, sizeof(Vertex_VN), g_pSphereVertices[0].m_Normal);
-	// `µe²y`
+	// `ç•«çƒ`
 	glDrawElements(
-		GL_TRIANGLES, // `«ü©w©Ò­nµeªº°ò¥»¹Ï§ÎºØÃş`
-		g_iNumSphereIndices, // `¦³´X­Ó¯Á¤Ş­È`
-		GL_UNSIGNED_SHORT, // `¯Á¤Ş­Èªº«¬ºA`
-		g_pSphereIndices // `¯Á¤Ş­È°}¦C`
+		GL_TRIANGLES, // `æŒ‡å®šæ‰€è¦ç•«çš„åŸºæœ¬åœ–å½¢ç¨®é¡`
+		g_iNumSphereIndices, // `æœ‰å¹¾å€‹ç´¢å¼•å€¼`
+		GL_UNSIGNED_SHORT, // `ç´¢å¼•å€¼çš„å‹æ…‹`
+		g_pSphereIndices // `ç´¢å¼•å€¼é™£åˆ—`
 	);
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

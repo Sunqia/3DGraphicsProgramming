@@ -5,8 +5,8 @@
 
 struct Vertex_V
 {
-	float m_Position[3]; // `³»ÂI¦ì¸m`
-	unsigned char m_Color[4]; // `ÃC¦â`
+	float m_Position[3]; // `é ‚é»ä½ç½®`
+	unsigned char m_Color[4]; // `é¡è‰²`
 };
 
 // model object
@@ -17,5 +17,5 @@ extern CGutUserControl g_Control;
 extern float g_fFOV;
 // mirror position
 extern float g_mirror_z;
-// ¯x§Î
+// çŸ©å½¢
 extern Vertex_V  g_Quad_v[4];

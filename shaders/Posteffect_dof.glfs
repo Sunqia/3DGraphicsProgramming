@@ -1,7 +1,7 @@
-// зя┼▄лGл╫
+// цФ╣шоКф║ох║ж
 // Pixel Shader
 //
-// PS ╜╒╛улGл╫░╤╝╞
+// PS шк┐цХ┤ф║ох║жхПГцХ╕
 uniform vec4 vDepthOfField;
 uniform vec4 vZInv;
 

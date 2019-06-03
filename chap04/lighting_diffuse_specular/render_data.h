@@ -42,40 +42,40 @@ struct Light_Info
 	}
 };
 
-// ¥ú·½
+// å…‰æº
 extern Light_Info g_Lights[];
 extern Vector4 g_vGlobal_AmbientLight;
 
-// ±`¼Æ©w¸q
+// å¸¸æ•¸å®šç¾©
 const float g_fFovW = 45.0f;
 const int	g_iMaxNumGrids = 100;
 const int	g_iMaxNumGridVertices = (g_iMaxNumGrids+1) * (g_iMaxNumGrids+1);
 const int	g_iMaxNumGridIndices = g_iMaxNumGrids * (g_iMaxNumGrids * 2 + 2);
 
-// ®æ¤l¼Ò«¬¸ê®Æ
+// æ ¼å­æ¨¡å‹è³‡æ–™
 extern int	g_iNumGridVertices;
 extern int	g_iNumGridIndices;
 extern int	g_iNumGridTriangles;
 extern Vertex_V3N3 *g_pGridVertices;
 extern unsigned short *g_pGridIndices;
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 extern Vector4 g_eye; 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 extern Vector4 g_lookat; 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 extern Vector4 g_up; 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 extern Matrix4x4 g_view_matrix;
-// ª«¥ó±ÛÂà¯x°}
+// ç‰©ä»¶æ—‹è½‰çŸ©é™£
 extern Matrix4x4 g_world_matrix;
-// ª«¥ó§÷½è
+// ç‰©ä»¶æè³ª
 extern Vector4 g_vMaterialAmbient;
 extern Vector4 g_vMaterialDiffuse;
 extern Vector4 g_vMaterialSpecular;
 extern Vector4 g_vMaterialEmissive;
 extern float   g_fMaterialShininess;
-// ¥´¥ú³]©w
+// æ‰“å…‰è¨­å®š
 extern bool g_bLocalViewer;
 extern bool g_bAutoNormalize;
 extern bool g_bDiffuseReflection;

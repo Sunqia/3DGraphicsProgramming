@@ -38,11 +38,11 @@ bool InitResourceDX10(void)
 	ID3D10Blob *pVSCode = NULL;
 
 	{
-		// ¸ü¤JVertex Shader
+		// è¼‰å…¥Vertex Shader
 		g_pVertexShader = GutLoadVertexShaderDX10_HLSL("../../shaders/color_dx10.hlsl", "VS", "vs_4_0", &pVSCode);
 		if ( NULL==g_pVertexShader )
 			return false;
-		// ¸ü¤JPixel Shader
+		// è¼‰å…¥Pixel Shader
 		g_pPixelShader = GutLoadPixelShaderDX10_HLSL("../../shaders/color_dx10.hlsl", "PS", "ps_4_0");
 		if ( NULL==g_pPixelShader )
 			return false;
@@ -52,7 +52,7 @@ bool InitResourceDX10(void)
 	CGutModel::SetTexturePath("../../textures/");
 	g_Model_DX10.ConvertToDX10Model(&g_Model);
 
-    // ³]©wVertex¸ê®Æ®æ¦¡
+    // è¨­å®šVertexè³‡æ–™æ ¼å¼
 	{
 		D3D10_INPUT_ELEMENT_DESC layout[] =
 		{
@@ -65,7 +65,7 @@ bool InitResourceDX10(void)
 		SAFE_RELEASE(pVSCode);
 	}
 
-	// °t¸mShaderÅª¨ú°Ñ¼Æªº°O¾ĞÅéªÅ¶¡
+	// é…ç½®Shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ç©ºé–“
 	{
 		D3D10_BUFFER_DESC cbDesc;
 		ZeroMemory(&cbDesc, sizeof(cbDesc));
@@ -80,7 +80,7 @@ bool InitResourceDX10(void)
 			return false;
 	}
 
-	// °t¸mVertex Buffer
+	// é…ç½®Vertex Buffer
 	{
 		D3D10_BUFFER_DESC cbDesc;
 		ZeroMemory(&cbDesc, sizeof(cbDesc));
@@ -99,7 +99,7 @@ bool InitResourceDX10(void)
 			return false;
 	}
 
-	// rasterizer stateª«¥ó
+	// rasterizer stateç‰©ä»¶
 	{
 		D3D10_RASTERIZER_DESC desc;
 		
@@ -166,7 +166,7 @@ bool InitResourceDX10(void)
 		}
 	}
 
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 
 	return true;
@@ -212,12 +212,12 @@ void RenderFrameDX10(void)
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 world_view_proj_matrix = world_matrix * view_matrix * g_proj_matrix;
 
-	// `²M°£ÃC¦â`
+	// `æ¸…é™¤é¡è‰²`
 	g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
-	// `²M°£`Depth/Stencil buffer
+	// `æ¸…é™¤`Depth/Stencil buffer
 	g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
 
-	// `µe¥X¯ùÜò, ¨Ã§ó·s Stencil Buffer.`
+	// `ç•«å‡ºèŒ¶å£¼, ä¸¦æ›´æ–° Stencil Buffer.`
 	{
 		g_pDevice->OMSetDepthStencilState(g_pZStencil_Incr, 0);
 
@@ -229,72 +229,72 @@ void RenderFrameDX10(void)
 		g_Model_DX10.Render();
 	}
 
-	// ®M¥Î Shader
+	// å¥—ç”¨ Shader
 	{
 		UINT stride = sizeof(Vertex_V);
 		UINT offset = 0;
-		// `³]©wShader`
+		// `è¨­å®šShader`
 		g_pDevice->VSSetShader(g_pVertexShader);
 		g_pDevice->PSSetShader(g_pPixelShader);
-		// `³]©wShaderÅª¨ú°Ñ¼Æªº°O¾ĞÅé¦ìÓ_`
+		// `è¨­å®šShaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ä½ç½`
 		g_pDevice->VSSetConstantBuffers(0, 1, &g_pConstantBuffer);
 		g_pDevice->PSSetConstantBuffers(0, 1, &g_pConstantBuffer);
-		// `³]©wvertex¸ê®Æ®æ¦¡`
+		// `è¨­å®švertexè³‡æ–™æ ¼å¼`
 		g_pDevice->IASetInputLayout(g_pVertexLayout);
-		// `³]©wVertex Buffer`
+		// `è¨­å®šVertex Buffer`
 		g_pDevice->IASetVertexBuffers(0, 1, &g_pVertexBuffer, &stride, &offset);
-		// `³]©w¤T¨¤§Î³»ÂI¯Á¤Ş­È¸ê®Æ±Æ¦C¬Otriangle strip`
+		// `è¨­å®šä¸‰è§’å½¢é ‚é»ç´¢å¼•å€¼è³‡æ–™æ’åˆ—æ˜¯triangle strip`
 		g_pDevice->IASetPrimitiveTopology(D3D10_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
 	}
 
 	ShaderConstant *pConstData = NULL;
 
-	// `¥Îºñ¦â¼Ğ¥Ü¥X¥u§ó·s1¦¸ªº¹³¯À`
+	// `ç”¨ç¶ è‰²æ¨™ç¤ºå‡ºåªæ›´æ–°1æ¬¡çš„åƒç´ `
 	{
-		// `³]©wshader°Ñ¼Æ`
+		// `è¨­å®šshaderåƒæ•¸`
 		g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 		pConstData->m_wvp_matrix = ident_matrix;
 		pConstData->m_color.Set(0,1,0,1);
 		g_pConstantBuffer->Unmap();
-		// `µe¥X¬İªO`
+		// `ç•«å‡ºçœ‹æ¿`
 		g_pDevice->OMSetDepthStencilState(g_pZStencil_Test, 1);
 		g_pDevice->Draw(4, 0);
 	}
-	// `¥ÎÂÅ¦â¼Ğ¥Ü¥X§ó·s2¦¸ªº¹³¯À`
+	// `ç”¨è—è‰²æ¨™ç¤ºå‡ºæ›´æ–°2æ¬¡çš„åƒç´ `
 	{
-		// `³]©wshader°Ñ¼Æ`
+		// `è¨­å®šshaderåƒæ•¸`
 		g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 		pConstData->m_wvp_matrix = ident_matrix;
 		pConstData->m_color.Set(0,0,1,1);
 		g_pConstantBuffer->Unmap();
-		// `µe¥X¬İªO`
+		// `ç•«å‡ºçœ‹æ¿`
 		g_pDevice->OMSetDepthStencilState(g_pZStencil_Test, 2);
 		g_pDevice->Draw(4, 0);
 	}
-	// `¥Î¬õ¦â¼Ğ¥Ü¥X§ó·s3¦¸ªº¹³¯À`
+	// `ç”¨ç´…è‰²æ¨™ç¤ºå‡ºæ›´æ–°3æ¬¡çš„åƒç´ `
 	{
-		// `³]©wshader°Ñ¼Æ`
+		// `è¨­å®šshaderåƒæ•¸`
 		g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 		pConstData->m_wvp_matrix = ident_matrix;
 		pConstData->m_color.Set(1,0,0,1);
 		g_pConstantBuffer->Unmap();
-		// `µe¥X¬İªO`
+		// `ç•«å‡ºçœ‹æ¿`
 		g_pDevice->OMSetDepthStencilState(g_pZStencil_Test, 3);
 		g_pDevice->Draw(4, 0);
 	}
-	// `¥Î¥Õ¦â¼Ğ¥Ü¥X§ó·s¶W¹L3¦¸ªº¹³¯À`
+	// `ç”¨ç™½è‰²æ¨™ç¤ºå‡ºæ›´æ–°è¶…é3æ¬¡çš„åƒç´ `
 	{
-		// `³]©wshader°Ñ¼Æ`
+		// `è¨­å®šshaderåƒæ•¸`
 		g_pConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 		pConstData->m_wvp_matrix = ident_matrix;
 		pConstData->m_color.Set(1,1,1,1);
 		g_pConstantBuffer->Unmap();
-		// `µe¥X¬İªO`
+		// `ç•«å‡ºçœ‹æ¿`
 		g_pDevice->OMSetDepthStencilState(g_pZStencil_Less, 3);
 		g_pDevice->Draw(4, 0);
 	}
 
-	// `µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±.`
+	// `ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢.`
 	pSwapChain->Present(1, 0);
 }
 

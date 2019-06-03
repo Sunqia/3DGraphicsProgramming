@@ -713,7 +713,7 @@ inline Vector4SSE VectorRotationToQuaternion(Vector4SSE &v)
 	return result;
 }
 
-// plane¦V¶q°O¿ı¥­­±ªí¦¡¥Ü¤¤a*x+b*y+c*z+d=0¤¤ªº(a,b,c,d)­È
+// planeå‘é‡è¨˜éŒ„å¹³é¢è¡¨å¼ç¤ºä¸­a*x+b*y+c*z+d=0ä¸­çš„(a,b,c,d)å€¼
 inline Vector4SSE PointToPlaneDistance(Vector4SSE &point, Vector4SSE &plane)
 {
 	Vector4SSE p = point;
@@ -721,7 +721,7 @@ inline Vector4SSE PointToPlaneDistance(Vector4SSE &point, Vector4SSE &plane)
 	return VectorDot(p, plane);
 }
 
-// ­pºâpoint¹ïplane¥­­±Ãè®g«áªº3D¦ì¸m
+// è¨ˆç®—pointå°planeå¹³é¢é¡å°„å¾Œçš„3Dä½ç½®
 inline Vector4SSE MirrorPoint(Vector4SSE &point, Vector4SSE &plane)
 {
 	Vector4SSE mirrored_point;
@@ -733,7 +733,7 @@ inline Vector4SSE MirrorPoint(Vector4SSE &point, Vector4SSE &plane)
 	return mirrored_point;
 }
 
-// ­pºâvector¹ïplane¥­­±Ãè®g«áªº3D¤è¦V
+// è¨ˆç®—vectorå°planeå¹³é¢é¡å°„å¾Œçš„3Dæ–¹å‘
 inline Vector4SSE MirrorVector(Vector4SSE &vector, Vector4SSE &plane)
 {
 	Vector4SSE mirrored_a, mirrored_b, mirrored_vector;

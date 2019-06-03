@@ -6,7 +6,7 @@
 Matrix4x4 g_sun_matrix, g_earth_matrix, g_moon_matrix;
 // 
 bool g_bBlur = true;
-// ¼Ò«¬
+// æ¨¡åž‹
 CGutModel g_Models[4];
 // controller object
 CGutUserControl g_Control;

@@ -16,9 +16,9 @@ static Vector4 g_vFogColor(0.5f, 0.5f, 0.5f, 1.0f);
 
 void InitState(float aspect)
 {
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_OpenGL(g_fFOV, aspect, 0.1f, 100.0f);
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
 	glMatrixMode(GL_MODELVIEW);	
@@ -41,36 +41,36 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	InitState(aspect);
 }
 
-// ¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï
+// ä½¿ç”¨OpenGLä¾†ç¹ªåœ–
 void RenderFrameOpenGL(void)
 {
-	// ²M°£µe­±
+	// æ¸…é™¤ç•«é¢
 	glClearColor(g_vFogColor[0], g_vFogColor[1], g_vFogColor[2], g_vFogColor[3]);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-	// ­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}
+	// è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£
 	Matrix4x4 view_matrix = g_Control.GetViewMatrix();
 	Matrix4x4 object_matrix = g_Control.GetObjectMatrix();
 	Matrix4x4 world_view_matrix = object_matrix * view_matrix;
-	// ³]©w§ë¼vÂà´«¯x°}
+	// è¨­å®šæŠ•å½±è½‰æ›çŸ©é™£
 	glMatrixMode(GL_PROJECTION);
 	glLoadMatrixf( (float *) &g_projection_matrix);
-	// ³]©wÃèÀYÂà´«¯x°}
+	// è¨­å®šé¡é ­è½‰æ›çŸ©é™£
 	glMatrixMode(GL_MODELVIEW);
 	glLoadMatrixf( (float *) &world_view_matrix);
 
-	// ³]©wÃú
-	glEnable(GL_FOG); // ¶}±ÒÃúªº¥\¯à
-	glFogfv(GL_FOG_COLOR, &g_vFogColor[0]); // ÃC¦â
+	// è¨­å®šéœ§
+	glEnable(GL_FOG); // é–‹å•Ÿéœ§çš„åŠŸèƒ½
+	glFogfv(GL_FOG_COLOR, &g_vFogColor[0]); // é¡è‰²
 	
 	switch(g_iFogMode)
 	{
@@ -78,32 +78,32 @@ void RenderFrameOpenGL(void)
 		glDisable(GL_FOG);
 		break;
 	case 1:
-		// ÃúÀH¶ZÂ÷½u©ÊÅÜ¿@
+		// éœ§éš¨è·é›¢ç·šæ€§è®Šæ¿ƒ
 		glFogi(GL_FOG_MODE, GL_LINEAR);
-		// ³]©wÃúªº½d³ò
+		// è¨­å®šéœ§çš„ç¯„åœ
 		glFogf(GL_FOG_START, 0.0f);
 		glFogf(GL_FOG_END, 10.0f);
-		// ­pºâ¤½¦¡¬°
+		// è¨ˆç®—å…¬å¼ç‚º
 		// (fog_end - distance_to_camera) / (fog_end - fog_start)
 		break;
 	case 2:
-		// `®M¥Î«ü¼Æ¨ç¦¡¨ÓÅÜ¤ÆªºÃú `
+		// `å¥—ç”¨æŒ‡æ•¸å‡½å¼ä¾†è®ŠåŒ–çš„éœ§ `
 		glFogi(GL_FOG_MODE, GL_EXP);
 		glFogf(GL_FOG_DENSITY, 0.5f);
-		// ­pºâ¤½¦¡¬°
+		// è¨ˆç®—å…¬å¼ç‚º
 		// power(e, -(fog_density * distance_to_camera))
 		break;
 	case 3:
-		// `®M¥Î«ü¼Æ¨ç¦¡¨ÓÅÜ¤ÆªºÃú `
+		// `å¥—ç”¨æŒ‡æ•¸å‡½å¼ä¾†è®ŠåŒ–çš„éœ§ `
 		glFogi(GL_FOG_MODE, GL_EXP2);
 		glFogf(GL_FOG_DENSITY, 0.5f);
-		// ­pºâ¤½¦¡¬°
+		// è¨ˆç®—å…¬å¼ç‚º
 		// power(e, -(fog_density * distance_to_camera)^2)
 		break;
 	}
 
-	// µe¥X¼Ò«¬
+	// ç•«å‡ºæ¨¡å‹
 	g_Model_OpenGL.Render();
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
 	GutSwapBuffersOpenGL();
 }

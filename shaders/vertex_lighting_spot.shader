@@ -1,34 +1,34 @@
-// `³»ÂIªº¸ê®Æ®æ¦¡`
+// `é ‚é»çš„è³‡æ–™æ ¼å¼`
 struct VS_INPUT
 {
 	float4 Position : POSITION;
 	float3 Normal	: Normal;
 };
 
-// `³]©wVertex Shader¿é¥Xªº¸ê®Æ®æ¦¡`
+// `è¨­å®šVertex Shaderè¼¸å‡ºçš„è³‡æ–™æ ¼å¼`
 struct VS_OUTPUT
 {
 	float4 Position : POSITION;
 	float4 Color	: COLOR;
 };
 
-// `Âà´«¯x°}`
+// `è½‰æ›çŸ©é™£`
 uniform row_major float4x4 g_worldviewproj_matrix : register(c0);
 uniform row_major float4x4 g_world_matrix : register(c4);
-// `ÃèÀY¦ì¸m`
+// `é¡é ­ä½ç½®`
 uniform float4 g_camera_position : register(c8);
-// `Àô¹Ò¥ú`
+// `ç’°å¢ƒå…‰`
 uniform float4 g_Ambient : register(c12);
-// `ÂI¥ú·½`
+// `é»å…‰æº`
 uniform float3 g_Light_Position : register(c13);
 uniform float3 g_Light_Direction : register(c14);
 uniform float3 g_Light_Attenuation : register(c15);
 uniform float3 g_SpotLightCoeff : register(c16);
-// `§÷½è©M¥ú·½¬Û­¼ªºµ²ªG`
+// `æè³ªå’Œå…‰æºç›¸ä¹˜çš„çµæœ`
 uniform float4 g_Light_Ambient : register(c17);
 uniform float4 g_Light_Diffuse : register(c18);
 uniform float4 g_Light_Specular : register(c19);
-// `Specularªº«GÂI¶°¤¤µ{«×`
+// `Specularçš„äº®é»é›†ä¸­ç¨‹åº¦`
 uniform float  g_Light_Shininess : register(c20);
 
 // Vertex Shader
@@ -36,25 +36,25 @@ VS_OUTPUT VS(VS_INPUT In)
 {
 	VS_OUTPUT Out;
 	
-	// `Âà´«¨ì¿Ã¹õ®y¼Ğ`
+	// `è½‰æ›åˆ°è¢å¹•åº§æ¨™`
 	Out.Position = mul( In.Position, g_worldviewproj_matrix);
 	
-	// `­pºâNormal, Position¦b¥@¬É®y¼Ğ¨t¤Wªº¤è¦V¸ò¦ì¸m.`
+	// `è¨ˆç®—Normal, Positionåœ¨ä¸–ç•Œåº§æ¨™ç³»ä¸Šçš„æ–¹å‘è·Ÿä½ç½®.`
 	float3 vWorldNormal = mul( In.Normal, (float3x3) g_world_matrix);
 	float3 vWorldPosition = mul( In.Position, g_world_matrix).xyz;
 	
-	// `ªì­È`
+	// `åˆå€¼`
 	float4 vAmbient = g_Ambient + g_Light_Ambient;
 	
-	// `­pºâ¥úªº¤è¦V¸ò¶ZÂ÷`
+	// `è¨ˆç®—å…‰çš„æ–¹å‘è·Ÿè·é›¢`
 	float3 vDiff = g_Light_Position - vWorldPosition;
 	float  fDistance = length(vDiff);
 	float3 vDir = vDiff / fDistance; // normalize
 	
-	// `¥ú·½ªºDiffuse³¡¥÷`
+	// `å…‰æºçš„Diffuseéƒ¨ä»½`
 	float4 vDiffuse = g_Light_Diffuse * saturate(dot(vDir, vWorldNormal));
 	
-	// `¥ú·½ªºSpcular³¡¥÷`
+	// `å…‰æºçš„Spcularéƒ¨ä»½`
 	float3 vCameraPosition = g_camera_position.xyz;
 	float3 vCameraDir = normalize(vCameraPosition - vWorldPosition);
 	float3 vHalfDir = normalize(vDir + vCameraDir);
@@ -62,15 +62,15 @@ VS_OUTPUT VS(VS_INPUT In)
 	float  fSpecular = pow(fSpecularCosine, g_Light_Shininess);
 	float4 vSpecular = g_Light_Specular * fSpecular;
 	
-	// `­pºâ¥úªº°I´î`
+	// `è¨ˆç®—å…‰çš„è¡°æ¸›`
 	float fLightAttenuation = dot(float3(1.0f, fDistance, fDistance * fDistance), g_Light_Attenuation);
 
-	// `­pºâ»E¥ú¿Oªº®ÄªG`
+	// `è¨ˆç®—èšå…‰ç‡ˆçš„æ•ˆæœ`
 	float fSpotLightCosine = dot(-vDir, g_Light_Direction);
 	fSpotLightCosine = fSpotLightCosine > g_SpotLightCoeff.x ? fSpotLightCosine : 0.0f;
 	float fSpotLightEffect = pow(fSpotLightCosine, g_SpotLightCoeff.y);
 
-	// `¥ş³¡¥[°_¨Ó`
+	// `å…¨éƒ¨åŠ èµ·ä¾†`
 	Out.Color = vAmbient + (vDiffuse + vSpecular) / fLightAttenuation * fSpotLightEffect;
 	
 	return Out;
@@ -79,6 +79,6 @@ VS_OUTPUT VS(VS_INPUT In)
 // Pixel Shader
 float4 PS(VS_OUTPUT In) : COLOR
 {
-	// `¨Ï¥Î³»ÂI¶¡¤º´¡¥X¨ÓªºÃC¦â`
+	// `ä½¿ç”¨é ‚é»é–“å…§æ’å‡ºä¾†çš„é¡è‰²`
 	return In.Color;
 }

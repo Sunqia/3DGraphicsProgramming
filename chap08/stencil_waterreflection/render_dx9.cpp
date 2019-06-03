@@ -9,19 +9,19 @@ static Matrix4x4 g_projection_matrix;
 
 void InitStateDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
-	// Ãö³¬¥´¥ú
+	// é—œé–‰æ‰“å…‰
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 }
 
 bool InitResourceDX9(void)
 {
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// ³]©wµø¨¤Âà´«¯x°}
+	// è¨­å®šè¦–è§’è½‰æ›çŸ©é™£
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 
 	InitStateDX9();
@@ -42,9 +42,9 @@ void ResizeWindowDX9(int width, int height)
 {
 	// Reset Device
 	GutResetGraphicsDeviceDX9();
-	// ¨ú±oDirect3D 9¸Ë¸m
+	// å–å¾—Direct3D 9è£ç½®
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_projection_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, aspect, 0.1f, 100.0f);
 
@@ -79,21 +79,21 @@ static void RenderModelDX9(bool mirror, Vector4 *pPlane)
 
 		Matrix4x4 temp_matrix = GutMatrixLookAtRH(mirror_eye, mirror_lookat, mirror_up);
 
-		// ¦]¬°¬OÃè®g, ¦bÂà´«¨ìÃèÀY®y¼Ð¨t«á­n°µ­Ó¥ª¥k¹ï½Õªº°Ê§@.
+		// å› ç‚ºæ˜¯é¡å°„, åœ¨è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»å¾Œè¦åšå€‹å·¦å³å°èª¿çš„å‹•ä½œ.
 		Matrix4x4 mirror_x;
 		mirror_x.Identity();
 		mirror_x.Scale(-1.0f, 1.0f, 1.0f);
 
 		view_matrix = temp_matrix * mirror_x;
 
-		// ¥k¥ª¹ï½Õ«á, 3¨¤§Îªº³»ÂI±Æ¦C¶¶§Ç·|³Q¤Ï¹L¨Ó.
+		// å³å·¦å°èª¿å¾Œ, 3è§’å½¢çš„é ‚é»žæŽ’åˆ—é †åºæœƒè¢«åéŽä¾†.
 		GutSetDX9BackFace(D3DCULL_CCW);
 	}
 	else
 	{
 		if ( g_bClip )
 		{
-			// `±Ò°Ê`ClipPlane
+			// `å•Ÿå‹•`ClipPlane
 			device->SetRenderState(D3DRS_CLIPPLANEENABLE, D3DCLIPPLANE0 );
 			float clipplane[] = {0.0f, 0.0f, 1.0f, -g_mirror_z};
 			device->SetClipPlane(0, clipplane);
@@ -111,7 +111,7 @@ static void RenderModelDX9(bool mirror, Vector4 *pPlane)
 	device->SetRenderState(D3DRS_CLIPPLANEENABLE, FALSE);
 }
 
-// ¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+// ä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
@@ -121,16 +121,16 @@ void RenderFrameDX9(void)
 	Matrix4x4 world_matrix = g_Control.GetObjectMatrix();
 
 	device->BeginScene(); 
-	// ®ø°£µe­±
+	// æ¶ˆé™¤ç•«é¢
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER | D3DCLEAR_STENCIL, D3DCOLOR_RGBA(0, 0, 150, 255), 1.0f, 0);
 	{
-		// µe¥XªÅ¶¡¤¤ªº¯ùÜò
+		// ç•«å‡ºç©ºé–“ä¸­çš„èŒ¶å£¼
 		device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &g_projection_matrix);
 		device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_matrix);
 		RenderModelDX9(false, NULL);
 	}
-	// µe¥XÃè­±, ¦P®É§âstencil­È³]¬°1
+	// ç•«å‡ºé¡é¢, åŒæ™‚æŠŠstencilå€¼è¨­ç‚º1
 	{	
 		sModelMaterial_DX9 material;
 		material.m_Material.Diffuse.r = material.m_Material.Diffuse.g = material.m_Material.Diffuse.b = material.m_Material.Diffuse.a = 0.0f;
@@ -143,11 +143,11 @@ void RenderFrameDX9(void)
 
 		Matrix4x4 identity_matrix = Matrix4x4::IdentityMatrix();
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &identity_matrix);
-		// µe¥X¯x§Î
+		// ç•«å‡ºçŸ©å½¢
 		device->SetFVF(D3DFVF_XYZ);
 		device->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, g_Quad, sizeof(Vertex_VT));
 	}
-	// §âÃè­±½d³òªºZBuffer²M¬°1.0
+	// æŠŠé¡é¢ç¯„åœçš„ZBufferæ¸…ç‚º1.0
 	{
 		device->SetRenderState(D3DRS_STENCILFUNC, D3DCMP_EQUAL);
 		device->SetRenderState(D3DRS_STENCILPASS, D3DSTENCILOP_KEEP);
@@ -170,13 +170,13 @@ void RenderFrameDX9(void)
 			D3DCOLORWRITEENABLE_BLUE |
 			D3DCOLORWRITEENABLE_ALPHA);
 	}
-	// µe¥X¤Ï®gªº¯ùÜò
+	// ç•«å‡ºåå°„çš„èŒ¶å£¼
 	{
 		RenderModelDX9(true, &vPlane);
 		device->SetRenderState(D3DRS_STENCILENABLE, FALSE);
 	}
-	// «Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F
+	// å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†
 	device->EndScene(); 
-	// §â­I´ºbackbufferªºµe­±§e²{¥X¨Ó
+	// æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†
     device->Present( NULL, NULL, NULL, NULL );
 }

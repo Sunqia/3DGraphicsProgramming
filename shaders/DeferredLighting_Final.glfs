@@ -12,15 +12,15 @@ uniform vec4 vLightAmbient;
 
 void main(void)
 {
-	// `§â¿Ã¹õ®y¼ĞÂà´«¦¨¶K¹Ï®y¼Ğ`
+	// `æŠŠè¢å¹•åº§æ¨™è½‰æ›æˆè²¼åœ–åº§æ¨™`
 	vec2 vTexcoord = (gl_TexCoord[0].xy / gl_TexCoord[0].w) * vec2(0.5, 0.5) + vec2(0.5, 0.5);
 	
-	// `±q¶K¹Ï¤¤¨ú¥X³o­Ó¹³¯Àªº¦ì¸m, ­±¦V, ¸ò¤Ï¥ú¯à¤O.`
+	// `å¾è²¼åœ–ä¸­å–å‡ºé€™å€‹åƒç´ çš„ä½ç½®, é¢å‘, è·Ÿåå…‰èƒ½åŠ›.`
 	vec4 vWorldPos = texture2D(PosSampler, vTexcoord);
 	vec4 vWorldNormal = texture2D(NormalmapSampler, vTexcoord);
 	vec4 vAlbedo = texture2D(AlbedoSampler, vTexcoord);
 
-	// `­pºâ¥´¥ú`
+	// `è¨ˆç®—æ‰“å…‰`
 	vec3 vLightDir = normalize(vLightPos.xyz - vWorldPos.xyz);
 	vec3 vCameraDir = normalize(vCameraPos.xyz - vWorldPos.xyz);
 	vec3 vHalfVector = normalize(vCameraDir + vLightDir);

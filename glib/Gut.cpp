@@ -160,9 +160,9 @@ Matrix4x4 GutMatrixLookAtLH(Vector4 &eye, Vector4 &lookat, Vector4 &up)
 }
 
 // right hand coord system
-// eye = `ÃèÀY¦ì¸m`
-// lookat = `ÃèÀY¹ï·Çªº¦ì¸m`
-// up = `ÃèÀY¥¿¤W¤èªº¤è¦V`
+// eye = `é¡é ­ä½ç½®`
+// lookat = `é¡é ­å°æº–çš„ä½ç½®`
+// up = `é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘`
 Matrix4x4 GutMatrixLookAtRH(Vector4 &eye, Vector4 &lookat, Vector4 &up)
 {
 	Vector4 up_normalized = VectorNormalize(up);
@@ -214,10 +214,10 @@ Matrix4x4 GutMatrixPerspectiveRH(float fovy, float aspect, float z_near, float z
 }
 
 // Direct3D native left hand system
-// fovy = ««ª½¤è¦Vªºµø¨¤
-// aspect = ¤ô¥­¤è¦Vµø¨¤¹ï­«ª½¤è¦Vµø¨¤ªº¤ñ­È
-// z_hear = ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷
-// z_far = ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷
+// fovy = å‚ç›´æ–¹å‘çš„è¦–è§’
+// aspect = æ°´å¹³æ–¹å‘è¦–è§’å°é‡ç›´æ–¹å‘è¦–è§’çš„æ¯”å€¼
+// z_hear = é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢
+// z_far = é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢
 Matrix4x4 GutMatrixPerspective_DirectX(float fovy, float aspect, float z_near, float z_far)
 {
 	Matrix4x4 matrix;
@@ -237,10 +237,10 @@ Matrix4x4 GutMatrixPerspective_DirectX(float fovy, float aspect, float z_near, f
 	return matrix;
 }
 
-// w = `ÃèÀY¤ô¥­¤è¦V¥i¥H¬İ¨ìªº½d³ò`
-// h = `ÃèÀY««ª½¤è¦V¥i¥H¬İ¨ìªº½d³ò`
-// z_hear = `ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷`
-// z_far  = `ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷`
+// w = `é¡é ­æ°´å¹³æ–¹å‘å¯ä»¥çœ‹åˆ°çš„ç¯„åœ`
+// h = `é¡é ­å‚ç›´æ–¹å‘å¯ä»¥çœ‹åˆ°çš„ç¯„åœ`
+// z_hear = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢`
+// z_far  = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢`
 Matrix4x4 GutMatrixOrthoRH_DirectX(float w, float h, float z_near, float z_far)
 {
 	Matrix4x4 matrix;
@@ -254,10 +254,10 @@ Matrix4x4 GutMatrixOrthoRH_DirectX(float w, float h, float z_near, float z_far)
 	return matrix;
 }
 
-// fovy = ««ª½¤è¦Vªºµø¨¤
-// aspect = `¤ô¥­¤è¦Vµø¨¤¹ï­«ª½¤è¦Vµø¨¤ªº¤ñ­È`
-// z_hear = `ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷`
-// z_far = `ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷`
+// fovy = å‚ç›´æ–¹å‘çš„è¦–è§’
+// aspect = `æ°´å¹³æ–¹å‘è¦–è§’å°é‡ç›´æ–¹å‘è¦–è§’çš„æ¯”å€¼`
+// z_hear = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢`
+// z_far = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢`
 Matrix4x4 GutMatrixPerspectiveRH_DirectX(float fovy, float aspect, 
 										 float z_near, float z_far)
 {
@@ -279,10 +279,10 @@ Matrix4x4 GutMatrixPerspectiveRH_DirectX(float fovy, float aspect,
 }
 
 // OpenGL native right hand system
-// fovy = `««ª½¤è¦Vªºµø¨¤`
-// aspect = `¤ô¥­¤è¦Vµø¨¤¹ï­«ª½¤è¦Vµø¨¤ªº¤ñ­È`
-// z_hear = `ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷`
-// z_far = `ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷`
+// fovy = `å‚ç›´æ–¹å‘çš„è¦–è§’`
+// aspect = `æ°´å¹³æ–¹å‘è¦–è§’å°é‡ç›´æ–¹å‘è¦–è§’çš„æ¯”å€¼`
+// z_hear = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢`
+// z_far = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢`
 Matrix4x4 GutMatrixOrthoRH_OpenGL(float w, float h, float z_near, float z_far)
 {
 	Matrix4x4 matrix;
@@ -303,10 +303,10 @@ Matrix4x4 GutMatrixOrtho_OpenGL(float w, float h, float z_near, float z_far)
 }
 
 // OpenGL native right hand system
-// fovy = `««ª½¤è¦Vªºµø¨¤`
-// aspect = `¤ô¥­¤è¦Vµø¨¤¹ï­«ª½¤è¦Vµø¨¤ªº¤ñ­È`
-// z_hear = `ÃèÀY¥i¥H¬İ¨ìªº³Ìªñ¶ZÂ÷`
-// z_far = `ÃèÀY¥i¥H¬İ¨ìªº³Ì»·¶ZÂ÷`
+// fovy = `å‚ç›´æ–¹å‘çš„è¦–è§’`
+// aspect = `æ°´å¹³æ–¹å‘è¦–è§’å°é‡ç›´æ–¹å‘è¦–è§’çš„æ¯”å€¼`
+// z_hear = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€è¿‘è·é›¢`
+// z_far = `é¡é ­å¯ä»¥çœ‹åˆ°çš„æœ€é è·é›¢`
 Matrix4x4 GutMatrixPerspectiveRH_OpenGL(float fovy, float aspect, 
 										float z_near, float z_far)
 {
@@ -332,7 +332,7 @@ Matrix4x4 GutMatrixPerspective_OpenGL(float fovy, float aspect, float z_near, fl
 	return GutMatrixPerspectiveRH_OpenGL(fovy, aspect, z_near, z_far);
 }
 
-// ²£¥Íx_grids * y_grids­Ó®æ¤lªº´Ñ½L®æ¼Ò«¬
+// ç”¢ç”Ÿx_grids * y_gridså€‹æ ¼å­çš„æ£‹ç›¤æ ¼æ¨¡å‹
 bool GutCreateGrids(int x_grids, int y_grids, 
 					  Vertex_V3N3 **ppVertices, int &num_vertices, 
 					  unsigned short **ppIndices, int &num_indices, int &num_triangles)
@@ -354,7 +354,7 @@ bool GutCreateGrids(int x_grids, int y_grids,
 		GutRelease16BytesAlignedMemory(pVertices);
 		return false;
 	}
-	// ¨Ï¥Îtriangle strip®É, ¤T¨¤§Î¼Æ¥Ø¥Ã»·µ¥©ó¯Á¤Ş­È¼Æ¥Ø´î¥h2
+	// ä½¿ç”¨triangle stripæ™‚, ä¸‰è§’å½¢æ•¸ç›®æ°¸é ç­‰æ–¼ç´¢å¼•å€¼æ•¸ç›®æ¸›å»2
 	num_triangles = num_indices-2;
 
 	Vector4 vCorner(-0.5f, 0.5f, 0.0f, 1.0f);
@@ -385,7 +385,7 @@ bool GutCreateGrids(int x_grids, int y_grids,
 	{
 		if ( from_left_to_right )
 		{
-			// ¦b©_¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥ª±Æ¨ì¥k
+			// åœ¨å¥‡æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å·¦æ’åˆ°å³
 			pIndices[index_index++] = y * vertices_per_row;
 			pIndices[index_index++] = y * vertices_per_row + vertices_per_row;
 
@@ -398,7 +398,7 @@ bool GutCreateGrids(int x_grids, int y_grids,
 		}
 		else
 		{
-			// ¦b°¸¼Æ¦Cªº®É­Ô, ¤T¨¤§Î±q¥k±Æ¨ì¥ª
+			// åœ¨å¶æ•¸åˆ—çš„æ™‚å€™, ä¸‰è§’å½¢å¾å³æ’åˆ°å·¦
 			pIndices[index_index++] = y * vertices_per_row + x_grids;
 			pIndices[index_index++] = (y+1) * vertices_per_row + x_grids;
 

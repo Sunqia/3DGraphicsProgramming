@@ -18,7 +18,7 @@ bool InitResourceDX10(void)
 	g_Font.SetFontSize(32, 32);
 	g_Font.SetFontAdvance(20, 30);
 	g_Font.SetConsoleSize(32, 16);
-	// ¸ü¤J¦r«¬
+	// è¼‰å…¥å­—å‹
 	g_Font.LoadTexture("../../textures/ascii_couriernew.tga");
 
 	g_Font.Puts("3D Graphics", false);
@@ -46,16 +46,16 @@ void ResizeWindowDX10(int width, int height)
 
 void RenderFrameDX10(void)
 {
-	// ¨ú±o©I¥sGutCreateGraphicsDeviceDX10®É©Ò²£¥ÍªºD3D10ª«¥ó
+	// å–å¾—å‘¼å«GutCreateGraphicsDeviceDX10æ™‚æ‰€ç”¢ç”Ÿçš„D3D10ç‰©ä»¶
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView();
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); 
-	// ²M°£±Ş­±
+	// æ¸…é™¤æ™é¢
 	Vector4 vClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
 	g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
-	// µe¥X¤å¦r
+	// ç•«å‡ºæ–‡å­—
 	g_Font.Render();
-	// µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±
+	// ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); // front/back buffer
 	pSwapChain->Present(1, 0);
 }

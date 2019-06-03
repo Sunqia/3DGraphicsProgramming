@@ -27,21 +27,21 @@ bool InitResourceDX10(void)
 {
 	g_pDevice = GutGetGraphicsDeviceDX10();
 
-	// ¸ü¤Jµe¼Ò«¬±M¥Î, ¼ÒÀÀfixed pipelineªºshader
+	// è¼‰å…¥ç•«æ¨¡å‹å°ˆç”¨, æ¨¡æ“¬fixed pipelineçš„shader
 	if ( !CGutModel_DX10::LoadDefaultShader("../../shaders/gmodel_dx10.hlsl") )
 		return false;
 
 	CGutModel::SetTexturePath("../../textures/");
 
-	// §â¼Ò«¬Âà´«¦¨direct3d10®æ¦¡
+	// æŠŠæ¨¡å‹è½‰æ›æˆdirect3d10æ ¼å¼
 	for ( int m=0; m<4; m++ )
 	{
 		g_Model_DX10[m].ConvertToDX10Model(&g_Models[m]);
 	}
 
-	// °t¸mCubemap 6­Ó­±ªº°ÊºA¶K¹Ï
+	// é…ç½®Cubemap 6å€‹é¢çš„å‹•æ…‹è²¼åœ–
 	{
-		// °t¸m6±i¶K¹Ï, arrisze = 6, 
+		// é…ç½®6å¼µè²¼åœ–, arrisze = 6, 
 		D3D10_TEXTURE2D_DESC dstex;
 		ZeroMemory( &dstex, sizeof(dstex) );
 
@@ -56,7 +56,7 @@ bool InitResourceDX10(void)
 		dstex.Usage = D3D10_USAGE_DEFAULT;
 		dstex.BindFlags = D3D10_BIND_RENDER_TARGET | D3D10_BIND_SHADER_RESOURCE;
 		dstex.CPUAccessFlags = 0;
-		// ­n°O±o¥[¤W D3D10_RESOURCE_MISC_TEXTURECUBE
+		// è¦è¨˜å¾—åŠ ä¸Š D3D10_RESOURCE_MISC_TEXTURECUBE
 		dstex.MiscFlags = D3D10_RESOURCE_MISC_TEXTURECUBE;
 
 		g_pDevice->CreateTexture2D( &dstex, NULL, &g_pTexture);
@@ -87,9 +87,9 @@ bool InitResourceDX10(void)
 		}
 	}
 
-	// °t¸mDepthStencil°ÊºA¶K¹Ï
+	// é…ç½®DepthStencilå‹•æ…‹è²¼åœ–
 	{
-		// depth stencilªº¤j¤p¥²»İ¸òrender target¬Û²Å
+		// depth stencilçš„å¤§å°å¿…éœ€è·Ÿrender targetç›¸ç¬¦
 		D3D10_TEXTURE2D_DESC desc;
 		ZeroMemory( &desc, sizeof(desc) );
 
@@ -118,7 +118,7 @@ bool InitResourceDX10(void)
 		g_pDevice->CreateDepthStencilView(g_pDepthStencilTexture, &target_desc, &g_pDepthStencilView);
 	}
 
-	// Rasterizer Stateª«¥ó
+	// Rasterizer Stateç‰©ä»¶
 	{
 		D3D10_RASTERIZER_DESC rasterizer_state_desc;
 		ZeroMemory( &rasterizer_state_desc, sizeof(rasterizer_state_desc) );
@@ -158,7 +158,7 @@ bool InitResourceDX10(void)
 		}
 	}
 
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, 1.0f, 0.1f, 100.0f);
 
 	return true;
@@ -182,22 +182,22 @@ bool ReleaseResourceDX10(void)
 void ResizeWindowDX10(int width, int height)
 {
 	GutResetGraphicsDeviceDX10();
-	// ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤, ¨Ã­«·s­pºâ§ë¼v¯x°}
+	// é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’, ä¸¦é‡æ–°è¨ˆç®—æŠ•å½±çŸ©é™£
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFOV, aspect, 0.1f, 100.0f);
 }
 
 static void RenderSolarSystem(void)
 {
-	// ¦a²y
+	// åœ°çƒ
 	CGutModel_DX10::SetWorldMatrix(g_earth_matrix);
 	CGutModel_DX10::UpdateMatrix();
 	g_Model_DX10[1].Render();
-	// ¤ë«G
+	// æœˆäº®
 	CGutModel_DX10::SetWorldMatrix(g_moon_matrix);
 	CGutModel_DX10::UpdateMatrix();
 	g_Model_DX10[2].Render();
-	// ¤õ¬P
+	// ç«æ˜Ÿ
 	CGutModel_DX10::SetWorldMatrix(g_mars_matrix);
 	CGutModel_DX10::UpdateMatrix();
 	g_Model_DX10[3].Render();
@@ -207,7 +207,7 @@ void RenderFrameDX10(void)
 {
 	Vector4 vClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 	
-	// `¨ú±o©I¥sGutCreateGraphicsDeviceDX10®É©Ò²£¥ÍªºD3D10ª«¥ó`
+	// `å–å¾—å‘¼å«GutCreateGraphicsDeviceDX10æ™‚æ‰€ç”¢ç”Ÿçš„D3D10ç‰©ä»¶`
 	ID3D10RenderTargetView *pRenderTargetView = GutGetDX10RenderTargetView(); 
     ID3D10DepthStencilView *pDepthStencilView = GutGetDX10DepthStencilView(); 
 	IDXGISwapChain *pSwapChain = GutGetDX10SwapChain(); 
@@ -216,7 +216,7 @@ void RenderFrameDX10(void)
 
 	CGutModel_DX10::SetProjectionMatrix(g_proj_matrix);
 
-	// `§ó·scubemap 6­Ó­±`
+	// `æ›´æ–°cubemap 6å€‹é¢`
 	{
 		UINT nViewports = 1;
 		g_pDevice->RSGetViewports(&nViewports, &mainVP);
@@ -237,16 +237,16 @@ void RenderFrameDX10(void)
 
 		for ( int i=0; i<6; i++ )
 		{
-			// `§âµe­±µe¨ìcubemap¨ä¤¤¤@­Ó­±`
+			// `æŠŠç•«é¢ç•«åˆ°cubemapå…¶ä¸­ä¸€å€‹é¢`
 			g_pDevice->OMSetRenderTargets(1, &g_pRGBAView[i], g_pDepthStencilView);
 			g_pDevice->RSSetViewports(1, &VP);
-			// `²M°£µe­±`
+			// `æ¸…é™¤ç•«é¢`
 			g_pDevice->ClearRenderTargetView(g_pRGBAView[i], (float *)&vClearColor);
 			g_pDevice->ClearDepthStencilView(g_pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
-			// `§ó·sÃèÀY­±¦V`
+			// `æ›´æ–°é¡é ­é¢å‘`
 			Matrix4x4 cubemap_view_matrix = GutMatrixLookAtRH(g_vCubemap_Eye, g_vCubemap_Lookat[i], g_vCubemap_Up[i]);
 			CGutModel_DX10::SetViewMatrix(cubemap_view_matrix);
-			// `µe¦æ¬P`
+			// `ç•«è¡Œæ˜Ÿ`
 			RenderSolarSystem();
 		}
 
@@ -255,26 +255,26 @@ void RenderFrameDX10(void)
 	}
 
 	{
-		// `²M°£ÃC¦â`
+		// `æ¸…é™¤é¡è‰²`
 		g_pDevice->ClearRenderTargetView(pRenderTargetView, (float *)&vClearColor);
 		g_pDevice->ClearDepthStencilView(pDepthStencilView, D3D10_CLEAR_DEPTH | D3D10_CLEAR_STENCIL, 1.0f, 0);
-		// `³]©wÂà´«¯x°}`
+		// `è¨­å®šè½‰æ›çŸ©é™£`
 		CGutModel_DX10::SetProjectionMatrix(g_proj_matrix);
 		CGutModel_DX10::SetViewMatrix(g_Control.GetViewMatrix());
 		CGutModel_DX10::SetInvViewMatrix(g_Control.GetCameraMatrix());
 		CGutModel_DX10::SetWorldMatrix(g_sun_matrix);
 		CGutModel_DX10::UpdateMatrix();
-		// `§âModelªº²Ä3¼h¶K¹Ï±j­¢§ï¦¨cubemap`
+		// `æŠŠModelçš„ç¬¬3å±¤è²¼åœ–å¼·è¿«æ”¹æˆcubemap`
 		CGutModel_DX10::SetTextureOverwrite(2, g_pCubemapView);
-		// `¤Ó¶§`
+		// `å¤ªé™½`
 		g_Model_DX10[0].Render();
-		// `§âModelªº²Ä3¼h¶K¹ÏÁÙ­ì¦¨¼Ò«¬­ì©l³]©w`
+		// `æŠŠModelçš„ç¬¬3å±¤è²¼åœ–é‚„åŸæˆæ¨¡å‹åŸå§‹è¨­å®š`
 		CGutModel_DX10::SetTextureOverwrite(2, NULL);
-		// `¦æ¬P`
+		// `è¡Œæ˜Ÿ`
 		RenderSolarSystem();
 	}
 
-	// `µ¥«İµwÅé±½µ²§ô, µM«á¤~§ó·sµe­±.`
+	// `ç­‰å¾…ç¡¬é«”æƒçµæŸ, ç„¶å¾Œæ‰æ›´æ–°ç•«é¢.`
 	pSwapChain->Present(1, 0);
 }
 

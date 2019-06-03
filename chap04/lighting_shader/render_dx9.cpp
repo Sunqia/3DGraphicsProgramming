@@ -14,33 +14,33 @@ static Matrix4x4 g_proj_matrix;
 
 bool InitResourceDX9(void)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `¸ü¤JPixel Shader`
+	// `è¼‰å…¥Pixel Shader`
 	g_pVertexColor_PS = GutLoadPixelShaderDX9_HLSL("../../shaders/vertex_lighting_directional.shader", "PS", "ps_2_0");
 	if ( g_pVertexColor_PS==NULL )
 		return false;
-	// `¸ü¤JDirectional Light Vertex Shader`
+	// `è¼‰å…¥Directional Light Vertex Shader`
 	g_pDirLight_VS = GutLoadVertexShaderDX9_HLSL("../../shaders/vertex_lighting_directional.shader", "VS", "vs_1_1");
 	if ( g_pDirLight_VS==NULL )
 		return false;
-	// `¸ü¤JPoint Light Vertex Shader`
+	// `è¼‰å…¥Point Light Vertex Shader`
 	g_pPointLight_VS = GutLoadVertexShaderDX9_HLSL("../../shaders/vertex_lighting_point.shader", "VS", "vs_1_1");
 	if ( g_pPointLight_VS==NULL )
 		return false;
-	// `¸ü¤JSpot Light Vertex Shader`
+	// `è¼‰å…¥Spot Light Vertex Shader`
 	g_pSpotLight_VS = GutLoadVertexShaderDX9_HLSL("../../shaders/vertex_lighting_spot.shader", "VS", "vs_1_1");
 	if ( g_pSpotLight_VS==NULL )
 		return false;
 
-	// `µø¨¤Âà´«¯x°}`
+	// `è¦–è§’è½‰æ›çŸ©é™£`
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, 1.0f, 0.1f, 100.0f);
-	// `ÃèÀYÂà´«¯x°}`
+	// `é¡é ­è½‰æ›çŸ©é™£`
 	g_view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
-	// `¨Æ¥ý§âview_matrix¸òproj_matrix¬Û­¼`
+	// `äº‹å…ˆæŠŠview_matrixè·Ÿproj_matrixç›¸ä¹˜`
 	g_view_proj_matrix = g_view_matrix * g_proj_matrix;
 
-	// `µe¥X¥¿¦V¸ò¤Ï¦Vªº¤T¨¤§Î`
+	// `ç•«å‡ºæ­£å‘è·Ÿåå‘çš„ä¸‰è§’å½¢`
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 
 	return true;
@@ -59,31 +59,31 @@ bool ReleaseResourceDX9(void)
 void ResizeWindowDX9(int width, int height)
 {
 	GutResetGraphicsDeviceDX9();
-	// `§ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.`
+	// `æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿåž‚ç›´æ–¹å‘çš„è¦–è§’.`
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_DirectX(g_fFovW, aspect, 0.1f, 100.0f);
 	g_view_proj_matrix = g_view_matrix * g_proj_matrix;
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `µe¥X¥¿¦V¸ò¤Ï¦Vªº¤T¨¤§Î`
+	// `ç•«å‡ºæ­£å‘è·Ÿåå‘çš„ä¸‰è§’å½¢`
 	device->SetRenderState(D3DRS_CULLMODE, D3DCULL_NONE);
 }
 
 static void SetupLightingDX9(void)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	int base = 12;
 	Vector4 vShininess = g_fMaterialShininess;
 	Vector4 vAmbient, vDiffuse, vSpecular, vSpotLightCoeff;
-	// `³]©wÀô¹Ò¥ú`
+	// `è¨­å®šç’°å¢ƒå…‰`
 	device->SetVertexShaderConstantF(base, &g_vAmbientLight[0], 1);
 	
-	// `³]©w¥ú·½`
+	// `è¨­å®šå…‰æº`
 	switch(g_iSelectedLight)
 	{
-	// `¤è¦V¥ú`
+	// `æ–¹å‘å…‰`
 	default:
 	case 0:
 		g_pSelected_VS = g_pDirLight_VS;
@@ -99,7 +99,7 @@ static void SetupLightingDX9(void)
 		device->SetVertexShaderConstantF(base + 5, &vShininess.x, 1);
 
 		break;
-	// `ÂI¥ú·½`
+	// `é»žå…‰æº`
 	case 1:
 		g_pSelected_VS = g_pPointLight_VS;
 		
@@ -115,7 +115,7 @@ static void SetupLightingDX9(void)
 		device->SetVertexShaderConstantF(base + 6, &vShininess.x, 1);
 
 		break;
-	// `»E¥ú¿O`
+	// `èšå…‰ç‡ˆ`
 	case 2:
 		g_pSelected_VS = g_pSpotLight_VS;
 		
@@ -139,32 +139,32 @@ static void SetupLightingDX9(void)
 	}
 }
 
-// `¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–`
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `®ø°£µe­±`
+	// `æ¶ˆé™¤ç•«é¢`
 	device->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
-	// `³]©w¸ê®Æ®æ¦¡`
+	// `è¨­å®šè³‡æ–™æ ¼å¼`
 	device->SetFVF(D3DFVF_XYZ | D3DFVF_NORMAL);
-	// `®M¥Îshader`
+	// `å¥—ç”¨shader`
 	device->SetVertexShader(g_pSelected_VS);
 	device->SetPixelShader(g_pVertexColor_PS);
-	// `³]©w¥ú·½`
+	// `è¨­å®šå…‰æº`
 	SetupLightingDX9();
-	// `³]©wÂà´«¯x°}`
+	// `è¨­å®šè½‰æ›çŸ©é™£`
 	Matrix4x4 world_view_proj_matrix = g_world_matrix * g_view_proj_matrix;
 	device->SetVertexShaderConstantF(0, &world_view_proj_matrix[0][0], 4);
 	device->SetVertexShaderConstantF(4, &g_world_matrix[0][0], 4);
-	// `ÃèÀY¦ì¸m, ­pºâSpecular·|¥Î¨ì.`
+	// `é¡é ­ä½ç½®, è¨ˆç®—Specularæœƒç”¨åˆ°.`
 	device->SetVertexShaderConstantF(8, &g_eye[0], 1);
-	// `µe¥X®æ¤l`
+	// `ç•«å‡ºæ ¼å­`
 	device->DrawIndexedPrimitiveUP(D3DPT_TRIANGLESTRIP, 0, g_iNumGridVertices, g_iNumGridTriangles, 
 		g_pGridIndices, D3DFMT_INDEX16, g_pGridVertices, sizeof(Vertex_V3N3) );
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

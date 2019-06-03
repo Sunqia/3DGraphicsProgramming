@@ -10,7 +10,7 @@ void GutAllocateMemoryAlignment(int alignment)
 	g_MemoryAllocationMask = ~(alignment-1);
 }
 
-// °t¸m¤@¶ô°O¾ĞÅéªÅ¶¡, ¨Ã½T«O¦^¶Çªº°O¾ĞÅé¦ì§}¬Og_MemoryAllocationAlignmentªº­¿¼Æ
+// é…ç½®ä¸€å¡Šè¨˜æ†¶é«”ç©ºé–“, ä¸¦ç¢ºä¿å›å‚³çš„è¨˜æ†¶é«”ä½å€æ˜¯g_MemoryAllocationAlignmentçš„å€æ•¸
 void *GutAllocateAlignedMemory(size_t size)
 {
 	if ( size==0 ) return NULL;
@@ -28,7 +28,7 @@ void *GutAllocateAlignedMemory(size_t size)
 	}
 }
 
-// ÄÀ©ñ¸g¥ÑGutAllocateAlignedMemory°t¸mªº°O¾ĞÅéªÅ¶¡
+// é‡‹æ”¾ç¶“ç”±GutAllocateAlignedMemoryé…ç½®çš„è¨˜æ†¶é«”ç©ºé–“
 void GutReleaseAlignedMemory(void *memory)
 {
 	if ( memory==NULL ) return;
@@ -37,7 +37,7 @@ void GutReleaseAlignedMemory(void *memory)
 	delete (unsigned int *)pMemory[-1];
 }
 
-// °t¸m¤@¶ô°O¾ĞÅéªÅ¶¡, ¨Ã½T«O¦^¶Çªº°O¾ĞÅé¦ì§}¬O16 bytesªº­¿¼Æ
+// é…ç½®ä¸€å¡Šè¨˜æ†¶é«”ç©ºé–“, ä¸¦ç¢ºä¿å›å‚³çš„è¨˜æ†¶é«”ä½å€æ˜¯16 bytesçš„å€æ•¸
 void *GutAllocate16BytesAlignedMemory(size_t size)
 {
 	/*
@@ -51,7 +51,7 @@ void *GutAllocate16BytesAlignedMemory(size_t size)
 	return GutAllocateAlignedMemory(size);
 }
 
-// ÄÀ©ñ¸g¥ÑGutAllocate16BytesAlignedMemory°t¸mªº°O¾ĞÅéªÅ¶¡
+// é‡‹æ”¾ç¶“ç”±GutAllocate16BytesAlignedMemoryé…ç½®çš„è¨˜æ†¶é«”ç©ºé–“
 void GutRelease16BytesAlignedMemory(void *memory)
 {
 	GutReleaseAlignedMemory(memory);

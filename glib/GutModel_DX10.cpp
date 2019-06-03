@@ -296,7 +296,7 @@ bool CGutModel_DX10::CreateSharedResource(void)
 {
 	ID3D10Device *pDevice = GutGetGraphicsDeviceDX10();
 
-	// °t¸mShaderÅª¨ú°Ñ¼Æªº°O¾ÐÅéªÅ¶¡
+	// é…ç½®Shaderè®€å–åƒæ•¸çš„è¨˜æ†¶é«”ç©ºé–“
 	s_pMatrixConstantBuffer = GutCreateShaderConstant_DX10(sizeof(sMatrixConstants));
 	s_pMtlConstantBuffer = GutCreateShaderConstant_DX10(sizeof(sMaterialConstants));
 	
@@ -564,11 +564,11 @@ bool CGutModel_DX10::ConvertToDX10Model(CGutModel *pModel)
 			cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 			cbDesc.MiscFlags = 0;
 
-			// °t¸mÅã¥Ü¥d°O¾ÐÅé
+			// é…ç½®é¡¯ç¤ºå¡è¨˜æ†¶é«”
 			pDevice->CreateBuffer(&cbDesc, NULL, &pVertexChunk->m_pVertexBuffer);
 			if ( D3D_OK==pVertexChunk->m_pVertexBuffer->Map(D3D10_MAP_WRITE_DISCARD, 0, &vbuffer_pointer) )
 			{
-				// §â³»ÂI¸ê®Æ±q¥D°O¾ÐÅé«þ¨ã¨ìÅã¥Ü¥d¤W
+				// æŠŠé ‚é»žè³‡æ–™å¾žä¸»è¨˜æ†¶é«”æ‹·å…·åˆ°é¡¯ç¤ºå¡ä¸Š
 				pVertexChunkTarget->OutputVertexBuffer(vbuffer_pointer);
 				pVertexChunk->m_pVertexBuffer->Unmap();
 			}
@@ -588,11 +588,11 @@ bool CGutModel_DX10::ConvertToDX10Model(CGutModel *pModel)
 			cbDesc.CPUAccessFlags = D3D10_CPU_ACCESS_WRITE;
 			cbDesc.MiscFlags = 0;
 
-			// °t¸m¤@¶ôÅã¥Ü¥d°O¾ÐÅé
+			// é…ç½®ä¸€å¡Šé¡¯ç¤ºå¡è¨˜æ†¶é«”
 			pDevice->CreateBuffer(&cbDesc, NULL, &pVertexChunk->m_pIndexBuffer);
 			if ( D3D_OK==pVertexChunk->m_pIndexBuffer->Map(D3D10_MAP_WRITE_DISCARD, 0, &ibuffer_pointer) )
 			{
-				// §â¯Á¤Þ¸ê®Æ±q¥D°O¾ÐÅé«þ¨ã¨ìÅã¥Ü¥d¤W
+				// æŠŠç´¢å¼•è³‡æ–™å¾žä¸»è¨˜æ†¶é«”æ‹·å…·åˆ°é¡¯ç¤ºå¡ä¸Š
 				memcpy(ibuffer_pointer, pVertexChunkTarget->m_pIndexArray, ibuffer_size);
 				pVertexChunk->m_pIndexBuffer->Unmap();
 			}
@@ -625,11 +625,11 @@ void CGutModel_DX10::Render(UINT mask)
 
 	if ( bSubmitShader )
 	{
-		// ³]©wshader°Ñ¼Æ
+		// è¨­å®šshaderåƒæ•¸
 		ID3D10Buffer *buffers[3] = {s_pMatrixConstantBuffer, s_pMtlConstantBuffer, s_pLightConstantBuffer};
 	    pDevice->VSSetConstantBuffers(0, 3, buffers);
 	    pDevice->PSSetConstantBuffers(0, 3, buffers);
-		// ³]©wÂà´«¯x°}
+		// è¨­å®šè½‰æ›çŸ©é™£
 		sMatrixConstants *pConstData;
 		s_pMatrixConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 			pConstData->wvp_matrix = s_wvp_matrix;
@@ -644,7 +644,7 @@ void CGutModel_DX10::Render(UINT mask)
 			pConstData->light_wvp_matrix = s_light_wvp_matrix;
 			pConstData->light_wv_matrix = s_light_wv_matrix;
 		s_pMatrixConstantBuffer->Unmap();
-		// ³]©w¥ú·½
+		// è¨­å®šå…‰æº
 		sLightConstants *pLightData = NULL;
 		CGutModel_DX10::s_pLightConstantBuffer->Map(D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pLightData );
 			memcpy(pLightData, &s_light, sizeof(s_light));
@@ -701,11 +701,11 @@ void CGutModel_DX10::RenderMesh(bool submit_mtl)
 
 	if ( submit_mtl )
 	{
-		// ³]©wshader°Ñ¼Æ
+		// è¨­å®šshaderåƒæ•¸
 		ID3D10Buffer *buffers[3] = {s_pMatrixConstantBuffer, s_pMtlConstantBuffer, s_pLightConstantBuffer};
 	    pDevice->VSSetConstantBuffers(0, 3, buffers);
 	    pDevice->PSSetConstantBuffers(0, 3, buffers);
-		// ³]©wÂà´«¯x°}
+		// è¨­å®šè½‰æ›çŸ©é™£
 		sMatrixConstants *pConstData;
 		s_pMatrixConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 			pConstData->wvp_matrix = s_wvp_matrix;
@@ -720,7 +720,7 @@ void CGutModel_DX10::RenderMesh(bool submit_mtl)
 			pConstData->light_wvp_matrix = s_light_wvp_matrix;
 			pConstData->light_wv_matrix = s_light_wv_matrix;
 		s_pMatrixConstantBuffer->Unmap();
-		// ³]©w¥ú·½
+		// è¨­å®šå…‰æº
 		sLightConstants *pLightData = NULL;
 		CGutModel_DX10::s_pLightConstantBuffer->Map(D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pLightData );
 			memcpy(pLightData, &s_light, sizeof(s_light));
@@ -774,11 +774,11 @@ void CGutModel_DX10::RenderInstance(int num_instances, int instance_start, int m
 
 	if ( bSubmitMtl )
 	{
-		// ³]©wshader°Ñ¼Æ
+		// è¨­å®šshaderåƒæ•¸
 		ID3D10Buffer *buffers[3] = {s_pMatrixConstantBuffer, s_pMtlConstantBuffer, s_pLightConstantBuffer};
 	    pDevice->VSSetConstantBuffers(0, 3, buffers);
 	    pDevice->PSSetConstantBuffers(0, 3, buffers);
-		// ³]©wÂà´«¯x°}
+		// è¨­å®šè½‰æ›çŸ©é™£
 		sMatrixConstants *pConstData;
 		s_pMatrixConstantBuffer->Map( D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pConstData );
 			pConstData->wvp_matrix = s_wvp_matrix;
@@ -793,7 +793,7 @@ void CGutModel_DX10::RenderInstance(int num_instances, int instance_start, int m
 			pConstData->light_wvp_matrix = s_light_wvp_matrix;
 			pConstData->light_wv_matrix = s_light_wv_matrix;
 		s_pMatrixConstantBuffer->Unmap();
-		// ³]©w¥ú·½
+		// è¨­å®šå…‰æº
 		sLightConstants *pLightData = NULL;
 		CGutModel_DX10::s_pLightConstantBuffer->Map(D3D10_MAP_WRITE_DISCARD, NULL, (void **) &pLightData );
 			memcpy(pLightData, &s_light, sizeof(s_light));

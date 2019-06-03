@@ -3,16 +3,16 @@
 
 bool InitResourceDX9(void)
 {
-	// `¨ú±oDirect3D9¸Ë¸m`
+	// `å–å¾—Direct3D9è£ç½®`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}`
+	// `è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 	Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
 	Matrix4x4 projection_matrix = GutMatrixPerspectiveRH_DirectX(60.0f, 1.0f, 1.0f, 100.0f);
-	// `³]©wµø¨¤Âà´«¯x°}`
+	// `è¨­å®šè¦–è§’è½‰æ›çŸ©é™£`
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *) &projection_matrix);
-	// `³]©wÃèÀYÂà´«¯x°}`
+	// `è¨­å®šé¡é ­è½‰æ›çŸ©é™£`
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix);
-	// `Ãö³¬¥´¥ú`
+	// `é—œé–‰æ‰“å…‰`
 	device->SetRenderState(D3DRS_LIGHTING, FALSE);
 
 	return true;
@@ -23,25 +23,25 @@ bool ReleaseResourceDX9(void)
 	return true;
 }
 
-// `¨Ï¥ÎDirect3D9¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨Direct3D9ä¾†ç¹ªåœ–`
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
 
 	device->Clear(
-		0, NULL, // `²M°£¾ã­Óµe­± `
-		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, // `²M°£ÃC¦â¸òZ Buffer`
-		D3DCOLOR_ARGB(0, 0, 0, 0), // `©w­n§âÃC¦â²M¦¨¶Â¦â`
-		1.0f, // `³]©w­n§âZ­È²M¬°1, ¤]´N¬OÂ÷ÃèÀY³Ì»·.`
-		0 // `³]©w­n§âStencil buffer²M¬°0, ¦b³o¨S®t.`
+		0, NULL, // `æ¸…é™¤æ•´å€‹ç•«é¢ `
+		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, // `æ¸…é™¤é¡è‰²è·ŸZ Buffer`
+		D3DCOLOR_ARGB(0, 0, 0, 0), // `å®šè¦æŠŠé¡è‰²æ¸…æˆé»‘è‰²`
+		1.0f, // `è¨­å®šè¦æŠŠZå€¼æ¸…ç‚º1, ä¹Ÿå°±æ˜¯é›¢é¡é ­æœ€é .`
+		0 // `è¨­å®šè¦æŠŠStencil bufferæ¸…ç‚º0, åœ¨é€™æ²’å·®.`
 	);
 	
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
-	// `³]©w¸ê®Æ®æ¦¡`
+	// `è¨­å®šè³‡æ–™æ ¼å¼`
 	device->SetFVF(D3DFVF_XYZ); 
 
-	// `4­Óª÷¦r¶ğªº°ò¥»¦ì¸m`
+	// `4å€‹é‡‘å­—å¡”çš„åŸºæœ¬ä½ç½®`
 	Vector4 pos[4] = 
 	{
 		Vector4(-1.0f, -1.0f, 0.0f),
@@ -54,16 +54,16 @@ void RenderFrameDX9(void)
 
 	for ( int i=0; i<4; i++ )
 	{
-		// `³]©wÂà´«¯x°}`
+		// `è¨­å®šè½‰æ›çŸ©é™£`
 		world_matrix.Translate_Replace(pos[i]);
 		device->SetTransform(D3DTS_WORLD, (D3DMATRIX *) &world_matrix);
-		// `µe¥Xª÷¦r¶ğªº8±øÃä½u`
+		// `ç•«å‡ºé‡‘å­—å¡”çš„8æ¢é‚Šç·š`
 		device->DrawPrimitiveUP(D3DPT_LINELIST, 8, g_vertices, sizeof(Vector4)); 
 	}
 
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene(); 
 	
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }

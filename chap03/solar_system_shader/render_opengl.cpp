@@ -23,7 +23,7 @@ bool InitResourceOpenGL(void)
 	if ( g_FragmentProgramID==0 )
 		return false;
 
-	// §ë¼v¯x°}
+	// æŠ•å½±çŸ©é™£
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(90.0f, 1.0f, 0.1f, 100.0f);
 
 	glEnable(GL_CULL_FACE);
@@ -48,47 +48,47 @@ bool ReleaseResourceOpenGL(void)
 	return true;
 }
 
-// callback function. µøµ¡¤j¤p§ïÅÜ®É·|³Q©I¥s, ¨Ã¶Ç¤J·sªºµøµ¡¤j¤p.
+// callback function. è¦–çª—å¤§å°æ”¹è®Šæ™‚æœƒè¢«å‘¼å«, ä¸¦å‚³å…¥æ–°çš„è¦–çª—å¤§å°.
 void ResizeWindowOpenGL(int width, int height)
 {
-	// ¨Ï¥Î·sªºµøµ¡¤j¤p°µ¬°·sªºÃ¸¹Ï¸ÑªR«×
+	// ä½¿ç”¨æ–°çš„è¦–çª—å¤§å°åšç‚ºæ–°çš„ç¹ªåœ–è§£æåº¦
 	glViewport(0, 0, width, height);
-	// §ë¼v¯x°}, ­«³]¤ô¥­¸ò««ª½¤è¦Vªºµø¨¤.
+	// æŠ•å½±çŸ©é™£, é‡è¨­æ°´å¹³è·Ÿå‚ç›´æ–¹å‘çš„è¦–è§’.
 	float aspect = (float) height / (float) width;
 	g_proj_matrix = GutMatrixPerspectiveRH_OpenGL(60.0f, aspect, 0.1f, 100.0f);
 }
 
-// `¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨OpenGLä¾†ç¹ªåœ–`
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
 
-	// `«ü©w­n¨Ï¥ÎShader¥iµ{¦¡¤Æ¬yµ{`
+	// `æŒ‡å®šè¦ä½¿ç”¨Shaderå¯ç¨‹å¼åŒ–æµç¨‹`
 	glEnable(GL_VERTEX_PROGRAM_ARB);
 	glEnable(GL_FRAGMENT_PROGRAM_ARB);
-	// `³]©w¨Ï¥Î­ş­ÓVertex/Fragment Program`
+	// `è¨­å®šä½¿ç”¨å“ªå€‹Vertex/Fragment Program`
 	glBindProgramARB(GL_VERTEX_PROGRAM_ARB, g_VertexProgramID);
 	glBindProgramARB(GL_FRAGMENT_PROGRAM_ARB, g_FragmentProgramID);
 
-	// `³]©w­n¥Î°}¦Cªº¤è¦¡¶Ç¤J³»ÂI¦ì¸m¸òÃC¦â`
+	// `è¨­å®šè¦ç”¨é™£åˆ—çš„æ–¹å¼å‚³å…¥é ‚é»ä½ç½®è·Ÿé¡è‰²`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_COLOR_ARRAY);
 	
-	// `­pºâÂà´«¯x°}`
+	// `è¨ˆç®—è½‰æ›çŸ©é™£`
 	Matrix4x4 view_matrix = GutMatrixLookAtRH(g_eye, g_lookat, g_up);
 	Matrix4x4 view_proj_matrix = view_matrix * g_proj_matrix;
 	Matrix4x4 world_view_proj_matrix;
 
-	// `¤Ó¶§`
+	// `å¤ªé™½`
 	world_view_proj_matrix = g_sun_matrix * view_proj_matrix;
 	glProgramLocalParameters4fvEXT(GL_VERTEX_PROGRAM_ARB, 0, 4, (float *) &world_view_proj_matrix);
 
 	glVertexPointer(3, GL_FLOAT, sizeof(Vertex_VC), g_pSunVertices);
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pSunVertices[0].m_RGBA);
 	glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
-	// `¦a²y`
+	// `åœ°çƒ`
 	world_view_proj_matrix = g_earth_matrix * view_proj_matrix;
 	glProgramLocalParameters4fvEXT(GL_VERTEX_PROGRAM_ARB, 0, 4, (float *) &world_view_proj_matrix);
 
@@ -96,7 +96,7 @@ void RenderFrameOpenGL(void)
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pEarthVertices[0].m_RGBA);
 	glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
 
-	// `¤ë²y`
+	// `æœˆçƒ`
 	world_view_proj_matrix = g_moon_matrix * view_proj_matrix;
 	glProgramLocalParameters4fvEXT(GL_VERTEX_PROGRAM_ARB, 0, 4, (float *) &world_view_proj_matrix);
 
@@ -104,6 +104,6 @@ void RenderFrameOpenGL(void)
 	glColorPointer(4, GL_UNSIGNED_BYTE, sizeof(Vertex_VC), g_pMoonVertices[0].m_RGBA);
 	glDrawElements(GL_TRIANGLES, g_iNumSphereIndices, GL_UNSIGNED_SHORT, g_pSphereIndices);
 
-	// `§e²{¥X­I´ºbackbuffer`
+	// `å‘ˆç¾å‡ºèƒŒæ™¯backbuffer`
 	GutSwapBuffersOpenGL();
 }

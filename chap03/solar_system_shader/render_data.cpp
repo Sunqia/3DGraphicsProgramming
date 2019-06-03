@@ -2,18 +2,18 @@
 #include "render_data.h"
 #include "gut.h"
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f, 0.0f, 15.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, 1.0f, 0.0f); 
-// ÃèÀYÂà´«¯x°}
+// é¡é ­è½‰æ›çŸ©é™£
 Matrix4x4 g_view_matrix;
 //
 Matrix4x4 g_sun_matrix, g_earth_matrix, g_moon_matrix;
 
-// ²yªº¼Ò«¬
+// çƒçš„æ¨¡å‹
 Vertex_VC *g_pSunVertices = NULL;
 Vertex_VC *g_pEarthVertices = NULL;
 Vertex_VC *g_pMoonVertices = NULL;
@@ -25,12 +25,12 @@ int g_iNumSphereTriangles = 0;
 int g_iNumSphereIndices = 0;
 
 //
-bool CreateSphere(float radius, // ¥b®| 
-				  Vertex_VC **ppVertices, // ¶Ç¦^²y­±ªº³»ÂI
-				  unsigned short **ppIndices, // ¶Ç¦^²y­±ªº¤T¨¤§Î¯Á¤Ş
-				  float *color, // ²yªºÃC¦â
-				  int stacks, // ½n«×ªº¤Á­±¼Æ¥Ø
-				  int slices // ®|«×ªº¤Á­±¼Æ¥Ø
+bool CreateSphere(float radius, // åŠå¾‘ 
+				  Vertex_VC **ppVertices, // å‚³å›çƒé¢çš„é ‚é»
+				  unsigned short **ppIndices, // å‚³å›çƒé¢çš„ä¸‰è§’å½¢ç´¢å¼•
+				  float *color, // çƒçš„é¡è‰²
+				  int stacks, // ç·¯åº¦çš„åˆ‡é¢æ•¸ç›®
+				  int slices // å¾‘åº¦çš„åˆ‡é¢æ•¸ç›®
 				  )
 {
 	*ppVertices = NULL;
