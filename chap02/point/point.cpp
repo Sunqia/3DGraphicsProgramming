@@ -6,29 +6,29 @@ void RenderFrameOpenGL(void);
 
 void main(int argc, char *argv[])
 {
-	// `¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï`
+	// `å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–`
 	char *device = "dx9";
 
 	if ( argc > 1 )
 	{
-		// `¦pªG©R¥O¦C°Ñ¼Æ«ü©w¥ÎOpenGL, ´N§ï¥ÎOpenGL.`
+		// `å¦‚æœå‘½ä»¤åˆ—åƒæ•¸æŒ‡å®šç”¨OpenGL, å°±æ”¹ç”¨OpenGL.`
 		if ( stricmp(argv[1], "opengl")==0 )
 		{
 			device = "opengl";
 		}
 	}
 
-	// `¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡`
+	// `åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—`
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// `°µOpenGL©ÎDirectXªì©l¤Æ`
+	// `åšOpenGLæˆ–DirectXåˆå§‹åŒ–`
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
 		exit(0);
 	}
 
-	// `¥D°j°é`
+	// `ä¸»è¿´åœˆ`
 	while( GutProcessMessage() )
 	{
 		if ( !strcmp(device, "dx9") )
@@ -41,52 +41,52 @@ void main(int argc, char *argv[])
 		}
 	}
 
-	// `Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m`
+	// `é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®`
 	GutReleaseGraphicsDevice();
 }
 
-float vertex[] = {0.0f, 0.0f, 0.0f}; // `¤@­Ó3D®y¼ĞÂI(x,y,z)ªº¦ì¸m`
+float vertex[] = {0.0f, 0.0f, 0.0f}; // `ä¸€å€‹3Dåº§æ¨™é»(x,y,z)çš„ä½ç½®`
 
-// `¨Ï¥ÎDirect3D9`
+// `ä½¿ç”¨Direct3D9`
 void RenderFrameDX9(void)
 {
-	// `¨ú±oD3D¸Ë¸m. ¦b©I¥sGutInitGraphicsDevice®É´N¤w¸g¦³¤F, ª½±µ§â¥¦®³¨Ó¥Î.`
+	// `å–å¾—D3Dè£ç½®. åœ¨å‘¼å«GutInitGraphicsDeviceæ™‚å°±å·²ç¶“æœ‰äº†, ç›´æ¥æŠŠå®ƒæ‹¿ä¾†ç”¨.`
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
-	// `Ãö³¬¥´¥úªº­pºâ`
+	// `é—œé–‰æ‰“å…‰çš„è¨ˆç®—`
 	device->SetRenderState( D3DRS_LIGHTING, FALSE );
-	// `§âµe­±²M¬°¶Â¦â`
+	// `æŠŠç•«é¢æ¸…ç‚ºé»‘è‰²`
 	device->Clear( 
-		0, NULL, // `²M°£¾ã­Óµe­±` 
-		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, // `²M°£ÃC¦â¸òZ Buffer` 
-		D3DCOLOR_RGBA(0, 0, 0, 0), // `³]©w­n§âÃC¦â²M¦¨¶Â¦â`
-		1.0f, // `³]©w­n§âZ­È²M¬°1, ¤]´N¬OÂ÷ÃèÀY³Ì»·.`
-		0 // `³]©w­n§âStencil buffer²M¬°0, ¦b³o¨S®t.`
+		0, NULL, // `æ¸…é™¤æ•´å€‹ç•«é¢` 
+		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, // `æ¸…é™¤é¡è‰²è·ŸZ Buffer` 
+		D3DCOLOR_RGBA(0, 0, 0, 0), // `è¨­å®šè¦æŠŠé¡è‰²æ¸…æˆé»‘è‰²`
+		1.0f, // `è¨­å®šè¦æŠŠZå€¼æ¸…ç‚º1, ä¹Ÿå°±æ˜¯é›¢é¡é ­æœ€é .`
+		0 // `è¨­å®šè¦æŠŠStencil bufferæ¸…ç‚º0, åœ¨é€™æ²’å·®.`
 	);
 
-	// `¶}©l¤UÃ¸¹Ï«ü¥O`
+	// `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
 	device->BeginScene(); 
-	// `³]©w¸ê®Æ®æ¦¡`
+	// `è¨­å®šè³‡æ–™æ ¼å¼`
 	device->SetFVF(D3DFVF_XYZ); 
-	// `µe¥X¤@­ÓÂI`
+	// `ç•«å‡ºä¸€å€‹é»`
 	device->DrawPrimitiveUP(D3DPT_POINTLIST, 1, vertex, 12); 
-	// `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	// `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	device->EndScene();		
 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	device->Present( NULL, NULL, NULL, NULL );
 }
 
-// `¨Ï¥ÎOpenGL`
+// `ä½¿ç”¨OpenGL`
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// `µe¤@­ÓÂI`
+	// `ç•«ä¸€å€‹é»`
 	glBegin(GL_POINTS);
 	glVertex3fv(vertex);
 	glEnd();
 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }

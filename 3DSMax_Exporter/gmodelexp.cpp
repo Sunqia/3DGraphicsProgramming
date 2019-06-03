@@ -295,7 +295,7 @@ DWORD WINAPI fn(LPVOID arg)
 	return(0);
 }
 
-// ¿é¥XÀÉ®×
+// è¼¸å‡ºæª”æ¡ˆ
 int GmodelExp::DoExport(const TCHAR *name,ExpInterface *ei,Interface *i, BOOL suppressPrompts, DWORD options) 
 {
 	// Set a global prompt display switch

@@ -9,29 +9,29 @@ void RenderFrameOpenGL(void);
 
 void main(int argc, char *argv[])
 {
-	// ¤º©w¨Ï¥ÎDirectX 9¨ÓÃ¸¹Ï
+	// å…§å®šä½¿ç”¨DirectX 9ä¾†ç¹ªåœ–
 	char *device = "dx9";
 
 	if ( argc > 1 )
 	{
-		// ¦pªG©R¥O¦C°Ñ¼Æ«ü©w¥ÎOpenGL, ´N§ï¥ÎOpenGL.
+		// å¦‚æœå‘½ä»¤åˆ—åƒæ•¸æŒ‡å®šç”¨OpenGL, å°±æ”¹ç”¨OpenGL.
 		if ( stricmp(argv[1], "opengl")==0 )
 		{
 			device = "opengl";
 		}
 	}
 
-	// ¦b(100,100)ªº¦ì¸m¶}±Ò¤@­Ó¤j¤p¬°(512x512)ªºµøµ¡
+	// åœ¨(100,100)çš„ä½ç½®é–‹å•Ÿä¸€å€‹å¤§å°ç‚º(512x512)çš„è¦–çª—
 	GutCreateWindow(100, 100, 512, 512, device);
 
-	// °µOpenGL©ÎDirectXªì©l¤Æ
+	// åšOpenGLæˆ–DirectXåˆå§‹åŒ–
 	if ( !GutInitGraphicsDevice(device) )
 	{
 		printf("Failed to initialize %s device\n", device);
 		exit(0);
 	}
 
-	// ¥D°j°é
+	// ä¸»è¿´åœˆ
 	while( GutProcessMessage() )
 	{
 		if ( !strcmp(device, "dx9") )
@@ -44,11 +44,11 @@ void main(int argc, char *argv[])
 		}
 	}
 
-	// Ãö³¬OpenGL/DirectXÃ¸¹Ï¸Ë¸m
+	// é—œé–‰OpenGL/DirectXç¹ªåœ–è£ç½®
 	GutReleaseGraphicsDevice();
 }
 
-// ª÷¦r¶ğ§Îªº8±øÃä½u
+// é‡‘å­—å¡”å½¢çš„8æ¢é‚Šç·š
 Vector4 g_vertices[] = 
 {
 	Vector4(-1.0f, 1.0f,-1.0f),
@@ -76,75 +76,75 @@ Vector4 g_vertices[] =
 	Vector4( 1.0f, 1.0f,-1.0f),
 };
 
-// ÃèÀY¦ì¸m
+// é¡é ­ä½ç½®
 Vector4 g_eye(0.0f,3.0f,3.0f); 
-// ÃèÀY¹ï·ÇªºÂI
+// é¡é ­å°æº–çš„é»
 Vector4 g_lookat(0.0f, 0.0f, 0.0f); 
-// ÃèÀY¥¿¤W¤èªº¤è¦V
+// é¡é ­æ­£ä¸Šæ–¹çš„æ–¹å‘
 Vector4 g_up(0.0f, -1.0f, 1.0f); 
 
-// `¨Ï¥ÎDirectX9¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨DirectX9ä¾†ç¹ªåœ–`
 void RenderFrameDX9(void)
 {
 	LPDIRECT3DDEVICE9 device = GutGetGraphicsDeviceDX9();
     device->SetRenderState( D3DRS_LIGHTING, FALSE );
     device->Clear(
-		0, NULL, // `²M°£¾ã­Óµe­±` 
-		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, // `²M°£ÃC¦â¸òZ Buffer` 
-		D3DCOLOR_ARGB(0, 0, 0, 0), // `³]©w­n§âÃC¦â²M¦¨¶Â¦â`
-		1.0f, // `³]©w­n§âZ­È²M¬°1, ¤]´N¬OÂ÷ÃèÀY³Ì»·.`
-		0 // `³]©w­n§âStencil buffer²M¬°0, ¦b³o¨S®t.`
+		0, NULL, // `æ¸…é™¤æ•´å€‹ç•«é¢` 
+		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, // `æ¸…é™¤é¡è‰²è·ŸZ Buffer` 
+		D3DCOLOR_ARGB(0, 0, 0, 0), // `è¨­å®šè¦æŠŠé¡è‰²æ¸…æˆé»‘è‰²`
+		1.0f, // `è¨­å®šè¦æŠŠZå€¼æ¸…ç‚º1, ä¹Ÿå°±æ˜¯é›¢é¡é ­æœ€é .`
+		0 // `è¨­å®šè¦æŠŠStencil bufferæ¸…ç‚º0, åœ¨é€™æ²’å·®.`
 	);
 	
-	// `­pºâ¥X¤@­Ó¥i¥HÂà´«¨ìÃèÀY®y¼Ğ¨tªº¯x°}`
+	// `è¨ˆç®—å‡ºä¸€å€‹å¯ä»¥è½‰æ›åˆ°é¡é ­åº§æ¨™ç³»çš„çŸ©é™£`
 	D3DXVECTOR3 eye(0.0f, 3.0f, 3.0f);
 	D3DXVECTOR3 lookat(0.0f, 0.0f, 0.0f);
 	D3DXVECTOR3 up(0.0f, -1.0f, 1.0f);
-	// `­pºâÃèÀYÂà´«¯x°}`
+	// `è¨ˆç®—é¡é ­è½‰æ›çŸ©é™£`
 	D3DXMATRIX view_matrix;
 	D3DXMatrixLookAtRH(&view_matrix, &eye, &lookat, &up);
-	// `³]©wÃèÀYÂà´«¯x°}`
+	// `è¨­å®šé¡é ­è½‰æ›çŸ©é™£`
 	device->SetTransform(D3DTS_VIEW, (D3DMATRIX *) &view_matrix); 	
 
-	// `­pºâ«D¥­¦æ§ë¼v¯x°}`
+	// `è¨ˆç®—éå¹³è¡ŒæŠ•å½±çŸ©é™£`
 	D3DXMATRIX perspective_matrix;
 	D3DXMatrixPerspectiveFovRH(&perspective_matrix, FastMath::DegreeToRadian(90.0f), 1.0f, 1.0f, 100.0f);
-	// `³]©wµø¨¤Âà´«¯x°}`
+	// `è¨­å®šè¦–è§’è½‰æ›çŸ©é™£`
 	device->SetTransform(D3DTS_PROJECTION, (D3DMATRIX *)&perspective_matrix); 	
 
-	device->BeginScene(); // `¶}©l¤UÃ¸¹Ï«ü¥O`
-	device->SetFVF(D3DFVF_XYZ); // `³]©w¸ê®Æ®æ¦¡`
-	// `µe¥Xª÷¦r¶ğªº8±øÃä½u`
+	device->BeginScene(); // `é–‹å§‹ä¸‹ç¹ªåœ–æŒ‡ä»¤`
+	device->SetFVF(D3DFVF_XYZ); // `è¨­å®šè³‡æ–™æ ¼å¼`
+	// `ç•«å‡ºé‡‘å­—å¡”çš„8æ¢é‚Šç·š`
 	device->DrawPrimitiveUP(D3DPT_LINELIST, 8, g_vertices, sizeof(Vector4)); 
-	device->EndScene(); // `«Å§i©Ò¦³ªºÃ¸¹Ï«ü¥O³£¤U§¹¤F`
+	device->EndScene(); // `å®£å‘Šæ‰€æœ‰çš„ç¹ªåœ–æŒ‡ä»¤éƒ½ä¸‹å®Œäº†`
 	
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
     device->Present( NULL, NULL, NULL, NULL );
 }
 
-// `¨Ï¥ÎOpenGL¨ÓÃ¸¹Ï`
+// `ä½¿ç”¨OpenGLä¾†ç¹ªåœ–`
 void RenderFrameOpenGL(void)
 {
-	// `²M°£µe­±`
+	// `æ¸…é™¤ç•«é¢`
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	// `­pºâ¨Ã³]©wÃèÀYÂà´«¯x°}`
+	// `è¨ˆç®—ä¸¦è¨­å®šé¡é ­è½‰æ›çŸ©é™£`
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 	gluLookAt(
 		g_eye[0], g_eye[1], g_eye[2],
 		g_lookat[0], g_lookat[1], g_lookat[2],
 		g_up[0], g_up[1], g_up[2]);
-	// `­pºâ¨Ã³]©wµø¨¤Âà´«¯x°}`
+	// `è¨ˆç®—ä¸¦è¨­å®šè¦–è§’è½‰æ›çŸ©é™£`
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluPerspective(90.0f, 1.0f, 1.0f, 100.0f);
 
-	// `µe¥Xª÷¦r¶ğªº8±øÃä½u`
+	// `ç•«å‡ºé‡‘å­—å¡”çš„8æ¢é‚Šç·š`
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(4, GL_FLOAT, sizeof(Vector4), g_vertices);
 	glDrawArrays(GL_LINES, 0, 16);
 
-	// `§â­I´ºbackbufferªºµe­±§e²{¥X¨Ó`
+	// `æŠŠèƒŒæ™¯backbufferçš„ç•«é¢å‘ˆç¾å‡ºä¾†`
 	GutSwapBuffersOpenGL();
 }
